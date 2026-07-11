@@ -1,0 +1,16 @@
+{
+  "updated": "2026-07-11",
+  "note": "此檔由後端排程爬蟲更新（見 crawler/README）。前端讀不到時會用內建清單。",
+  "sources": {
+    "lucid": "https://x.com/LucidTrading",
+    "apex": "https://x.com/ApexTraderFund",
+    "topstep": "https://x.com/topsteptrader",
+    "tradeify": "https://x.com/Tradeify"
+  },
+  "items": [
+    { "tag": "折扣", "html": "🔥 Lucid Pro 6 折碼 <b>PAT8</b>，台灣時間 7/25 11:59 截止" },
+    { "tag": "規則更新", "html": "📊 LucidPro 7/5 新制：考試與出金都<b>取消日風控</b>" },
+    { "tag": "規則更新", "html": "⚡ Apex 4.0：出金改<b>全自動</b>，不再人工審查" },
+    { "tag": "價格", "html": "💵 Apex 啟動費調降：Intraday $79 / EOD $99（50K，過關後）" }
+  ]
+}

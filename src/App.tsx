@@ -296,7 +296,7 @@ export default function App() {
                 <h3 className="font-heading text-4xl mt-1">{recFirm.name}</h3>
                 <p className="text-white/70 font-body text-lg my-4">{rec!.why}</p>
                 {recFirm.code &&
-                  <p className="font-body text-sm text-white/80 mb-4">專屬折扣碼 <span className="font-heading" style={{ color: '#35E08A' }}>{recFirm.code}</span>，結帳直接省——<b className="text-white">名額與折扣有限，晚買不一定有</b>。</p>}
+                  <p className="font-body text-sm text-white/80 mb-4">專屬折扣碼 <span className="font-heading" style={{ color: '#35E08A' }}>{recFirm.code}</span>，結帳直接省——<b className="text-white">折扣為限時活動，過期即恢復原價</b>。</p>}
                 <div className="flex flex-col sm:flex-row items-center gap-3 justify-center">
                   <button onClick={() => buy(recFirm.link)}
                     className="glass-hover rounded-full px-8 py-4 font-heading text-lg flex items-center gap-2" style={BUY}>

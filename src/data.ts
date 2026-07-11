@@ -235,24 +235,25 @@ export const NOTES = [
 ];
 
 export const QUIZ = [
-  { q: 'dll', title: '你在意「日風控（盤中被砍）」嗎？', opts: [
+  { q: 'dll', title: '你在意「盤中日風控」嗎？', opts: [
     { v: 'care', label: '很在意，最好完全沒有日風控' },
     { v: 'ok', label: '還好，我能控制單日虧損' },
   ] },
-  { q: 'speed', title: '你想要的出金節奏？', opts: [
-    { v: 'fast', label: '越快越好，最好一天通關' },
-    { v: 'flex', label: '彈性就好，穩穩來' },
+  { q: 'speed', title: '通關與出金節奏？', opts: [
+    { v: 'fast', label: '越快越好（最好一天通關）' },
+    { v: 'flex', label: '彈性穩穩來就好' },
   ] },
-  { q: 'budget', title: '你的預算考量？', opts: [
-    { v: 'low', label: '越便宜越好，我可能會多次挑戰' },
-    { v: 'mid', label: '預算 OK，重點是規則單純' },
+  { q: 'goal', title: '你最重視哪一點？', opts: [
+    { v: 'cheap', label: '成本越低越好' },
+    { v: 'profit', label: '獲利潛力越高越好' },
+    { v: 'simple', label: '規則越單純越好' },
   ] },
 ];
 
 export function recommend(a: Record<string, string>): { id: string; why: string } {
-  if (a.dll === 'care' && a.speed === 'flex') return { id: 'lucid', why: '你在意日風控又想彈性出金，LucidFlex 無 DLL、無緩衝、5 獲利日出金最合拍。' };
-  if (a.speed === 'fast') return { id: 'tradeify', why: '你想通關快，Tradeify Growth 可一天通關，Select 通關後出金還免一致性。' };
-  if (a.budget === 'low') return { id: 'apex', why: '你想壓低考試成本，Apex 常有 1～2 折、可開多帳複製；但記得過關要付啟動費，總成本要一起算。' };
-  if (a.dll === 'ok' && a.budget === 'mid') return { id: 'topstep', why: '你不排斥月費又想要最單純的規則，Topstep 語言最好懂、Live 免數據費。' };
-  return { id: 'lucid', why: '規則最單純、無日風控、一次性付費，最適合新手把流程跑順。' };
+  // Lucid 最便宜（首購 $70）、無日風控、出金快 → 多數情況主推
+  if (a.goal === 'profit') return { id: 'apex', why: '想衝高獲利，Apex 可開 20 帳複製下單、獲利潛力最高（但過關要付啟動費、限 1 個月內考完）。' };
+  if (a.goal === 'simple' && a.dll === 'ok') return { id: 'topstep', why: '想要最單純的規則，Topstep 語言最好懂、Live 免數據費（月費制）。' };
+  if (a.speed === 'fast' && a.dll === 'ok' && a.goal !== 'cheap') return { id: 'tradeify', why: '想通關快，Tradeify Growth 可一天通關，Select 通關後出金還免一致性。' };
+  return { id: 'lucid', why: 'CP 值最高：首購 $70 最便宜、完全無日風控、5 個獲利日就能出金——新手首選。' };
 }

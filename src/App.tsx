@@ -28,6 +28,9 @@ const rise = {
 };
 const vp = { once: true, amount: 0.3 } as const;
 
+// 強烈購買按鈕（發光綠）；規則按鈕走低調灰
+const BUY = { background: '#35E08A', color: '#06110B', boxShadow: '0 0 26px rgba(53,224,138,.5)' } as const;
+
 function SecHead({ tag, title, sub }: { tag: string; title: string; sub?: string }) {
   return (
     <motion.div className="mb-10" initial={rise.initial} whileInView={rise.whileInView} viewport={vp} transition={{ duration: 0.7 }}>
@@ -67,7 +70,7 @@ export default function App() {
   }), [filter]);
   const setF = (k: string, v: string) => setFilter((s) => (s[k] === v ? (({ [k]: _, ...r }) => r)(s) : { ...s, [k]: v }));
 
-  const rec = ans.dll && ans.speed && ans.budget ? recommend(ans) : null;
+  const rec = ans.dll && ans.speed && ans.goal ? recommend(ans) : null;
   const recFirm = rec ? FIRMS.find((f) => f.id === rec.id)! : null;
 
   return (
@@ -173,14 +176,14 @@ export default function App() {
                     </div>
                     <p className="text-white/75 font-body text-lg leading-relaxed max-w-md">{f.summary}</p>
                     <div className="mt-7 flex items-center gap-4 flex-wrap">
-                      <button onClick={() => openRules(f.id)}
-                        className="glass-hover rounded-full px-6 py-3 flex items-center gap-2 font-heading text-black"
-                        style={{ background: '#35E08A' }}>
-                        看完整規則 <ArrowUpRight className="h-4 w-4" />
-                      </button>
                       <button onClick={() => buy(f.link)}
-                        className="glass-hover liquid-glass-strong rounded-full px-5 py-3 flex items-center gap-2 font-heading">
-                        直接購買 ↗
+                        className="glass-hover rounded-full px-7 py-3.5 flex items-center gap-2 font-heading text-lg"
+                        style={BUY}>
+                        直接購買 <ArrowUpRight className="h-5 w-5" />
+                      </button>
+                      <button onClick={() => openRules(f.id)}
+                        className="glass-hover liquid-glass rounded-full px-5 py-3 flex items-center gap-2 font-heading text-white/60">
+                        看完整規則
                       </button>
                       {f.code && <Code code={f.code} onToast={showToast} />}
                     </div>
@@ -292,10 +295,16 @@ export default function App() {
                 <div className="font-body text-xs text-[#35E08A] tracking-widest">// 你的推薦</div>
                 <h3 className="font-heading text-4xl mt-1">{recFirm.name}</h3>
                 <p className="text-white/70 font-body text-lg my-4">{rec!.why}</p>
-                <div className="flex items-center gap-4 justify-center">
-                  <button onClick={() => openRules(recFirm.id)} className="glass-hover rounded-full px-6 py-3 font-heading text-black" style={{ background: '#35E08A' }}>看完整規則 →</button>
-                  <button onClick={() => { setAns({}); setQi(0); }} className="text-sm font-body text-white/70">重新測驗</button>
+                {recFirm.code &&
+                  <p className="font-body text-sm text-white/80 mb-4">專屬折扣碼 <span className="font-heading" style={{ color: '#35E08A' }}>{recFirm.code}</span>，結帳直接省——<b className="text-white">名額與折扣有限，晚買不一定有</b>。</p>}
+                <div className="flex flex-col sm:flex-row items-center gap-3 justify-center">
+                  <button onClick={() => buy(recFirm.link)}
+                    className="glass-hover rounded-full px-8 py-4 font-heading text-lg flex items-center gap-2" style={BUY}>
+                    立即前往購買 <ArrowUpRight className="h-5 w-5" />
+                  </button>
+                  <button onClick={() => openRules(recFirm.id)} className="glass-hover liquid-glass rounded-full px-6 py-3.5 font-heading text-white/60">先看完整規則</button>
                 </div>
+                <button onClick={() => { setAns({}); setQi(0); }} className="mt-4 text-sm font-body text-white/40">重新測驗</button>
                 <p className="font-body text-[11px] text-white/40 mt-4">※ 依作答簡化推薦，實際規則以官網為準</p>
               </div>
             )}

@@ -14,7 +14,7 @@ const openRules = (id: string) => window.open(`/rules/${id}.html`, '_blank', 'no
 // 推廣連結：一點直接前往官網購買頁
 const buy = (url: string) => window.open(url, '_blank', 'noopener');
 
-const DISCORD = 'https://discord.gg/zAckvPyT5';
+const DISCORD = 'https://discord.gg/YGWXTN7qcd';
 const FAQ = [
   ['Prop Firm 是什麼？', '自營商用「先考核、後資助」模式：你付費考試，通過後用他們的（模擬）資金操盤並分潤。'],
   ['出金要多久？', '各家不同，多為 1～2 個工作日。Lucid 支援 WorkMarket 或加密貨幣（USDC / USDT）出金。'],

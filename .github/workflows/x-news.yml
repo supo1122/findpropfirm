@@ -27,10 +27,15 @@ jobs:
         run: |
           git config user.name "news-bot"
           git config user.email "bot@users.noreply.github.com"
-          if ! git diff --quiet public/news.json; then
-            git add public/news.json
-            git commit -m "auto: 更新 X 最新消息"
-            git push
-          else
-            echo "news.json 無變化，略過"
+          if git diff --quiet public/news.json; then
+            echo "news.json 無變化，略過"; exit 0
           fi
+          git add public/news.json
+          git commit -m "auto: 更新 X 最新消息"
+          # 遠端可能有新 commit：重試 pull --rebase（衝突時保留我們剛抓的 news.json）再推
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase -X theirs origin/main || { git checkout --theirs public/news.json 2>/dev/null; git add public/news.json; git rebase --continue || true; }
+            if git push origin main; then echo "推送成功"; break; fi
+            echo "重試 $i ..."; sleep 5
+          done

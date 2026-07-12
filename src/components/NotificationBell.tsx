@@ -32,7 +32,7 @@ export default function NotificationBell() {
     if (off) return;
     if (sessionStorage.getItem('tw_welcomed')) return;
     const t = setTimeout(() => {
-      setToast(desktop ? 0 : 'welcome');
+      setToast(0); // 直接跳最新消息，不再詢問（桌面通知授權另外在鈴鐺面板裡）
       sessionStorage.setItem('tw_welcomed', '1');
     }, 1500);
     return () => clearTimeout(t);

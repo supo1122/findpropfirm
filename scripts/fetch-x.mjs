@@ -60,9 +60,16 @@ async function main() {
   }
 
   raw.sort((a, b) => b.ts - a.ts);
-  const top = raw.slice(0, 8);
+  // 去重：同內容（前 30 字相同）只留最新一則
+  const seen = new Set();
+  const uniq = raw.filter((t) => {
+    const key = t.firm + '|' + t.text.slice(0, 30);
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+
   const items = [];
-  for (const t of top) {
+  for (const t of uniq.slice(0, 6)) {
     const zh = await toZh(t.text);
     const body = zh.length > 80 ? zh.slice(0, 80) + '…' : zh;
     items.push({
@@ -71,11 +78,16 @@ async function main() {
     });
   }
 
-  if (items.length === 0) { console.log('無有料推文，保留舊檔'); return; }
+  // 常駐置頂：Lucid 首購優惠（Lucid 很少發 X，但這是主力分潤，永遠顯示）
+  const PINNED = [
+    { tag: '折扣', html: '<b>Lucid</b>：🔥 首購 $70！折扣碼 <b>PAT8</b>，無日風控、一次性付費、終身擁有 <a href="https://lucidtrading.com/ref/patrigger/" target="_blank" rel="noopener">前往購買↗</a>' },
+  ];
+  const finalItems = [...PINNED, ...items].slice(0, 8);
+
   writeFileSync('public/news.json', JSON.stringify({
     updated: new Date().toISOString().slice(0, 16).replace('T', ' '),
-    items,
+    items: finalItems,
   }, null, 2));
-  console.log(`寫入 ${items.length} 則（已過濾+翻譯）`);
+  console.log(`寫入 ${finalItems.length} 則（含置頂 Lucid + 去重 + 翻譯）`);
 }
 main().catch((e) => { console.error(e); process.exit(1); });

@@ -26,8 +26,10 @@ async function main() {
   const ct0 = process.env.X_CT0;
   if (!authToken || !ct0) throw new Error('缺少 X_AUTH_TOKEN / X_CT0');
 
-  // 用 cookie 登入（比帳密安全，不會觸發登入驗證）
+  // 用 cookie 登入（x.com 與 twitter.com 兩個網域都送，避免 domain 對不上導致 401）
   await scraper.setCookies([
+    `auth_token=${authToken}; Domain=.x.com; Path=/; Secure; HttpOnly`,
+    `ct0=${ct0}; Domain=.x.com; Path=/; Secure`,
     `auth_token=${authToken}; Domain=.twitter.com; Path=/; Secure; HttpOnly`,
     `ct0=${ct0}; Domain=.twitter.com; Path=/; Secure`,
   ]);

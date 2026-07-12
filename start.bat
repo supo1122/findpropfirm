@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
-title findpropfirm 一鍵啟動
+title PropFirmTW 一鍵啟動
 
 if not exist node_modules (
   echo [1/2] 首次啟動，正在安裝套件（約 1 分鐘）...

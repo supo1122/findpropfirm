@@ -97,7 +97,7 @@ export default function App() {
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/50 via-black/30 to-black" />
 
           <nav className="relative z-20 flex items-center justify-between px-6 md:px-12 pt-6">
-            <div className="font-heading text-2xl">find<span className="text-[#35E08A]">propfirm</span></div>
+            <div className="font-heading text-2xl">PropFirm<span className="text-[#35E08A]">TW</span></div>
             <div className="hidden md:flex liquid-glass rounded-full px-1.5 py-1.5 items-center gap-1">
               {[['公司', 'showcase'], ['優惠', 'offers'], ['價格', 'prices'], ['測驗', 'quiz'], ['篩選', 'compare'], ['客服', 'support']].map(([l, h]) => (
                 <a key={h} href={'#' + h} className="px-3 py-2 text-sm font-medium text-white/90 font-body">{l}</a>
@@ -388,7 +388,7 @@ export default function App() {
           <SecHead tag="// ABOUT" title="關於與免責" />
           <div className="rounded-2xl p-6 md:p-8 space-y-4 text-[15px] leading-relaxed font-body text-white/75"
             style={{ background: '#0F141C', border: '1px solid rgba(255,255,255,0.1)' }}>
-            <p><b className="font-heading text-white">一站式整合。</b> findpropfirm 把五大 Prop Firm 的規則用繁體中文整理、定期更新官網與可靠來源，讓你花最少時間挑到適合自己的方案。</p>
+            <p><b className="font-heading text-white">一站式整合。</b> PropFirmTW 把五大 Prop Firm 的規則用繁體中文整理、定期更新官網與可靠來源，讓你花最少時間挑到適合自己的方案。</p>
             <div className="rounded-xl p-4 border-l-4" style={{ background: 'rgba(244,91,91,0.10)', borderColor: '#F45B5B' }}>
               <b className="font-heading block mb-1" style={{ color: '#F45B5B' }}>⚠️ 風險揭露</b>
               交易期貨與差價合約（CFD）具<b className="text-white">高度風險</b>，可能導致損失全部本金。Prop Firm 約 <b className="text-white">90% 的收入來自失敗交易員的考試費用</b>，請理性評估自身風險承受能力後再參與。
@@ -400,7 +400,7 @@ export default function App() {
         </section>
 
         <footer className="px-6 md:px-12 py-10 border-t border-white/10 flex flex-wrap justify-between gap-4 font-body text-sm text-white/40 max-w-5xl mx-auto">
-          <span>© 2026 findpropfirm · 給台灣人的一站式 Prop Firm 整合</span>
+          <span>© 2026 PropFirmTW · 給台灣人的一站式 Prop Firm 整合</span>
           <span>更新 2026/07</span>
         </footer>
       </main>

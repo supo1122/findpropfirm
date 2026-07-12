@@ -1,4 +1,4 @@
-// ===== findpropfirm 資料層（繁體中文，2026/07 核對）=====
+// ===== PropFirmTW 資料層（繁體中文，2026/07 核對）=====
 
 export type Block =
   | { kind: 'callout'; tone: 'new' | 'warn'; title: string; body: string }

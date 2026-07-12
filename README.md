@@ -1,4 +1,4 @@
-# findpropfirm — Liquid Glass 版
+# PropFirmTW — Liquid Glass 版
 
 暗色電影感 + liquid glass 玻璃擬態的 Prop Firm 一站式比較站。
 React + Vite + TypeScript + Tailwind + Framer Motion。全繁體中文，2026/07 核對。

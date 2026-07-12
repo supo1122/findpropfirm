@@ -55,7 +55,7 @@ export default function NotificationBell() {
     const p = await Notification.requestPermission();
     if (p === 'granted') {
       setDesktop(true);
-      new Notification('findpropfirm 通知已開啟', { body: '有新折扣或規則更新會通知你。' });
+      new Notification('PropFirmTW 通知已開啟', { body: '有新折扣或規則更新會通知你。' });
       setToast(0);
     } else {
       setToast(0); // 使用者拒絕桌面通知，仍給站內通知

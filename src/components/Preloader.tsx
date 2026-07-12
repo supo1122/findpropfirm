@@ -27,7 +27,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
           <div className="font-heading italic text-4xl md:text-6xl">
-            find<span className="text-[#35E08A]">propfirm</span>
+            PropFirm<span className="text-[#35E08A]">TW</span>
           </div>
           <div className="w-[min(240px,60vw)] h-[3px] bg-white/15 rounded overflow-hidden">
             <div className="h-full bg-gradient-to-r from-[#35E08A] to-[#F5A524]" style={{ width: pct + '%' }} />

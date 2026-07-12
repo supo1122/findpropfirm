@@ -6,7 +6,7 @@ import { writeFileSync } from 'node:fs';
 // 各家 X 帳號（@ 後面的帳號名，若不對再改）
 const HANDLES = {
   lucid: 'LucidTrading',
-  apex: 'ApexTraderFund',
+  apex: 'ApexTradeFund',
   topstep: 'topsteptrader',
   tradeify: 'Tradeify',
 };

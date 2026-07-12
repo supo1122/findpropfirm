@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write           # 允許 commit 回 news.json
 
+concurrency:
+  group: x-news             # 同時只跑一個，避免兩次執行互相撞
+  cancel-in-progress: false
+
 jobs:
   fetch:
     runs-on: ubuntu-latest

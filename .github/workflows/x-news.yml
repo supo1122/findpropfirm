@@ -1,0 +1,36 @@
+name: X 最新消息（每小時）
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # 每小時整點
+  workflow_dispatch: {}     # 也可在 Actions 頁手動觸發測試
+
+permissions:
+  contents: write           # 允許 commit 回 news.json
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 安裝 twitter-scraper
+        run: npm i @the-convocation/twitter-scraper
+      - name: 抓取並更新 news.json
+        env:
+          X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
+          X_CT0: ${{ secrets.X_CT0 }}
+        run: node scripts/fetch-x.mjs
+      - name: Commit 更新
+        run: |
+          git config user.name "news-bot"
+          git config user.email "bot@users.noreply.github.com"
+          if ! git diff --quiet public/news.json; then
+            git add public/news.json
+            git commit -m "auto: 更新 X 最新消息"
+            git push
+          else
+            echo "news.json 無變化，略過"
+          fi

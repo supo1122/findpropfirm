@@ -60,7 +60,9 @@ export default function App() {
   const [qi, setQi] = useState(0);
 
   const showToast = (m: string) => { setToast(m); setTimeout(() => setToast(null), 1800); };
-  const ranked = useMemo(() => [...FIRMS].sort((a, b) => b.rating - a.rating), []);
+  // 展示排序（編輯精選；星等維持真實不造假）
+  const ORDER = ['lucid', 'tradeday', 'tradeify', 'apex', 'topstep'];
+  const ranked = useMemo(() => [...FIRMS].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id)), []);
   const filtered = useMemo(() => FIRMS.filter((f) => {
     if (filter.risk && !f.risk.includes(filter.risk)) return false;
     if (filter.pay && f.pay !== filter.pay) return false;

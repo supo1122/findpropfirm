@@ -8,6 +8,7 @@ const HANDLES = {
   apex: 'ApexTradeFund',
   topstep: 'topsteptrader',
   tradeify: 'Tradeify',
+  tradeday: 'TradeDay',
 };
 
 // 只留「真的有料」的推文：折扣碼/百分比、出金、規則、維護故障。純閒聊一律濾掉。
@@ -43,7 +44,7 @@ async function main() {
     `ct0=${ct0}; Domain=.twitter.com; Path=/; Secure`,
   ]);
 
-  const FIRM_ZH = { lucid: 'Lucid', apex: 'Apex', topstep: 'Topstep', tradeify: 'Tradeify' };
+  const FIRM_ZH = { lucid: 'Lucid', apex: 'Apex', topstep: 'Topstep', tradeify: 'Tradeify', tradeday: 'TradeDay' };
   const raw = [];
   for (const [firm, handle] of Object.entries(HANDLES)) {
     try {

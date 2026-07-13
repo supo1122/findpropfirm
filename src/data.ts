@@ -114,6 +114,50 @@ export const FIRMS: Firm[] = [
     ],
   },
   {
+    id: 'tradeday',
+    name: 'TradeDay',
+    logo: '/logos/tradeday.png',
+    rating: 4.6,
+    type: 'futures',
+    tags: ['出金快', 'Quick Pay / Fast Pass', '月費'],
+    summary: 'TradeDay 2.0 兩條路線：Quick Pay（funded 後很快能出金）、Fast Pass（比較快拿到 funded）。分潤最高 80%，出金走 Riseworks（電匯/加密）。',
+    risk: ['eod', 'intraday'],
+    pay: 'monthly',
+    dll: 'no',
+    link: 'https://www.tradeday.com/',
+    anim: '/anim/tradeday.html',
+    metrics: [
+      { label: '分潤', value: '最高 80%' },
+      { label: '考試一致性', value: 'Quick 30% / Fast 45%' },
+      { label: '出金上限(50K)', value: '$2,000' },
+    ],
+    blocks: [
+      { kind: 'callout', tone: 'new', title: '🆕 TradeDay 2.0', body: 'Quick Pay＝通關後先讓你快點出金（Intraday 回撤、$4,000 分潤分界）；Fast Pass＝走 5 獲利日主流路線（EOD 回撤、45% 一致性、最快 3 天通關）。' },
+      { kind: 'h3', text: 'Quick Pay（考試 30% 一致性 · 5 天）' },
+      { kind: 'table', head: ['規模', '折扣價/月', '獲利目標', '最大回撤'], rows: [
+        ['50K', '約 $62', '$3,000', '$2,000'],
+        ['100K', '約 $115', '$6,000', '$3,000'],
+        ['150K', '約 $175', '$9,000', '$4,500'],
+      ] },
+      { kind: 'list', items: [
+        '出金帳號一律 Intraday 回撤；正餘額即可申請、出金後仍須高於起始本金。',
+        '分潤：$4,000 以下 50%、超過 $4,000 的部分 80%。',
+        '每個 funded 帳號賺到 $10,000 gross profit 進 Live 審查（超過部分會被移除，記得收手）。',
+      ] },
+      { kind: 'h3', text: 'Fast Pass（考試 45% 一致性 · 3 天）' },
+      { kind: 'table', head: ['規模', '折扣價/月', '獲利目標', '單次出金上限'], rows: [
+        ['50K', '約 $90', '$3,000', '$2,000'],
+        ['100K', '約 $160', '$6,000', '$2,500'],
+        ['150K', '約 $240', '$9,000', '$3,000'],
+      ] },
+      { kind: 'list', items: [
+        'EOD 回撤；funded 出金需 5 個獲利日（50K 每日≥$150）、最多領餘額 50%。',
+        '分潤 80%、無緩衝要求；第 5 次出金申請時轉 Funded Live（$0 起始、沿用 EOD 回撤）。',
+      ] },
+      { kind: 'para', text: '出金速度：5:30 PM CT 前送出於 24 商用小時內處理；款項走 Riseworks（國際電匯每次 $15、L1 加密 $2.5+gas、L2 加密免費）。' },
+    ],
+  },
+  {
     id: 'apex',
     name: 'Apex Trader Funding',
     logo: '/logos/apex.png',
@@ -204,6 +248,11 @@ export const PRICES: Price[] = [
     id: 'tradeify', name: 'Tradeify', logo: '/logos/tradeify.png', model: '一次性 · 免啟動費',
     evalFee: '50K Select 定價約 $165', activation: '無啟動費',
     total: '$87 起（Select $99）', code: '', link: 'https://tradeify.co/',
+  },
+  {
+    id: 'tradeday', name: 'TradeDay', logo: '/logos/tradeday.png', model: '月費 · Quick/Fast',
+    evalFee: 'Quick 50K 約 $62/月 · Fast 約 $90/月', activation: '無啟動費',
+    total: '50% OFF', code: '', link: 'https://www.tradeday.com/',
   },
   {
     id: 'apex', name: 'Apex（付啟動費版）', logo: '/logos/apex.png', model: '限 1 個月內考完',

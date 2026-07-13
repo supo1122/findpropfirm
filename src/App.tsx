@@ -246,7 +246,7 @@ export default function App() {
             <table className="w-full text-left" style={{ minWidth: 720, borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: '#1B2230' }}>
-                  {['公司', '付費模式', '考試費（定價）', '啟動費', '折後總成本', '折扣碼', ''].map((h) => (
+                  {['公司', '付費模式', '考試費（定價）', '啟動費', '折後總成本', '折扣碼'].map((h) => (
                     <th key={h} className="px-4 py-3 font-heading text-sm text-white/80 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -270,12 +270,6 @@ export default function App() {
                       {p.code
                         ? <Code code={p.code} onToast={showToast} />
                         : <span className="font-body text-xs text-white/35">官網折扣</span>}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <button onClick={() => buy(p.link)}
-                        className="glass-hover rounded-full px-4 py-2 font-heading text-sm text-black" style={{ background: '#35E08A' }}>
-                        直接購買 ↗
-                      </button>
                     </td>
                   </tr>
                 ))}

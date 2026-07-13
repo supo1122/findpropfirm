@@ -37,7 +37,7 @@ export const FIRMS: Firm[] = [
     risk: ['eod'],
     pay: 'once',
     dll: 'no',
-    code: 'PAT8',
+    code: 'PFTW',
     link: 'https://lucidtrading.com/ref/patrigger/',
     anim: '/anim/lucid.html',
     metrics: [
@@ -198,7 +198,7 @@ export const PRICES: Price[] = [
   {
     id: 'lucid', name: 'Lucid Trading', logo: '/logos/lucid.png', model: '一次性 · 無月費',
     evalFee: '50K 定價約 $175', activation: '無啟動費',
-    total: '首購 $70', code: 'PAT8', link: 'https://lucidtrading.com/ref/patrigger/',
+    total: '首購 $70', code: 'PFTW', link: 'https://lucidtrading.com/ref/patrigger/',
   },
   {
     id: 'tradeify', name: 'Tradeify', logo: '/logos/tradeify.png', model: '一次性 · 免啟動費',
@@ -223,13 +223,13 @@ export const PRICES: Price[] = [
 ];
 
 export const OFFERS = [
-  { firm: 'Lucid — LucidFlex 50K', old: '原價 $109', now: '首購 $70', note: '一次性付費 · 無日風控 · 終身擁有', deadline: '折扣碼 PAT8 · Flex 約 7 折', code: 'PAT8', link: 'firms/lucid' },
-  { firm: 'Lucid — LucidPro', old: '', now: '6 折', note: '7/5 起考試與出金皆無日風控', deadline: '台灣時間 7/25 11:59 截止', code: 'PAT8', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidFlex 50K', old: '原價 $109', now: '首購 $70', note: '一次性付費 · 無日風控 · 終身擁有', deadline: '折扣碼 PFTW · Flex 約 7 折', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidPro', old: '', now: '6 折', note: '7/5 起考試與出金皆無日風控', deadline: '台灣時間 7/25 11:59 截止', code: 'PFTW', link: 'firms/lucid' },
   { firm: 'Apex — 付啟動費版', old: '', now: '日內啟動費 $59', note: '限時 · 考試 $24.9 起（限 1 個月內考完）', deadline: '限時優惠 · 以官網為準', code: '', link: 'firms/apex' },
 ];
 
 export const NOTES = [
-  { tag: '折扣', html: '🔥 Lucid Pro 6 折碼 <b>PAT8</b>，台灣時間 7/25 11:59 截止' },
+  { tag: '折扣', html: '🔥 Lucid Pro 6 折碼 <b>PFTW</b>，台灣時間 7/25 11:59 截止' },
   { tag: '規則更新', html: '📊 LucidPro 7/5 新制：考試與出金都<b>取消日風控</b>' },
   { tag: '規則更新', html: '⚡ Apex 4.0：出金改<b>全自動</b>，不再人工審查' },
 ];

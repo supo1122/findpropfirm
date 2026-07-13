@@ -225,6 +225,23 @@ export default function App() {
         <section id="prices" className="relative px-6 md:px-12 py-24 max-w-5xl mx-auto">
           <SecHead tag="// 價格" title="價格比較（以 50K 為例）"
             sub="Apex 過關要付啟動費，總成本不一定最低。定價常有 70–90% 折扣，實際以官網結帳為準。" />
+
+          {/* 快速購買：最重要的連結一眼可見（不用捲表格） */}
+          <div className="flex flex-wrap gap-3 mb-8">
+            {PRICES.map((p, i) => (
+              <button key={i} onClick={() => buy(p.link)}
+                className="glass-hover rounded-2xl px-5 py-4 flex items-center gap-3 text-left"
+                style={{ background: '#0F141C', border: '1px solid rgba(53,224,138,.35)' }}>
+                <img src={p.logo} alt={p.name} className="h-9 w-9 rounded-lg bg-white p-1 object-contain" />
+                <span>
+                  <span className="block font-heading text-white leading-tight">{p.name}</span>
+                  <span className="block font-heading text-lg leading-tight" style={{ color: p.total === '無折扣' ? '#8A93A2' : '#35E08A' }}>{p.total}</span>
+                </span>
+                <span className="ml-1 rounded-full px-3 py-2 font-heading text-sm text-black whitespace-nowrap" style={BUY}>直接購買 ↗</span>
+              </button>
+            ))}
+          </div>
+
           <div className="rounded-2xl border border-white/10 overflow-x-auto" style={{ background: '#0F141C' }}>
             <table className="w-full text-left" style={{ minWidth: 720, borderCollapse: 'collapse' }}>
               <thead>

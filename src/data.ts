@@ -133,14 +133,14 @@ export const FIRMS: Firm[] = [
     ],
     blocks: [
       { kind: 'callout', tone: 'new', title: '🆕 TradeDay 2.0', body: 'Quick Pay＝通關後先讓你快點出金（Intraday 回撤、$4,000 分潤分界）；Fast Pass＝走 5 獲利日主流路線（EOD 回撤、45% 一致性、最快 3 天通關）。' },
-      { kind: 'h3', text: 'Quick Pay（考試 30% 一致性 · 5 天）' },
-      { kind: 'table', head: ['規模', '折扣價/月', '獲利目標', '最大回撤'], rows: [
-        ['50K', '約 $62', '$3,000', '$2,000'],
-        ['100K', '約 $115', '$6,000', '$3,000'],
-        ['150K', '約 $175', '$9,000', '$4,500'],
+      { kind: 'h3', text: 'Quick Pay（考試 30% 一致性 · 5 天；折後月費）' },
+      { kind: 'table', head: ['規模', 'Intraday/月', 'EOD/月', '獲利目標', '最大回撤'], rows: [
+        ['50K', '$62.50', '$87.50', '$3,000', '$2,000'],
+        ['100K', '$115', '$142.50', '$6,000', '$3,000'],
+        ['150K', '$175', '$197.50', '$9,000', '$4,500'],
       ] },
       { kind: 'list', items: [
-        '出金帳號一律 Intraday 回撤；正餘額即可申請、出金後仍須高於起始本金。',
+        '考試可選 Intraday 或 EOD 回撤，但出金帳號一律 Intraday 回撤；正餘額即可申請、出金後仍須高於起始本金。',
         '分潤：$4,000 以下 50%、超過 $4,000 的部分 80%。',
         '每個 funded 帳號賺到 $10,000 gross profit 進 Live 審查（超過部分會被移除，記得收手）。',
       ] },
@@ -250,8 +250,8 @@ export const PRICES: Price[] = [
     total: '$87 起（Select $99）', code: '', link: 'https://tradeify.co/',
   },
   {
-    id: 'tradeday', name: 'TradeDay', logo: '/logos/tradeday.png', model: '月費 · Quick/Fast',
-    evalFee: 'Quick 50K 約 $62/月 · Fast 約 $90/月', activation: '無啟動費',
+    id: 'tradeday', name: 'TradeDay', logo: '/logos/tradeday.png', model: '月費 · 三方案',
+    evalFee: 'Quick 50K $62.5(IND)/$87.5(EOD) · Fast $90', activation: '無啟動費（$0）',
     total: '50% OFF', code: '', link: 'https://www.tradeday.com/',
   },
   {

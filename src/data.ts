@@ -38,7 +38,7 @@ export const FIRMS: Firm[] = [
     pay: 'once',
     dll: 'no',
     code: 'PFTW',
-    link: 'https://lucidtrading.com/ref/patrigger/',
+    link: 'https://lucidtrading.com/ref/pftw',
     anim: '/anim/lucid.html',
     metrics: [
       { label: '分潤', value: '90%' },
@@ -242,7 +242,7 @@ export const PRICES: Price[] = [
   {
     id: 'lucid', name: 'Lucid Trading', logo: '/logos/lucid.png', model: '一次性 · 無月費',
     evalFee: '50K 定價約 $175', activation: '無啟動費',
-    total: '首購 $70', code: 'PFTW', link: 'https://lucidtrading.com/ref/patrigger/',
+    total: '首購 $70', code: 'PFTW', link: 'https://lucidtrading.com/ref/pftw',
   },
   {
     id: 'tradeify', name: 'Tradeify', logo: '/logos/tradeify.png', model: '一次性 · 免啟動費',

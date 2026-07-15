@@ -6,6 +6,8 @@ import NotificationBell from './components/NotificationBell';
 import Discord from './components/Discord';
 import FirmAnim from './components/FirmAnim';
 import { ArrowUpRight } from './components/icons';
+import MissionCard from './components/MissionCard';
+import { MISSION_FIRMS, plansOf } from './missions';
 import { FIRMS, activeOffers, daysLeft, PRICES, QUIZ, recommend } from './data';
 import { copyCode } from './lib/confetti';
 
@@ -64,6 +66,12 @@ export default function App() {
   const ORDER = ['lucid', 'tradeday', 'tradeify', 'apex', 'topstep'];
   const ranked = useMemo(() => [...FIRMS].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id)), []);
   const offers = useMemo(() => activeOffers(), []); // 過期活動自動下架
+
+  // 快速規則選擇器：選公司 → 選方案 → 出任務卡
+  const [mFirm, setMFirm] = useState('lucid');
+  const [mPlan, setMPlan] = useState(0);
+  const mPlans = useMemo(() => plansOf(mFirm), [mFirm]);
+  const mission = mPlans[Math.min(mPlan, mPlans.length - 1)];
   const filtered = useMemo(() => FIRMS.filter((f) => {
     if (filter.risk && !f.risk.includes(filter.risk)) return false;
     if (filter.pay && f.pay !== filter.pay) return false;
@@ -102,7 +110,7 @@ export default function App() {
           <nav className="relative z-20 flex items-center justify-between px-6 md:px-12 pt-6">
             <div className="font-heading text-2xl">PropFirm<span className="text-[#35E08A]">TW</span></div>
             <div className="hidden md:flex liquid-glass rounded-full px-1.5 py-1.5 items-center gap-1">
-              {[['公司', 'showcase'], ['優惠', 'offers'], ['價格', 'prices'], ['測驗', 'quiz'], ['篩選', 'compare'], ['客服', 'support']].map(([l, h]) => (
+              {[['公司', 'showcase'], ['查規則', 'mission'], ['優惠', 'offers'], ['價格', 'prices'], ['測驗', 'quiz'], ['客服', 'support']].map(([l, h]) => (
                 <a key={h} href={'#' + h} className="px-3 py-2 text-sm font-medium text-white/90 font-body">{l}</a>
               ))}
             </div>
@@ -195,6 +203,70 @@ export default function App() {
               </div>
             );
           })}
+        </section>
+
+        {/* ===== 快速規則選擇器 ===== */}
+        <section id="mission" className="relative px-6 md:px-12 py-24 max-w-4xl mx-auto">
+          <SecHead tag="// 查規則" title="30 秒看懂你的出金任務"
+            sub="選你買的公司和帳號，直接看要打到多少錢、哪些線不能碰。" />
+
+          {/* Step 1 選公司 */}
+          <div className="mb-4">
+            <div className="font-body text-xs text-white/40 mb-2">① 選公司</div>
+            <div className="flex flex-wrap gap-2">
+              {MISSION_FIRMS.map((id) => {
+                const f = FIRMS.find((x) => x.id === id)!;
+                const on = mFirm === id;
+                return (
+                  <button key={id} onClick={() => { setMFirm(id); setMPlan(0); }}
+                    className="glass-hover rounded-xl px-4 py-2.5 flex items-center gap-2 font-heading text-sm transition"
+                    style={on
+                      ? { background: '#35E08A', color: '#06110B' }
+                      : { background: '#0F141C', border: '1px solid rgba(255,255,255,.12)', color: '#B9C0CB' }}>
+                    <img src={f.logo} alt="" className="h-6 w-6 rounded bg-white p-0.5 object-contain" />
+                    {f.name.replace(' Trader Funding', '').replace(' Trading', '')}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Step 2 選方案 */}
+          <div className="mb-6">
+            <div className="font-body text-xs text-white/40 mb-2">② 選帳號方案</div>
+            <div className="flex flex-wrap gap-2">
+              {mPlans.map((p, i) => {
+                const on = mission === p;
+                return (
+                  <button key={p.plan} onClick={() => setMPlan(i)}
+                    className="glass-hover rounded-lg px-4 py-2 font-body text-sm transition"
+                    style={on
+                      ? { background: 'rgba(53,224,138,.15)', border: '1px solid #35E08A', color: '#35E08A' }
+                      : { background: '#0F141C', border: '1px solid rgba(255,255,255,.12)', color: '#8A93A2' }}>
+                    {p.plan}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 任務卡 */}
+          <AnimatePresence mode="wait">
+            <motion.div key={mFirm + mPlan}
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}>
+              <MissionCard m={mission} />
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="mt-5 flex items-center gap-3 flex-wrap">
+            <button onClick={() => buy(FIRMS.find((f) => f.id === mFirm)!.link)}
+              className="glass-hover rounded-full px-6 py-3 flex items-center gap-2 font-heading" style={BUY}>
+              直接購買 <ArrowUpRight className="h-4 w-4" />
+            </button>
+            <button onClick={() => openRules(mFirm)}
+              className="glass-hover liquid-glass rounded-full px-5 py-3 font-heading text-white/60">看完整規則</button>
+          </div>
         </section>
 
         {/* ===== 優惠 ===== */}

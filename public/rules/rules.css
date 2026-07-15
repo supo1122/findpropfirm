@@ -79,3 +79,28 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--dim);font-siz
 .buy-btn:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(53,224,138,.35);color:#06110B}
 .code-chip{font-family:'Barlow';background:var(--pay-bg);color:var(--pay);border:1px dashed rgba(53,224,138,.5);
   padding:8px 14px;border-radius:10px;font-weight:700;font-size:15px}
+
+/* ===== 出金任務卡 ===== */
+.mission-card{background:#0F141C;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;margin:22px 0}
+.mission-card .bar{height:4px;background:linear-gradient(90deg,var(--pay),var(--risk))}
+.mission-card .inner{padding:24px}
+.mission-card .who{font-family:'Barlow';font-size:14px;color:var(--dim);margin-bottom:16px}
+.mission-card .who b{color:#CBD2DC}
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:720px){.mission-grid{grid-template-columns:1fr;gap:18px}}
+.mission-col h4{font-family:'Noto Sans TC';font-size:18px;margin-bottom:12px}
+.mission-col.task h4{color:var(--pay)} .mission-col.line h4{color:var(--risk)}
+.mission-col ul{margin:0;padding:0;list-style:none}
+.mission-col li{position:relative;padding-left:20px;margin:10px 0;font-size:15px;color:#D4D9E0;line-height:1.7}
+.mission-col.task li::before{content:"▸";position:absolute;left:0;color:var(--pay)}
+.mission-col.line li::before{content:"▸";position:absolute;left:0;color:var(--risk)}
+/* 金額大字 */
+.target-num{font-family:'Noto Sans TC';font-weight:700;font-size:20px;color:var(--pay)}
+.line .target-num{color:var(--risk)}
+.mission-targets{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);font-size:14px}
+.mission-targets .lbl{color:var(--dim);font-size:12.5px;margin-right:6px}
+.mission-targets .sz{color:var(--soft)}
+.mission-targets b{color:var(--pay)}
+.mission-targets .sep{color:#3a4150;margin:0 8px}
+.mission-tip{margin-top:16px;border-radius:12px;padding:14px;font-size:14px;line-height:1.7;
+  background:rgba(245,165,36,.10);border:1px solid rgba(245,165,36,.3);color:var(--text)}

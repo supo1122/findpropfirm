@@ -28,9 +28,10 @@
   <h2><span class="n">02</span> 考試（Trading Combine）</h2>
   <ul>
     <li><span class="risk">最大虧損（EOD）</span>：每日收盤結算，虧損線隨最高餘額上移，達初始資金後固定。例：50K Max Loss $2,000，起始線 $48,000 → 賺到 $52,000 時線移到 $50,000 固定。</li>
-    <li><b>一致性 50%</b>：單日最高<span class="pay">獲利</span> ≤ 總獲利 50%（實測 51~54% 仍有機會，建議壓 40~45%）。</li>
+    <li><b>一致性 50%</b>：單日最高<span class="pay">獲利</span> ≤ 總獲利 50%，超過則<b>獲利目標會被調高</b>。<b>最快 2 天可通關</b>（只要沒有單日超過 50%）。<span class="risk">虧損日不會重置你的最佳日</span>；最佳日每天 3:10 PM CT 鎖定。官方有小幅緩衝，不必算到分毫。</li>
     <li>重置：每月續費得 1 個「重置代幣」，可累積不過期，爆倉手動消耗。</li>
   </ul>
+  <div class="box new"><b>🆕 日風控（DLL）是「選配」不是必有</b>官方：Combine 與 EX 帳戶的 DLL <b>可在結帳時自行選擇加購</b>（加了就<span class="risk">固定不能改</span>）；Live 帳戶則<b>強制自動有</b>。參數：<b>50K $1,000／100K $2,000／150K $3,000</b>。<span class="pay">觸發 DLL 不算違規</span>——只是當日強制休息（平倉、取消掛單，隔天 5PM CT 恢復），帳號仍保有資格。<br>💡 加了 DLL 的好處：<span class="pay">出金上限加倍</span>。</div>
 
   <h2><span class="n">03</span> EX 帳戶出金（官網現制）</h2>
   <div class="tw"><table>
@@ -55,6 +56,19 @@
     <li>動態風險擴展：<span class="risk">日虧損上限</span>隨累積獲利自動擴大。</li>
     <li>累積 <b>30 個獲利日</b>後解鎖<b>每日<span class="pay">出金</span></b>與 <span class="pay">100% 利潤提領</span>（不再受 50% 限制）。</li>
   </ul>
+
+  <h2><span class="n">05</span> 禁止行為（官方規則）</h2>
+  <div class="box risk"><b>🚫 硬性禁止（非灰色地帶）</b>
+    <ul style="margin:8px 0 0">
+      <li><b>Account Stacking</b>：故意在一個帳號激進打爆、換另一個再來，博一次大贏。</li>
+      <li><b>故意打爆 Live 帳戶</b>以強制失敗。</li>
+      <li><b>不公平技術</b>：用軟體、AI、超高速系統或大量下單取得不當優勢。</li>
+      <li><b>脫離真實市場行為</b>的交易，或可能讓 Topstep 蒙受損失的操作。</li>
+      <li><b>在最佳買賣價之外掛單</b>。</li>
+      <li><b>重大新聞前用滿倉位</b>直接對做。</li>
+    </ul>
+  </div>
+  <div class="box risk"><b>🚫 濫用模擬環境（SIM）</b>官方明列:跑剝頭皮演算法吃不真實的 SIM 成交、每天數百筆超快速交易佔隊列優勢、在跳空市場亂丟單撿漏、反覆利用 SIM 幾乎無滑價達成不可能的停損、用極窄括號單/自動平保吃 SIM 有利成交。<br><span class="pay">💡 官方也說:一般交易者不用擔心,幾次幸運成交不會被拒絕出金;他們針對的是每天數百上千筆、持倉以秒計的系統性濫用。</span></div>
 
   <div class="buy-cta" style="background:linear-gradient(135deg,rgba(138,147,162,.12),rgba(138,147,162,.03));border-color:rgba(138,147,162,.35)">
     <div class="l">

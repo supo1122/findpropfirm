@@ -19,7 +19,7 @@ export default function MissionCard({
           <span className="font-body text-xs px-2 py-1 rounded-md" style={{ background: 'rgba(255,255,255,.06)', color: 'rgba(255,255,255,.6)' }}>
             {plan.dd === 'EOD' ? 'EOD 收盤結算回撤' : 'Intraday 盤中即時回撤'}
           </span>
-          {verified === false && (
+          {(verified === false || plan.unverified) && (
             <span className="font-body text-xs px-2 py-1 rounded-md" style={{ background: 'rgba(245,165,36,.14)', color: '#F5A524' }}>官方核對中</span>
           )}
         </div>
@@ -33,9 +33,18 @@ export default function MissionCard({
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <Col title="🎯 你的任務" color="#35E08A" items={plan.tasks.map((t) => fill(t, s))} />
-          <Col title="🚫 不能碰的線" color="#F45B5B" items={plan.redlines.map((t) => fill(t, s))} />
+          <Col title="🎯 你的任務" color="#35E08A" items={plan.tasks.map((t) => fill(t, s, plan))} />
+          <Col title="🚫 不能碰的線" color="#F45B5B" items={plan.redlines.map((t) => fill(t, s, plan))} />
         </div>
+
+        {/* 幾次轉真倉：買之前一定要知道 */}
+        {plan.toLive && (
+          <div className="mt-5 rounded-xl p-3.5 flex items-start gap-2.5"
+            style={{ background: 'rgba(91,157,244,.09)', border: '1px solid rgba(91,157,244,.28)' }}>
+            <span className="font-heading text-sm shrink-0" style={{ color: '#5B9DF4' }}>🎬 轉真倉</span>
+            <span className="font-body text-[14px] leading-relaxed text-white/80">{plan.toLive}</span>
+          </div>
+        )}
 
         {/* 補充規格 */}
         <div className="mt-5 pt-4 border-t border-white/10 flex flex-wrap gap-x-5 gap-y-2 font-body text-xs text-white/45">

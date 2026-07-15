@@ -3,6 +3,8 @@
 // 所有數字皆已逐規模預先算好。Lucid / Tradeify / TradeDay / Topstep
 // 於 2026/07 逐條核對官方幫助中心;Apex 官網封鎖機房 IP,標示為待核。
 
+import { lucidDllWaived } from './data';
+
 export type SizeKey = '25K' | '50K' | '100K' | '150K';
 
 export type Spec = {
@@ -39,6 +41,10 @@ export type Plan = {
   /** 🚫 紅線 */
   redlines: string[];
   tip?: string;
+  /** 幾次出金會轉真倉（每家都不一樣，買之前一定要知道） */
+  toLive?: string;
+  /** 尚未逐條核對官方原文 */
+  unverified?: boolean;
   sizes: Partial<Record<SizeKey, Spec>>;
 };
 
@@ -54,6 +60,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'flex',
         name: 'LucidFlex',
+        toLive: '第 5 次出金後進真倉審核池（上限 5 次）',
         sub: '規則最單純 · 新手首選',
         dd: 'EOD',
         split: '90/10',
@@ -77,6 +84,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'pro',
         name: 'LucidPro',
+        toLive: '第 5 次出金後進真倉審核池（上限 5 次）',
         sub: '有緩衝區 · 出金上限較高',
         dd: 'EOD',
         split: '90/10',
@@ -88,7 +96,9 @@ export const FIRMS_M: FirmM[] = [
         ],
         redlines: [
           '餘額碰到最大虧損線就爆：{maxLoss}',
-          '日虧損上限 {dll}（軟性，不會沒收帳號）',
+          lucidDllWaived()
+            ? '日虧損上限 {dll}（軟性）——⚡ 目前活動免除中，2026/7/24 後自動恢復'
+            : '日虧損上限 {dll}（軟性，不會沒收帳號）',
         ],
         tip: '餘額收在緩衝之上後，固定日風控會換成 LucidScale：最高 EOD 利潤 × 60%，只升不降。2025/11/28 前買的帳號一致性是 35%。',
         sizes: {
@@ -101,6 +111,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'direct',
         name: 'LucidDirect',
+        toLive: '第 5 次出金後進真倉審核池（上限 5 次）',
         sub: '免考試直接開帳 · 一致性最嚴',
         dd: 'EOD',
         split: '90/10',
@@ -121,6 +132,34 @@ export const FIRMS_M: FirmM[] = [
           '150K': { maxLoss: '$5,000', dll: '$3,000', goal: '首次 $9,000，第 2 次起 $4,500', cap: '第 1–3 次 $3,000，第 4–5 次 $3,500', minPayout: '$500', contracts: '10 mini / 100 micro' },
         },
       },
+      {
+        id: 'live',
+        name: 'LucidLive（真倉）',
+        sub: '真錢 · 每日出金 · 規則最寬',
+        dd: 'EOD',
+        split: '90/10',
+        toLive: '從 Flex／Pro／Direct 第 5 次出金後進審核池，由風控團隊決定',
+        tasks: [
+          '帳戶從 $0 開始，賺到的都是你的利潤',
+          '每天都能申請出金，沒有次數與金額上限',
+          '無日風控、無一致性、無緩衝——規則比模擬帳號還少',
+          '🎁 首次轉真倉限定：賺到 {goal} → 額外領一次性獎金 {cap}',
+        ],
+        redlines: [
+          '回撤 {maxLoss}（沿用你原本 funded 帳號的規模）',
+          '⚠️ 回撤還沒鎖上就申請出金 → 最大虧損線直接鎖在 $100，等於幾乎沒有容錯',
+          '對沖真倉 = 永久停權（Lucid 和 CME 都禁止，沒有商量餘地）',
+          '爆掉真倉要冷卻 2 週才能再買考試；反覆亂玩會被延長',
+          '家裡有人在跑真倉，其他人就不能跑模擬帳號',
+        ],
+        tip: '⚠️ 轉真倉時，所有「有出過金」的 funded 帳號會一起轉，其餘模擬帳號全部關閉——包含你留著沒動的考試帳號（0 次出金的 funded 帳號會退考試費）。不想被關就別囤考試帳號。最多同時 5 個真倉。獎金只有第一次轉真倉能拿，且 LucidMaxx 不適用。',
+        sizes: {
+          '25K': { maxLoss: '$1,000', dll: '無', goal: '$1,100', cap: '獎金 $1,000', contracts: '2 mini / 20 micro（依獲利分級）' },
+          '50K': { maxLoss: '$2,000', dll: '無', goal: '$2,100', cap: '獎金 $2,000', contracts: '4 mini / 40 micro（依獲利分級）' },
+          '100K': { maxLoss: '$3,000', dll: '無', goal: '$3,100', cap: '獎金 $3,000', contracts: '6 mini / 60 micro（依獲利分級）' },
+          '150K': { maxLoss: '$4,500', dll: '無', goal: '$4,600', cap: '獎金 $4,500', contracts: '10 mini / 100 micro（依獲利分級）' },
+        },
+      },
     ],
   },
 
@@ -133,6 +172,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'flex',
         name: 'Select Flex',
+        toLive: '單帳號 3 次出金，或距上次轉真倉累計 10 次 → 才「被考慮」',
         sub: '考過後選這條 · 無日風控、無緩衝',
         dd: 'EOD',
         split: '90/10',
@@ -156,6 +196,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'daily',
         name: 'Select Daily',
+        toLive: '單帳號 3 次出金，或距上次轉真倉累計 10 次 → 才「被考慮」',
         sub: '考過後選這條 · 每天可領但有緩衝',
         dd: 'EOD',
         split: '90/10',
@@ -180,6 +221,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'growth',
         name: 'Growth',
+        toLive: '單帳號 3 次出金，或距上次轉真倉累計 10 次 → 才「被考慮」',
         sub: '1 天就能考過 · 但出金要墊最低餘額',
         dd: 'EOD',
         split: '90/10',
@@ -204,6 +246,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'lightning',
         name: 'Lightning',
+        toLive: '單帳號 3 次出金，或距上次轉真倉累計 10 次 → 才「被考慮」',
         sub: '免考試直接開帳 · 無最低天數',
         dd: 'EOD',
         split: '90/10',
@@ -226,6 +269,31 @@ export const FIRMS_M: FirmM[] = [
           '150K': { maxLoss: '$5,250', dll: '$3,000', goal: '首次 $9,000，第 2 次起 $4,500', cap: '第 1–3 次 $3,000，第 4 次起 $3,500', minPayout: '$1,000', contracts: '12 mini / 120 micro' },
         },
       },
+      {
+        id: 'live',
+        name: 'Elite（真倉）',
+        sub: '真錢 · 隨時可領 · 無日風控',
+        dd: 'EOD',
+        split: '80/20',
+        toLive: '單帳號 3 次出金，或距上次轉真倉累計 10 次 → 才「被考慮」，非自動',
+        tasks: [
+          '帳戶從 $0 開始，賺到的都是利潤',
+          '隨時可以申請出金，沒有最低天數',
+          '無日風控，部位上限比模擬帳號還大',
+        ],
+        redlines: [
+          'EOD 回撤 {maxLoss}（固定，不追蹤）',
+          '⚠️ 一筆出金把餘額領到 $0 → 真倉帳號直接關閉',
+          '所有持倉一樣要在美東 4:45 PM 前平倉（真倉也適用）',
+        ],
+        tip: '⚠️ 回撤鎖上前別急著領：官方規定若你在餘額還沒到「回撤 + $100」之前送出申請，不會馬上處理，會壓到隔一個營業日、等 EOD 調整完才扣款——結果是回撤已經往上移、錢才被扣走，你隔天的容錯空間反而變小。等回撤鎖定再申請。只有「出過金至少 1 次」的帳號才會轉真倉，最多 5 個。',
+        sizes: {
+          '25K': { maxLoss: '$1,500', dll: '無', cap: '無上限（餘額領到 $0 就關戶）', contracts: '$0→回撤:1 mini／回撤之上:2 mini' },
+          '50K': { maxLoss: '$2,000', dll: '無', cap: '無上限（餘額領到 $0 就關戶）', contracts: '$0→回撤:2 mini／回撤之上:4 mini' },
+          '100K': { maxLoss: '$3,000', dll: '無', cap: '無上限（餘額領到 $0 就關戶）', contracts: '$0→回撤:4 mini／回撤之上:8 mini' },
+          '150K': { maxLoss: '$4,500', dll: '無', cap: '無上限（餘額領到 $0 就關戶）', contracts: '$0→回撤:6 mini／回撤之上:12 mini' },
+        },
+      },
     ],
   },
 
@@ -238,6 +306,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'qp-ind',
         name: 'Quick Pay（Intraday 考試）',
+        toLive: '毛利到 $10,000 → 當天暫停、審查後轉真倉（不是看次數）',
         sub: '最便宜 · 但回撤含浮盈',
         dd: 'Intraday',
         split: '$4,000 分界:50% / 80%',
@@ -261,6 +330,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'qp-eod',
         name: 'Quick Pay（EOD 考試）',
+        toLive: '毛利到 $10,000 → 當天暫停、審查後轉真倉（不是看次數）',
         sub: '考試較好過 · 但出金帳號仍是 Intraday',
         dd: 'EOD',
         split: '$4,000 分界:50% / 80%',
@@ -284,6 +354,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'fp',
         name: 'Fast Pass',
+        toLive: '第 5 次出金申請時 → 直接轉真倉，Sim 帳號關閉',
         sub: '無最低天數 · 分潤一律 80%',
         dd: 'EOD',
         split: '80/20（無分界）',
@@ -304,6 +375,31 @@ export const FIRMS_M: FirmM[] = [
           '150K': { target: '$9,000', maxLoss: '$4,500', minDay: '$250', cap: '$3,000', minPayout: '$250', contracts: '15 口 / 50 微' },
         },
       },
+      {
+        id: 'live',
+        name: 'Funded Live（真倉）',
+        sub: '真錢 · 分潤升到 90%',
+        dd: 'EOD',
+        split: '90/10',
+        toLive: 'Fast Pass 第 5 次出金申請即轉；Quick Pay 毛利到 $10,000 審查後轉',
+        tasks: [
+          '帳戶從 $0 開始，賺到的都是利潤',
+          '分潤從 80% 升到 {split}——真倉才是 TradeDay 最甜的地方',
+          '一樣沒有日風控，只有一條最大回撤',
+        ],
+        redlines: [
+          'EOD 回撤 {maxLoss}（沿用你原本考試層級）',
+          '⚠️ 爆掉真倉 → 強制冷卻 3 個月，這段期間不能參加任何考試',
+          '不能在價格限制 2% 範圍內交易',
+          '真倉部位上限被砍到 {contracts}，要調升得看官方臉色',
+        ],
+        tip: '⚠️ 三個月冷卻是全站最重的處罰——其他家爆真倉大多 2 週（Lucid）或直接再買（Tradeify）。冷卻結束要寄信到 FundedTrader@TradeDay.com 申請。最多同時 5 個真倉。另外真倉還有「滑價風險管理」政策會降你的部位上限。',
+        sizes: {
+          '50K': { maxLoss: '$2,000', dll: '無', cap: '無上限', contracts: '2 口' },
+          '100K': { maxLoss: '$3,000', dll: '無', cap: '無上限', contracts: '3 口' },
+          '150K': { maxLoss: '$4,500', dll: '無', cap: '無上限', contracts: '4 口' },
+        },
+      },
     ],
   },
 
@@ -316,6 +412,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'xfa-std',
         name: 'Express 標準路徑',
+        toLive: '沒有次數要求。官方明講「不需要 5 次出金」，全看風控團隊綜合評估',
         sub: '5 個獲利日 · 老牌路線',
         dd: 'EOD',
         split: '90/10',
@@ -338,6 +435,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'xfa-cons',
         name: 'Express 一致性路徑',
+        toLive: '沒有次數要求。官方明講「不需要 5 次出金」，全看風控團隊綜合評估',
         sub: '只要 3 天 · 出金上限更高',
         dd: 'EOD',
         split: '90/10',
@@ -358,6 +456,32 @@ export const FIRMS_M: FirmM[] = [
           '150K': { target: '$9,000', maxLoss: '$4,500', cap: '$6,000（加 DLL 變 $12,000）', minPayout: '$125', contracts: '15 口 / 150 微' },
         },
       },
+      {
+        id: 'live',
+        name: 'Live Funded（真倉）',
+        sub: '真錢 · 出金無上限',
+        dd: 'EOD',
+        split: '90/10',
+        toLive: '沒有次數要求。官方明講「不需要 5 次出金」，全看風控團隊綜合評估',
+        tasks: [
+          '出金完全沒有上限——這是 Topstep 真倉最大的賣點',
+          '打滿 30 個獲利日 → 每天都能領，最高可領 100% 利潤',
+          '起始餘額 = 你 Express 帳戶累計餘額的 20%，最低保證 $10,000',
+          '每達一次獲利目標 {goal} → 解鎖 25% 準備金',
+        ],
+        redlines: [
+          '日風控 {maxLoss}（真倉強制有，不像 Express 是選配）',
+          '⚠️ 餘額掉到 $1,000 以下 → 當日直接清算關戶，沒解鎖的準備金全部沒收',
+          '⚠️ 被 Call Down（Shoulder Tap）降回模擬帳號時，官方明講「不會事先警告」',
+          '轉真倉時，所有 Express 帳戶會全部關閉',
+        ],
+        tip: '真倉帳號大小 = 所有「有出過金」的 Express 帳戶平均，進位到 50K／100K／150K。例：四個 50K + 一個 150K → 平均 70K → 算你 100K。80% 的錢一開始鎖在準備金裡，要分 4 次解鎖，而且不能用一筆大單一次解鎖多層——每層都要「距上次解鎖後的新淨利」。每週一審核。',
+        sizes: {
+          '50K': { maxLoss: '$2,000', dll: '$2,000', goal: '$3,000', cap: '無上限', contracts: '依 Live 風險動態調整' },
+          '100K': { maxLoss: '$3,000', dll: '$3,000', goal: '$6,000', cap: '無上限', contracts: '依 Live 風險動態調整' },
+          '150K': { maxLoss: '$4,500', dll: '$4,500', goal: '$9,000', cap: '無上限', contracts: '依 Live 風險動態調整' },
+        },
+      },
     ],
   },
 
@@ -370,6 +494,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'pa-eod',
         name: 'PA（EOD 回撤）',
+        toLive: '領滿 6 次 → PA 關閉，要再考一次才有新 PA（Apex Live 為另外的邀請制）',
         sub: '回撤收盤才重算 · 但考試有日風控',
         dd: 'EOD',
         split: '100%',
@@ -398,6 +523,7 @@ export const FIRMS_M: FirmM[] = [
       {
         id: 'pa-ind',
         name: 'PA（Intraday 回撤）',
+        toLive: '領滿 6 次 → PA 關閉，要再考一次才有新 PA（Apex Live 為另外的邀請制）',
         sub: '回撤跟著浮盈即時跑 · 考試無日風控',
         dd: 'Intraday',
         split: '100%',
@@ -423,6 +549,29 @@ export const FIRMS_M: FirmM[] = [
           '150K': { target: '$9,000', maxLoss: '$4,000', dll: '無', goal: '$154,600（安全網 $154,100 ＋ 最低出金 $500）', minPayout: '$500', minDay: '$300', cap: '首次 $2,500，六階最高 $5,000', contracts: '考試 12 口／PA 10 口' },
         },
       },
+      {
+        id: 'live',
+        name: 'Apex Live（真倉）',
+        sub: '真錢 · 邀請制',
+        dd: 'EOD',
+        split: '待核對官方',
+        toLive: 'PA 領滿 6 次會關閉，Apex Live 是另外的邀請制方案',
+        unverified: true,
+        tasks: [
+          '⚠️ 本方案尚未核對官方原文——Apex 官網的說明頁對自動查詢有存取限制',
+          '請直接以官網 Apex Live 說明為準，不要依賴本頁',
+        ],
+        redlines: [
+          '⚠️ 這裡先不寫規則，避免給你錯的數字',
+        ],
+        tip: '其他四家的真倉規則都已逐條核對官方；Apex Live 這頁我們還沒拿到官方原文，寧可留白也不猜。拿到後會補上並移除本提示。',
+        sizes: {
+          '25K': { maxLoss: '待核對', cap: '待核對' },
+          '50K': { maxLoss: '待核對', cap: '待核對' },
+          '100K': { maxLoss: '待核對', cap: '待核對' },
+          '150K': { maxLoss: '待核對', cap: '待核對' },
+        },
+      },
     ],
   },
 ];
@@ -446,8 +595,10 @@ export const sizesOf = (firmId: string, planId: string): SizeKey[] => {
 };
 
 /** 把 {goal} {minDay} {cap} 等換成該規模的實際數字 */
-export function fill(text: string, s: Spec): string {
+export function fill(text: string, s: Spec, plan?: Plan): string {
   return text
+    .replace(/\{split\}/g, plan?.split ?? '—')
+    .replace(/\{contracts\}/g, s.contracts ?? '—')
     .replace(/\{goal\}/g, s.goal ?? '—')
     .replace(/\{minDay\}/g, s.minDay ?? '—')
     .replace(/\{cap\}/g, s.cap)

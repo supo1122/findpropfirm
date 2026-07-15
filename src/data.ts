@@ -1,5 +1,14 @@
 // ===== PropFirmTW 資料層（繁體中文，2026/07 核對）=====
 
+function todayTW(): string {
+  return new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+}
+
+/** LucidPro 日風控免除活動的最後一天（含當天）。過了就自動切回常規規則。 */
+export const LUCID_DLL_WAIVER_UNTIL = '2026-07-24';
+export const lucidDllWaived = (): boolean => todayTW() <= LUCID_DLL_WAIVER_UNTIL;
+
+
 export type Block =
   | { kind: 'callout'; tone: 'new' | 'warn'; title: string; body: string }
   | { kind: 'para'; text: string }
@@ -46,7 +55,9 @@ export const FIRMS: Firm[] = [
       { label: '出金門檻', value: '5 獲利日' },
     ],
     blocks: [
-      { kind: 'callout', tone: 'new', title: '🔥 限時：LucidPro 日風控免除中（到 2026/7/24）', body: '常規規則 LucidPro 有日風控（50K $1,200／100K $1,800／150K $2,700；25K 無），但目前活動期間暫時免除至 2026/7/24，之後恢復。Lucid 所有 DLL 皆為軟違規：碰到只當日禁交易，不會直接失去帳號（除非碰到最大虧損 MLL）。' },
+      lucidDllWaived()
+        ? { kind: 'callout' as const, tone: 'new' as const, title: '🔥 限時：LucidPro 日風控免除中（到 2026/7/24）', body: '常規規則 LucidPro 有日風控（50K $1,200／100K $1,800／150K $2,700；25K 無），活動期間暫時免除，7/24 過後自動恢復。Lucid 所有 DLL 皆為軟違規：碰到只當日禁交易，不會直接失去帳號（除非碰到最大虧損 MLL）。' }
+        : { kind: 'callout' as const, tone: 'warn' as const, title: 'LucidPro 日風控（常規已恢復）', body: 'LucidPro 有固定日風控：50K $1,200／100K $1,800／150K $2,700（25K 無）。餘額收在緩衝之上後改用 LucidScale：最高 EOD 利潤 × 60%，只升不降。所有 DLL 皆為軟違規：碰到只當日禁交易，不會直接失去帳號（除非碰到最大虧損 MLL）。' },
       { kind: 'h3', text: 'LucidFlex 考試（一致性 50%）' },
       { kind: 'table', head: ['規模', '獲利目標', '總風控 EOD', '口數上限'], rows: [
         ['25K', '$1,250', '$1,000', '2 Mini / 20 Micro'],
@@ -61,7 +72,7 @@ export const FIRMS: Firm[] = [
       ] },
       { kind: 'h3', text: 'LucidPro / Direct' },
       { kind: 'list', items: [
-        'Pro：常規有固定 DLL（50K $1,200／100K $1,800／150K $2,700；25K 無）——目前活動免除至 2026/7/24。出金 40% 一致性＋緩衝區（緩衝＝總風控＋$100）。40% 僅適用 2025/11/28 後購買/重置，之前為 35%；Live 後無一致性。',
+        `Pro：固定 DLL 50K $1,200／100K $1,800／150K $2,700（25K 無）${lucidDllWaived() ? '——目前活動免除至 2026/7/24' : '（活動已結束，已恢復）'}。出金 40% 一致性＋緩衝區（緩衝＝總風控＋$100）。40% 僅適用 2025/11/28 後購買/重置，之前為 35%；Live 後無一致性。`,
         'Direct：免考試直接出金，一致性最嚴 20%。',
         '每週期最低獲利目標：25K→$250／50K→$500／100K→$750／150K→$1,000。',
       ] },
@@ -343,9 +354,6 @@ export const OFFERS: Offer[] = [
 ];
 
 /** 台灣時間今天（YYYY-MM-DD） */
-function todayTW(): string {
-  return new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
-}
 /** 還有幾天到期；未設 until 回傳 null（常駐優惠） */
 export function daysLeft(until?: string): number | null {
   if (!until) return null;

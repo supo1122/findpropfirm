@@ -113,3 +113,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--dim);font-siz
 .plan-sub{font-family:'Barlow';font-weight:400;font-size:13.5px;color:var(--dim)}
 .plan-tag{font-family:'Barlow';font-size:12px;font-weight:400;color:var(--soft);
   background:rgba(255,255,255,.06);border-radius:6px;padding:3px 8px}
+
+.mission-live{margin-top:16px;border-radius:12px;padding:13px 14px;font-size:14px;line-height:1.7;
+  background:rgba(91,157,244,.09);border:1px solid rgba(91,157,244,.28);color:var(--text)}
+.mission-live b{color:#5B9DF4;margin-right:8px}
+.mission-live .target-num{font-size:16px;color:#5B9DF4}

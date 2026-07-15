@@ -41,8 +41,8 @@ function planBlock(firm, plan) {
     return `<tr><td><b>${esc(sz)}</b></td>${tds}</tr>`;
   }).join('\n      ');
 
-  const tasks = plan.tasks.map((t) => `<li>${num(fill(t, ref), 'pay')}</li>`).join('\n        ');
-  const lines = plan.redlines.map((t) => `<li>${num(fill(t, ref), 'risk')}</li>`).join('\n        ');
+  const tasks = plan.tasks.map((t) => `<li>${num(fill(t, ref, plan), 'pay')}</li>`).join('\n        ');
+  const lines = plan.redlines.map((t) => `<li>${num(fill(t, ref, plan), 'risk')}</li>`).join('\n        ');
 
   return `
   <h3 class="plan-h">${esc(plan.name)} <span class="plan-sub">${esc(plan.sub)}</span>
@@ -65,7 +65,8 @@ function planBlock(firm, plan) {
       <div class="mission-col line"><h4>🚫 不能碰的線</h4><ul>
         ${lines}
       </ul></div>
-    </div>${plan.tip ? `
+    </div>${plan.toLive ? `
+    <div class="mission-live"><b>🎬 轉真倉</b>${num(esc(plan.toLive), 'pay')}</div>` : ''}${plan.tip ? `
     <div class="mission-tip">${num(plan.tip, 'pay')}</div>` : ''}
   </div></div>
 `;

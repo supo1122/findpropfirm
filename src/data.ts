@@ -272,11 +272,32 @@ export const PRICES: Price[] = [
   },
 ];
 
-export const OFFERS = [
+// 優惠：until = 截止日（YYYY-MM-DD，台灣時間當日 23:59 為止）。過期會自動下架，不用手動刪。
+export type Offer = {
+  firm: string; old: string; now: string; note: string; deadline: string;
+  code: string; link: string; until?: string;
+};
+export const OFFERS: Offer[] = [
   { firm: 'Lucid — LucidFlex 50K', old: '原價 $109', now: '首購 $70', note: '一次性付費 · 無日風控 · 終身擁有', deadline: '折扣碼 PFTW · Flex 約 7 折', code: 'PFTW', link: 'firms/lucid' },
-  { firm: 'Lucid — LucidPro', old: '', now: '6 折', note: '7/5 起考試與出金皆無日風控', deadline: '台灣時間 7/25 11:59 截止', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidPro', old: '', now: '6 折', note: '日風控免除中（活動至 7/24），之後恢復', deadline: '台灣時間 7/25 11:59 截止', code: 'PFTW', link: 'firms/lucid', until: '2026-07-25' },
   { firm: 'Apex — 付啟動費版', old: '', now: '日內啟動費 $59', note: '限時 · 考試 $24.9 起（限 1 個月內考完）', deadline: '限時優惠 · 以官網為準', code: '', link: 'firms/apex' },
 ];
+
+/** 台灣時間今天（YYYY-MM-DD） */
+function todayTW(): string {
+  return new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+}
+/** 還有幾天到期；未設 until 回傳 null（常駐優惠） */
+export function daysLeft(until?: string): number | null {
+  if (!until) return null;
+  const a = new Date(todayTW() + 'T00:00:00Z').getTime();
+  const b = new Date(until + 'T00:00:00Z').getTime();
+  return Math.round((b - a) / 86400e3);
+}
+/** 只回傳還沒過期的優惠（過期自動下架） */
+export function activeOffers(): Offer[] {
+  return OFFERS.filter((o) => !o.until || o.until >= todayTW());
+}
 
 export const NOTES = [
   { tag: '折扣', html: '🔥 Lucid Pro 6 折碼 <b>PFTW</b>，台灣時間 7/25 11:59 截止' },

@@ -80,10 +80,13 @@ async function main() {
   }
 
   // 常駐置頂：Lucid 首購優惠（Lucid 很少發 X，但這是主力分潤，永遠顯示）
+  // 常駐置頂；until = 截止日（台灣時間），過期自動下架
+  const todayTW = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
   const PINNED = [
     { tag: '折扣', html: '<b>Lucid</b>：🔥 首購 $70！折扣碼 <b>PFTW</b>，一次性付費、終身擁有 <a href="https://lucidtrading.com/ref/pftw" target="_blank" rel="noopener">前往購買↗</a>' },
-    { tag: '規則更新', html: '⏳ <b>Lucid Pro 日風控免除中</b>，活動到 <b>2026/7/24</b>，之後恢復 <a href="/rules/lucid.html">看規則↗</a>' },
-  ];
+    { tag: '規則更新', until: '2026-07-24', html: '⏳ <b>Lucid Pro 日風控免除中</b>，活動到 <b>2026/7/24</b>，之後恢復 <a href="/rules/lucid.html">看規則↗</a>' },
+  ].filter((p) => !p.until || p.until >= todayTW)
+   .map(({ tag, html }) => ({ tag, html }));
   const finalItems = [...PINNED, ...items].slice(0, 8);
 
   writeFileSync('public/news.json', JSON.stringify({

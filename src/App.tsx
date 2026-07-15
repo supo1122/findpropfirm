@@ -6,7 +6,7 @@ import NotificationBell from './components/NotificationBell';
 import Discord from './components/Discord';
 import FirmAnim from './components/FirmAnim';
 import { ArrowUpRight } from './components/icons';
-import { FIRMS, OFFERS, PRICES, QUIZ, recommend } from './data';
+import { FIRMS, activeOffers, daysLeft, PRICES, QUIZ, recommend } from './data';
 import { copyCode } from './lib/confetti';
 
 // 規則頁在新視窗開啟（避免 Modal 卡住）
@@ -63,6 +63,7 @@ export default function App() {
   // 展示排序（編輯精選；星等維持真實不造假）
   const ORDER = ['lucid', 'tradeday', 'tradeify', 'apex', 'topstep'];
   const ranked = useMemo(() => [...FIRMS].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id)), []);
+  const offers = useMemo(() => activeOffers(), []); // 過期活動自動下架
   const filtered = useMemo(() => FIRMS.filter((f) => {
     if (filter.risk && !f.risk.includes(filter.risk)) return false;
     if (filter.pay && f.pay !== filter.pay) return false;
@@ -200,7 +201,9 @@ export default function App() {
         <section id="offers" className="relative px-6 md:px-12 py-24 max-w-5xl mx-auto">
           <SecHead tag="// 本月優惠" title="當期有效折扣" sub="只列真實、未過期的活動。以官網結帳金額為準。" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {OFFERS.map((o, i) => (
+            {offers.map((o, i) => {
+              const d = daysLeft(o.until);
+              return (
               <motion.div key={i} className="liquid-glass rounded-2xl p-6"
                 initial={rise.initial} whileInView={rise.whileInView} viewport={vp} transition={{ duration: 0.6, delay: i * 0.1 }}>
                 <h4 className="font-heading text-xl">{o.firm}</h4>
@@ -210,6 +213,11 @@ export default function App() {
                 </div>
                 <p className="text-white/60 text-sm font-body">{o.note}</p>
                 <p className="text-[#F5A524] font-body text-xs mt-2">⏳ {o.deadline}</p>
+                {d !== null && (
+                  <p className="font-heading text-sm mt-1" style={{ color: d <= 3 ? '#F45B5B' : '#F5A524' }}>
+                    {d > 0 ? `剩 ${d} 天` : '今天最後一天'}
+                  </p>
+                )}
                 <div className="mt-4 flex items-center gap-2 flex-wrap">
                   {o.code && <Code code={o.code} onToast={showToast} />}
                   <button onClick={() => buy(FIRMS.find((f) => o.link.endsWith(f.id))?.link || '#')}
@@ -217,7 +225,8 @@ export default function App() {
                   <span className="font-body text-[10.5px] text-white/40">推薦連結</span>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </section>
 

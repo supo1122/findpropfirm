@@ -84,6 +84,7 @@ export const FIRMS: Firm[] = [
     risk: ['eod', 'intraday'],
     pay: 'once',
     dll: 'no',
+    code: 'JULY',
     link: 'https://tradeify.co/',
     anim: '/anim/tradeify.html',
     metrics: [
@@ -126,6 +127,7 @@ export const FIRMS: Firm[] = [
     risk: ['eod', 'intraday'],
     pay: 'monthly',
     dll: 'no',
+    code: 'TDNEW',
     link: 'https://www.tradeday.com/',
     anim: '/anim/tradeday.html',
     metrics: [
@@ -166,7 +168,7 @@ export const FIRMS: Firm[] = [
     rating: 4.5,
     type: 'futures',
     tags: ['獲利潛力最高', 'EOD／Intraday', '複製 20 帳'],
-    summary: '考試費常有 1–2 折，但過關需付啟動費（付啟動費版：日內 $59／EOD $119），總成本要含啟動費；限 1 個月內考完。可開 20 帳複製下單，2026/03 大改革取消 MAE、改自動出金。',
+    summary: '考試常有大幅折扣（目前折扣碼 SAVENOW，$199→$19.90），但過關需付啟動費（日內 $59／EOD $119），總成本要含啟動費；考試 30 天內要考完、無重置。可開 20 帳複製下單，2026/03 大改革取消 MAE、改自動出金。',
     risk: ['eod', 'intraday'],
     pay: 'once',
     dll: 'no',
@@ -244,23 +246,23 @@ export type Price = {
 export const PRICES: Price[] = [
   {
     id: 'lucid', name: 'Lucid Trading', logo: '/logos/lucid.png', model: '一次性 · 無月費',
-    evalFee: '50K 定價約 $175', activation: '無啟動費',
-    total: '首購 $70', code: 'PFTW', link: 'https://lucidtrading.com/ref/pftw',
+    evalFee: '定價 Flex 25K $100／50K $140；Pro 25K $135／50K $185', activation: '無啟動費',
+    total: '折後 Flex 25K $70／50K $98；Pro 25K $81／50K $111', code: 'PFTW', link: 'https://lucidtrading.com/ref/pftw',
   },
   {
     id: 'tradeify', name: 'Tradeify', logo: '/logos/tradeify.png', model: '一次性 · 免啟動費',
-    evalFee: '50K Select 定價約 $165', activation: '無啟動費',
-    total: '$87 起（Select $99）', code: '', link: 'https://tradeify.co/',
+    evalFee: '定價 Growth 25K $99／50K $145；Select 25K $109／50K $165；Lightning 50K $492', activation: '無啟動費',
+    total: '折扣碼 JULY 打 6 折：Growth 50K $87／Select 50K $99／25K $60 起', code: 'JULY', link: 'https://tradeify.co/',
   },
   {
     id: 'tradeday', name: 'TradeDay', logo: '/logos/tradeday.png', model: '月費 · 三方案',
-    evalFee: 'Quick 50K $62.5(IND)/$87.5(EOD) · Fast $90', activation: '無啟動費（$0）',
-    total: '50% OFF', code: '', link: 'https://www.tradeday.com/',
+    evalFee: '原價 Quick 50K $125(IND)／$175(EOD)、Fast $180 → 5 折後 $62.50／$87.50／$90', activation: '無啟動費（$0）',
+    total: '折扣碼 TDNEW 打 5 折 · 50K $62.50/月起', code: 'TDNEW', link: 'https://www.tradeday.com/',
   },
   {
     id: 'apex', name: 'Apex（付啟動費版）', logo: '/logos/apex.png', model: '限 1 個月內考完',
-    evalFee: '日內考試 $24.9 / EOD $49', activation: '日內啟動費 $59 / EOD $119（過關後）',
-    total: '考試 $24.9 起', code: '', link: 'https://apextraderfunding.com/',
+    evalFee: '一次性 $199（折扣碼 SAVENOW → $19.90）· 5 入 $850→$85', activation: '日內啟動費 $59 / EOD $119（過關後）',
+    total: '考試 $19.90 起', code: 'SAVENOW', link: 'https://apextraderfunding.com/',
   },
   {
     id: 'apex', name: 'Apex（免啟動費版）', logo: '/logos/apex.png', model: '限 1 個月內考完',
@@ -269,8 +271,8 @@ export const PRICES: Price[] = [
   },
   {
     id: 'topstep', name: 'Topstep', logo: '/logos/topstep.png', model: '月費 + 啟動費',
-    evalFee: '50K $49/月（標準）或 $109/月（免啟動）', activation: '標準 $149 / 免啟動 $0（過關後）',
-    total: '無折扣', code: '', link: 'https://www.topstep.com/',
+    evalFee: '標準 50K $49／100K $99／150K $199 每月；免啟動費版 50K $95／100K $149／150K $229 每月', activation: '標準 $149 / 免啟動 $0（過關後）',
+    total: '無折扣碼 · 標準版總成本要含 $149 啟動費', code: '', link: 'https://www.topstep.com/',
   },
 ];
 
@@ -280,9 +282,13 @@ export type Offer = {
   code: string; link: string; until?: string;
 };
 export const OFFERS: Offer[] = [
-  { firm: 'Lucid — LucidFlex 50K', old: '原價 $109', now: '首購 $70', note: '一次性付費 · 無日風控 · 終身擁有', deadline: '折扣碼 PFTW · Flex 約 7 折', code: 'PFTW', link: 'firms/lucid' },
-  { firm: 'Lucid — LucidPro', old: '', now: '6 折', note: '日風控免除中（活動至 7/24），之後恢復', deadline: '台灣時間 7/25 11:59 截止', code: 'PFTW', link: 'firms/lucid', until: '2026-07-25' },
-  { firm: 'Apex — 付啟動費版', old: '', now: '日內啟動費 $59', note: '限時 · 考試 $24.9 起（限 1 個月內考完）', deadline: '限時優惠 · 以官網為準', code: '', link: 'firms/apex' },
+  { firm: 'Lucid — LucidFlex 25K', old: '原價 $100', now: '$70', note: '一次性付費 · 無日風控 · 無緩衝區 · 免啟動費', deadline: '折扣碼 PFTW · 結帳時輸入 · 7 折', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidFlex 50K', old: '原價 $140', now: '$98', note: '5 獲利日出金 · 通關後無一致性 · 最多領 5 次轉真倉', deadline: '折扣碼 PFTW · 結帳時輸入 · 7 折', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidPro 50K', old: '原價 $185', now: '$111', note: '6 折 · 緩衝區 $52,100 · 出金上限比 Flex 高', deadline: '日風控免除活動至 7/24，之後恢復 $1,200', code: 'PFTW', link: 'firms/lucid', until: '2026-07-25' },
+  { firm: 'Tradeify — Select 50K', old: '原價 $165', now: '$99', note: '6 折 · 通關後選 Flex（無緩衝）或 Daily（每日領）', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
+  { firm: 'Tradeify — Growth 50K', old: '原價 $145', now: '$87', note: '6 折 · 1 天可通關 · 出金需墊到 $53,000', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
+  { firm: 'TradeDay — Quick Pay 50K', old: '原價 $125/月', now: '$62.50/月', note: '5 折 · Intraday 版 · 通關 $0 啟動費', deadline: '折扣碼 TDNEW · 結帳時輸入', code: 'TDNEW', link: 'firms/tradeday' },
+  { firm: 'Apex — 考試（一次性）', old: '原價 $199', now: '$19.90', note: '折扣碼 SAVENOW · 5 入 $85（每個 $17）· 過關另付啟動費', deadline: '考試 30 天內要考完 · 無重置 · 以官網為準', code: 'SAVENOW', link: 'firms/apex' },
 ];
 
 /** 台灣時間今天（YYYY-MM-DD） */

@@ -81,7 +81,8 @@ async function main() {
 
   // 常駐置頂：Lucid 首購優惠（Lucid 很少發 X，但這是主力分潤，永遠顯示）
   const PINNED = [
-    { tag: '折扣', html: '<b>Lucid</b>：🔥 首購 $70！折扣碼 <b>PFTW</b>，無日風控、一次性付費、終身擁有 <a href="https://lucidtrading.com/ref/pftw" target="_blank" rel="noopener">前往購買↗</a>' },
+    { tag: '折扣', html: '<b>Lucid</b>：🔥 首購 $70！折扣碼 <b>PFTW</b>，一次性付費、終身擁有 <a href="https://lucidtrading.com/ref/pftw" target="_blank" rel="noopener">前往購買↗</a>' },
+    { tag: '規則更新', html: '⏳ <b>Lucid Pro 日風控免除中</b>，活動到 <b>2026/7/24</b>，之後恢復 <a href="/rules/lucid.html">看規則↗</a>' },
   ];
   const finalItems = [...PINNED, ...items].slice(0, 8);
 

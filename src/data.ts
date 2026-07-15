@@ -30,7 +30,7 @@ export const FIRMS: Firm[] = [
     id: 'lucid',
     name: 'Lucid Trading',
     logo: '/logos/lucid.png',
-    rating: 4.8,
+    rating: 4.6,
     type: 'futures',
     tags: ['新手首選', 'EOD', '一次性付費'],
     summary: '無月費、免啟動費、EOD 回撤、可新聞交易。Flex / Pro / Direct / Maxx 多條路線，新手第一家首選之一。',
@@ -77,7 +77,7 @@ export const FIRMS: Firm[] = [
     id: 'tradeify',
     name: 'Tradeify',
     logo: '/logos/tradeify.png',
-    rating: 4.7,
+    rating: 4.6,
     type: 'futures',
     tags: ['彈性最佳', 'EOD', '一次性付費'],
     summary: 'Select / Growth / Lightning 三條路線，出金節奏最彈性。Select 通關後出金免一致性。',
@@ -165,7 +165,7 @@ export const FIRMS: Firm[] = [
     id: 'apex',
     name: 'Apex Trader Funding',
     logo: '/logos/apex.png',
-    rating: 4.5,
+    rating: 4.3,
     type: 'futures',
     tags: ['獲利潛力最高', 'EOD／Intraday', '複製 20 帳'],
     summary: '考試常有大幅折扣（目前折扣碼 SAVENOW，$199→$19.90），但過關需付啟動費（日內 $59／EOD $119），總成本要含啟動費；考試 30 天內要考完、無重置。可開 20 帳複製下單，2026/03 大改革取消 MAE、改自動出金。',
@@ -204,7 +204,7 @@ export const FIRMS: Firm[] = [
     id: 'topstep',
     name: 'Topstep',
     logo: '/logos/topstep.png',
-    rating: 4.3,
+    rating: 3.6,
     type: 'futures',
     tags: ['規則最簡單', 'EOD', '月費'],
     summary: '老牌自營商，TopstepX 內建 TradingView。規則語言最好懂，Live 帳戶免數據費。',
@@ -238,41 +238,73 @@ export const FIRMS: Firm[] = [
   },
 ];
 
-// 價格比較（以 50K 為代表；定價常有 70–90% 折扣，實際以官網結帳為準。2026/07 查證）
+// 價格比較：一律以 50K 帳號為基準，方便直接對比。2026/07 用真實瀏覽器逐家核對官方結帳頁。
 export type Price = {
-  id: string; name: string; logo: string; model: string;
-  evalFee: string; activation: string; total: string; code?: string; link: string;
+  id: string;
+  name: string;      // 公司 · 方案
+  logo: string;
+  model: '一次性' | '月費';
+  now: string;       // 50K 折後價
+  list: string;      // 50K 定價
+  activation: string;// 啟動費（'無' 或金額）
+  code?: string;     // 折扣碼（沒有就留空）
+  link: string;
+  note?: string;     // 一句話提醒
 };
 export const PRICES: Price[] = [
   {
-    id: 'lucid', name: 'Lucid Trading', logo: '/logos/lucid.png', model: '一次性 · 無月費',
-    evalFee: '定價 Flex 25K $100／50K $140；Pro 25K $135／50K $185', activation: '無啟動費',
-    total: '折後 Flex 25K $70／50K $98；Pro 25K $81／50K $111', code: 'PFTW', link: 'https://lucidtrading.com/ref/pftw',
+    id: 'lucid', name: 'Lucid · Flex', logo: '/logos/lucid.png', model: '一次性',
+    now: '$98', list: '$140', activation: '無', code: 'PFTW',
+    link: 'https://lucidtrading.com/ref/pftw',
+    note: '無日風控、無緩衝區，規則最單純',
   },
   {
-    id: 'tradeify', name: 'Tradeify', logo: '/logos/tradeify.png', model: '一次性 · 免啟動費',
-    evalFee: '定價 Growth 25K $99／50K $145；Select 25K $109／50K $165；Lightning 50K $492', activation: '無啟動費',
-    total: '折扣碼 JULY 打 6 折：Growth 50K $87／Select 50K $99／25K $60 起', code: 'JULY', link: 'https://tradeify.co/',
+    id: 'lucid', name: 'Lucid · Pro', logo: '/logos/lucid.png', model: '一次性',
+    now: '$111', list: '$185', activation: '無', code: 'PFTW',
+    link: 'https://lucidtrading.com/ref/pftw',
+    note: '出金上限比 Flex 高，但要打過緩衝 $52,100',
   },
   {
-    id: 'tradeday', name: 'TradeDay', logo: '/logos/tradeday.png', model: '月費 · 三方案',
-    evalFee: '原價 Quick 50K $125(IND)／$175(EOD)、Fast $180 → 5 折後 $62.50／$87.50／$90', activation: '無啟動費（$0）',
-    total: '折扣碼 TDNEW 打 5 折 · 50K $62.50/月起', code: 'TDNEW', link: 'https://www.tradeday.com/',
+    id: 'tradeify', name: 'Tradeify · Growth', logo: '/logos/tradeify.png', model: '一次性',
+    now: '$87', list: '$145', activation: '無', code: 'JULY',
+    link: 'https://tradeify.co/',
+    note: '1 天可通關，但出金要墊到 $53,000',
   },
   {
-    id: 'apex', name: 'Apex（付啟動費版）', logo: '/logos/apex.png', model: '限 1 個月內考完',
-    evalFee: '一次性 $199（折扣碼 SAVENOW → $19.90）· 5 入 $850→$85', activation: '日內啟動費 $59 / EOD $119（過關後）',
-    total: '考試 $19.90 起', code: 'SAVENOW', link: 'https://apextraderfunding.com/',
+    id: 'tradeify', name: 'Tradeify · Select', logo: '/logos/tradeify.png', model: '一次性',
+    now: '$99', list: '$165', activation: '無', code: 'JULY',
+    link: 'https://tradeify.co/',
+    note: '通關後可選 Flex（無緩衝）或 Daily（每日領）',
   },
   {
-    id: 'apex', name: 'Apex（免啟動費版）', logo: '/logos/apex.png', model: '限 1 個月內考完',
-    evalFee: '日內考試 $79 / EOD $109', activation: '無啟動費（$0）',
-    total: '啟動費 $0', code: '', link: 'https://apextraderfunding.com/',
+    id: 'tradeday', name: 'TradeDay · Quick Pay', logo: '/logos/tradeday.png', model: '月費',
+    now: '$62／月', list: '$125／月', activation: '無', code: 'TDNEW',
+    link: 'https://www.tradeday.com/',
+    note: 'Intraday 版。分潤有 $4,000 分界，小額只分 50%',
   },
   {
-    id: 'topstep', name: 'Topstep', logo: '/logos/topstep.png', model: '月費 + 啟動費',
-    evalFee: '標準 50K $49／100K $99／150K $199 每月；免啟動費版 50K $95／100K $149／150K $229 每月', activation: '標準 $149 / 免啟動 $0（過關後）',
-    total: '無折扣碼 · 標準版總成本要含 $149 啟動費', code: '', link: 'https://www.topstep.com/',
+    id: 'tradeday', name: 'TradeDay · Fast Pass', logo: '/logos/tradeday.png', model: '月費',
+    now: '$90／月', list: '$180／月', activation: '無', code: 'TDNEW',
+    link: 'https://www.tradeday.com/',
+    note: '分潤一律 80%，小額出金比 Quick Pay 划算',
+  },
+  {
+    id: 'apex', name: 'Apex · Intraday', logo: '/logos/apex.png', model: '一次性',
+    now: '$24.90', list: '$249', activation: '$59', code: 'SAVENOW',
+    link: 'https://apextraderfunding.com/',
+    note: '考試最便宜，但過關要付 $59 啟動費；30 天內要考完、無重置',
+  },
+  {
+    id: 'topstep', name: 'Topstep · 標準', logo: '/logos/topstep.png', model: '月費',
+    now: '$49／月', list: '$49／月', activation: '$149', code: '',
+    link: 'https://www.topstep.com/',
+    note: '月費最低，但每拿到一個出金帳號要付一次 $149',
+  },
+  {
+    id: 'topstep', name: 'Topstep · 免啟動費', logo: '/logos/topstep.png', model: '月費',
+    now: '$85／月', list: '$95／月', activation: '無', code: '',
+    link: 'https://www.topstep.com/',
+    note: '月費較高但免啟動費；久考不過會比標準版划算',
   },
 ];
 

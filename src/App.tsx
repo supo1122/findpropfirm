@@ -338,58 +338,66 @@ export default function App() {
 
         {/* ===== 價格比較 ===== */}
         <section id="prices" className="relative px-6 md:px-12 py-24 max-w-5xl mx-auto">
-          <SecHead tag="// 價格" title="價格比較（以 50K 為例）"
-            sub="Apex 過關要付啟動費，總成本不一定最低。定價常有 70–90% 折扣，實際以官網結帳為準。" />
-
-          {/* 快速購買：最重要的連結一眼可見（不用捲表格） */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            {PRICES.map((p, i) => (
-              <button key={i} onClick={() => buy(p.link)}
-                className="glass-hover rounded-2xl px-5 py-4 flex items-center gap-3 text-left"
-                style={{ background: '#0F141C', border: '1px solid rgba(53,224,138,.35)' }}>
-                <img src={p.logo} alt={p.name} className="h-9 w-9 rounded-lg bg-white p-1 object-contain" />
-                <span>
-                  <span className="block font-heading text-white leading-tight">{p.name}</span>
-                  <span className="block font-heading text-lg leading-tight" style={{ color: p.total === '無折扣' ? '#8A93A2' : '#35E08A' }}>{p.total}</span>
-                </span>
-                <span className="ml-1 rounded-full px-3 py-2 font-heading text-sm text-black whitespace-nowrap" style={BUY}>直接購買 ↗</span>
-              </button>
-            ))}
-          </div>
+          <SecHead tag="// 價格" title="50K 帳號價格比較"
+            sub="全部統一用 50K 比，含啟動費。Apex 和 Topstep 標準版過關要另付啟動費——那筆才是真正的成本。" />
 
           <div className="rounded-2xl border border-white/10 overflow-x-auto" style={{ background: '#0F141C' }}>
-            <table className="w-full text-left" style={{ minWidth: 720, borderCollapse: 'collapse' }}>
+            <table className="w-full text-left" style={{ minWidth: 760, borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: '#1B2230' }}>
-                  {['公司', '付費模式', '考試費（定價）', '啟動費', '折後總成本', '折扣碼'].map((h) => (
+                  {['公司 · 方案', '50K 價格', '啟動費', '折扣碼', ''].map((h) => (
                     <th key={h} className="px-4 py-3 font-heading text-sm text-white/80 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {PRICES.map((p, i) => (
-                  <tr key={i} style={{ background: i % 2 ? '#141A24' : '#10151D' }}>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <img src={p.logo} alt={p.name} className="h-9 w-9 rounded-lg bg-white p-1 object-contain" />
-                        <span className="font-heading">{p.name}</span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 font-body text-sm text-white/80 whitespace-nowrap">{p.model}</td>
-                    <td className="px-4 py-4 font-body text-sm text-white/80">{p.evalFee}</td>
-                    <td className="px-4 py-4 font-body text-sm" style={{ color: p.activation.includes('無') ? '#35E08A' : '#F45B5B' }}>{p.activation}</td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <span className="font-heading text-xl md:text-2xl" style={{ color: p.total === '無折扣' ? '#8A93A2' : '#35E08A' }}>{p.total}</span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      {p.code
-                        ? <Code code={p.code} onToast={showToast} />
-                        : <span className="font-body text-xs text-white/35">官網折扣</span>}
-                    </td>
-                  </tr>
-                ))}
+                {PRICES.map((p, i) => {
+                  const free = p.activation === '無';
+                  const off = p.now !== p.list;
+                  return (
+                    <tr key={i} style={{ background: i % 2 ? '#141A24' : '#10151D' }}>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-3">
+                          <img src={p.logo} alt="" className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 object-contain" />
+                          <span>
+                            <span className="block font-heading whitespace-nowrap">{p.name}</span>
+                            <span className="block font-body text-xs text-white/40">{p.model}</span>
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <span className="font-heading text-xl md:text-2xl" style={{ color: '#35E08A' }}>{p.now}</span>
+                        {off && <span className="font-body text-xs text-white/35 ml-2 line-through">{p.list}</span>}
+                      </td>
+                      <td className="px-4 py-4 font-heading text-lg whitespace-nowrap"
+                        style={{ color: free ? '#35E08A' : '#F45B5B' }}>
+                        {free ? '無' : p.activation}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        {p.code
+                          ? <Code code={p.code} onToast={showToast} />
+                          : <span className="font-body text-xs text-white/35">無需折扣碼</span>}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <button onClick={() => buy(p.link)}
+                          className="glass-hover rounded-full px-5 py-2.5 font-heading text-sm" style={BUY}>
+                          直接購買 ↗
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
+          </div>
+
+          {/* 每列一句話提醒（表格內塞不下，也不該塞） */}
+          <div className="mt-5 grid md:grid-cols-2 gap-x-8 gap-y-2">
+            {PRICES.filter((p) => p.note).map((p, i) => (
+              <div key={i} className="font-body text-sm text-white/50 leading-relaxed">
+                <b className="text-white/75">{p.name}</b>：{p.note}
+              </div>
+            ))}
           </div>
           <div className="font-body text-sm text-white/50 mt-4 space-y-1">
             <p>⏱️ <b className="text-white/70">考試時限</b>：Apex <span style={{ color: '#F45B5B' }}>限 1 個月內考完</span>；Lucid、Tradeify <span style={{ color: '#35E08A' }}>可考到過（無時限）</span>；Topstep 每月給重置點數。</p>

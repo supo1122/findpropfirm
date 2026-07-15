@@ -132,7 +132,7 @@ export const FIRMS: Firm[] = [
       { label: '通關啟動費', value: '$0' },
     ],
     blocks: [
-      { kind: 'callout', tone: 'new', title: '🆕 TradeDay 2.0', body: 'Quick Pay＝通關後先讓你快點出金（Intraday 回撤、$4,000 分潤分界）；Fast Pass＝走 5 獲利日主流路線（EOD 回撤、45% 一致性、最快 3 天通關）。' },
+      { kind: 'callout', tone: 'new', title: '🆕 TradeDay 2.0', body: 'Quick Pay＝通關後先讓你快點出金（Intraday 回撤、$4,000 分潤分界）；Fast Pass＝走 5 獲利日主流路線（EOD 回撤、45% 一致性、官方無最低交易天數）。' },
       { kind: 'h3', text: 'Quick Pay（考試 30% 一致性 · 5 天；折後月費）' },
       { kind: 'table', head: ['規模', 'Intraday/月', 'EOD/月', '獲利目標', '最大回撤'], rows: [
         ['50K', '$62.50', '$87.50', '$3,000', '$2,000'],
@@ -144,7 +144,7 @@ export const FIRMS: Firm[] = [
         '分潤：$4,000 以下 50%、超過 $4,000 的部分 80%。',
         '每個 funded 帳號賺到 $10,000 gross profit 進 Live 審查（超過部分會被移除，記得收手）。',
       ] },
-      { kind: 'h3', text: 'Fast Pass（考試 45% 一致性 · 3 天）' },
+      { kind: 'h3', text: 'Fast Pass（考試 45% 一致性 · 無最低交易天數）' },
       { kind: 'table', head: ['規模', '折扣價/月', '獲利目標', '單次出金上限'], rows: [
         ['50K', '約 $90', '$3,000', '$2,000'],
         ['100K', '約 $160', '$6,000', '$2,500'],

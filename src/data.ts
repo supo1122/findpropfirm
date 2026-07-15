@@ -113,7 +113,7 @@ export const FIRMS: Firm[] = [
         '⚠️ 利潤目標 ≠ 能領的錢：50K 達標 $3,000，但單次上限只有 $2,000。無最低交易天數。',
         '最大回撤（EOD）：25K $1,000／50K $2,000／100K $4,000／150K $5,250。',
       ] },
-      { kind: 'callout', tone: 'warn', title: '平倉時間', body: '2026/7/13 起所有持倉須在美東 4:45 PM 前平倉（比原本早 14 分鐘）。' },
+      { kind: 'callout', tone: 'warn', title: '平倉時間 4:45 PM ET', body: '所有持倉必須在美東時間 4:45 PM 前平倉（5:00 PM 收盤、5:00–6:00 PM 維護）。適用「所有」帳號類型，含 Live。不能留倉過夜、不能波段。Tradeify 的一個交易日是美東 6:00 PM 到隔天 5:00 PM。' },
     ],
   },
   {
@@ -238,73 +238,92 @@ export const FIRMS: Firm[] = [
   },
 ];
 
-// 價格比較：一律以 50K 帳號為基準，方便直接對比。2026/07 用真實瀏覽器逐家核對官方結帳頁。
+// 價格比較：一律以 50K 帳號為基準。2026/07 用真實瀏覽器逐家點過官方結帳頁核對。
 export type Price = {
   id: string;
-  name: string;      // 公司 · 方案
+  name: string;       // 公司 · 方案
   logo: string;
   model: '一次性' | '月費';
-  now: string;       // 50K 折後價
-  list: string;      // 50K 定價
-  activation: string;// 啟動費（'無' 或金額）
-  code?: string;     // 折扣碼（沒有就留空）
+  now: string;        // 50K 折後考試費
+  list: string;       // 50K 定價
+  activation: string; // 啟動費（'無' 或金額）
+  total: string;      // 拿到出金帳號的總成本
+  code?: string;
   link: string;
-  note?: string;     // 一句話提醒
+  note?: string;
 };
 export const PRICES: Price[] = [
   {
     id: 'lucid', name: 'Lucid · Flex', logo: '/logos/lucid.png', model: '一次性',
-    now: '$98', list: '$140', activation: '無', code: 'PFTW',
+    now: '$98', list: '$140', activation: '無', total: '$98', code: 'PFTW',
     link: 'https://lucidtrading.com/ref/pftw',
-    note: '無日風控、無緩衝區，規則最單純',
+    note: '無日風控、無緩衝區，規則最單純。考不過可以一直考（無時限）',
   },
   {
     id: 'lucid', name: 'Lucid · Pro', logo: '/logos/lucid.png', model: '一次性',
-    now: '$111', list: '$185', activation: '無', code: 'PFTW',
+    now: '$111', list: '$185', activation: '無', total: '$111', code: 'PFTW',
     link: 'https://lucidtrading.com/ref/pftw',
-    note: '出金上限比 Flex 高，但要打過緩衝 $52,100',
+    note: '出金上限比 Flex 高，但要打過緩衝 $52,100 才領得到',
   },
   {
     id: 'tradeify', name: 'Tradeify · Growth', logo: '/logos/tradeify.png', model: '一次性',
-    now: '$87', list: '$145', activation: '無', code: 'JULY',
+    now: '$87', list: '$145', activation: '無', total: '$87', code: 'JULY',
     link: 'https://tradeify.co/',
     note: '1 天可通關，但出金要墊到 $53,000',
   },
   {
     id: 'tradeify', name: 'Tradeify · Select', logo: '/logos/tradeify.png', model: '一次性',
-    now: '$99', list: '$165', activation: '無', code: 'JULY',
+    now: '$99', list: '$165', activation: '無', total: '$99', code: 'JULY',
     link: 'https://tradeify.co/',
-    note: '通關後可選 Flex（無緩衝）或 Daily（每日領）',
+    note: '通關後可選 Flex（無緩衝）或 Daily（每日領），選了不能改',
+  },
+  {
+    id: 'apex', name: 'Apex · 日內追 · 標準', logo: '/logos/apex.png', model: '一次性',
+    now: '$24.90', list: '$249', activation: '$59', total: '$83.90', code: 'SAVENOW',
+    link: 'https://apextraderfunding.com/',
+    note: '考試費全場最低——沒考過只賠 $24.90，但考過要補 $59',
+  },
+  {
+    id: 'apex', name: 'Apex · 日內追 · 免啟動', logo: '/logos/apex.png', model: '一次性',
+    now: '$79', list: '$790', activation: '無', total: '$79', code: 'SAVENOW',
+    link: 'https://apextraderfunding.com/',
+    note: '確定會考過的話，總成本比標準版還低 $4.90',
+  },
+  {
+    id: 'apex', name: 'Apex · EOD 追尾 · 標準', logo: '/logos/apex.png', model: '一次性',
+    now: '$49', list: '$490', activation: '$119', total: '$168', code: 'SAVENOW',
+    link: 'https://apextraderfunding.com/',
+    note: 'EOD 版盤中不怕浮盈推門檻，但啟動費 $119 讓總成本翻倍',
+  },
+  {
+    id: 'apex', name: 'Apex · EOD 追尾 · 免啟動', logo: '/logos/apex.png', model: '一次性',
+    now: '$109', list: '$1,090', activation: '無', total: '$109', code: 'SAVENOW',
+    link: 'https://apextraderfunding.com/',
+    note: '想要 EOD 就選這個——比 EOD 標準版總共省 $59',
   },
   {
     id: 'tradeday', name: 'TradeDay · Quick Pay', logo: '/logos/tradeday.png', model: '月費',
-    now: '$62／月', list: '$125／月', activation: '無', code: 'TDNEW',
+    now: '$62／月', list: '$125／月', activation: '無', total: '首月 $62', code: 'TDNEW',
     link: 'https://www.tradeday.com/',
-    note: 'Intraday 版。分潤有 $4,000 分界，小額只分 50%',
+    note: 'Intraday 版。分潤有 $4,000 分界，利潤不到 $4,000 只分 50%',
   },
   {
     id: 'tradeday', name: 'TradeDay · Fast Pass', logo: '/logos/tradeday.png', model: '月費',
-    now: '$90／月', list: '$180／月', activation: '無', code: 'TDNEW',
+    now: '$90／月', list: '$180／月', activation: '無', total: '首月 $90', code: 'TDNEW',
     link: 'https://www.tradeday.com/',
     note: '分潤一律 80%，小額出金比 Quick Pay 划算',
   },
   {
-    id: 'apex', name: 'Apex · Intraday', logo: '/logos/apex.png', model: '一次性',
-    now: '$24.90', list: '$249', activation: '$59', code: 'SAVENOW',
-    link: 'https://apextraderfunding.com/',
-    note: '考試最便宜，但過關要付 $59 啟動費；30 天內要考完、無重置',
-  },
-  {
     id: 'topstep', name: 'Topstep · 標準', logo: '/logos/topstep.png', model: '月費',
-    now: '$49／月', list: '$49／月', activation: '$149', code: '',
+    now: '$49／月', list: '$49／月', activation: '$149', total: '$198（首月＋啟動）', code: '',
     link: 'https://www.topstep.com/',
-    note: '月費最低，但每拿到一個出金帳號要付一次 $149',
+    note: '月費最低，但每拿到一個出金帳號就要付一次 $149',
   },
   {
     id: 'topstep', name: 'Topstep · 免啟動費', logo: '/logos/topstep.png', model: '月費',
-    now: '$85／月', list: '$95／月', activation: '無', code: '',
+    now: '$85／月', list: '$95／月', activation: '無', total: '首月 $85', code: '',
     link: 'https://www.topstep.com/',
-    note: '月費較高但免啟動費；久考不過會比標準版划算',
+    note: '月費較高但免啟動費；一個月內考過就比標準版划算',
   },
 ];
 

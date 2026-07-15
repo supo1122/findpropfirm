@@ -160,7 +160,7 @@ export const FIRMS_M: FirmM[] = [
         dd: 'EOD',
         split: '90/10',
         tasks: [
-          '利潤要先超過緩衝 {goal}（緩衝內的錢不能領）',
+          '先把利潤打過緩衝 {goal}——緩衝內的錢不能領',
           '之後每天都能申請',
           '單次可領「上次出金後利潤 × 2」，最高 {cap}',
         ],
@@ -171,10 +171,10 @@ export const FIRMS_M: FirmM[] = [
         ],
         tip: '⚠️ 緩衝算的是「利潤」不是餘額。例（50K）：賺了 $250 → 2×$250，最多領 $500；賺 $700 → 2×$700=$1,400 但上限 $1,000，只能領 $1,000。賺不到 $125 連最低 $250 都領不了。',
         sizes: {
-          '25K': { maxLoss: '$1,000', dll: '$500', goal: '利潤 $1,100（餘額 $26,100）', cap: '$600', minPayout: '$250', contracts: '起始 1 mini，最高 2 mini' },
-          '50K': { maxLoss: '$2,000', dll: '$1,000', goal: '利潤 $2,100（餘額 $52,100）', cap: '$1,000', minPayout: '$250', contracts: '起始 2 mini，最高 4 mini' },
-          '100K': { maxLoss: '$2,500', dll: '$1,250', goal: '利潤 $2,600（餘額 $102,600）', cap: '$1,500', minPayout: '$250', contracts: '起始 3 mini，最高 8 mini' },
-          '150K': { maxLoss: '$3,500', dll: '$1,750', goal: '利潤 $3,600（餘額 $153,600）', cap: '$2,500', minPayout: '$250', contracts: '起始 3 mini，最高 12 mini' },
+          '25K': { maxLoss: '$1,000', dll: '$500', goal: '$1,100（餘額要到 $26,100）', cap: '$600', minPayout: '$250', contracts: '起始 1 mini，最高 2 mini' },
+          '50K': { maxLoss: '$2,000', dll: '$1,000', goal: '$2,100（餘額要到 $52,100）', cap: '$1,000', minPayout: '$250', contracts: '起始 2 mini，最高 4 mini' },
+          '100K': { maxLoss: '$2,500', dll: '$1,250', goal: '$2,600（餘額要到 $102,600）', cap: '$1,500', minPayout: '$250', contracts: '起始 3 mini，最高 8 mini' },
+          '150K': { maxLoss: '$3,500', dll: '$1,750', goal: '$3,600（餘額要到 $153,600）', cap: '$2,500', minPayout: '$250', contracts: '起始 3 mini，最高 12 mini' },
         },
       },
       {

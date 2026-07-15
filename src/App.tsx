@@ -345,7 +345,7 @@ export default function App() {
             <table className="w-full text-left" style={{ minWidth: 760, borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ background: '#1B2230' }}>
-                  {['公司 · 方案', '50K 價格', '啟動費', '折扣碼', ''].map((h) => (
+                  {['公司 · 方案', '50K 考試費', '啟動費', '通關總成本', '折扣碼', ''].map((h) => (
                     <th key={h} className="px-4 py-3 font-heading text-sm text-white/80 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -373,6 +373,7 @@ export default function App() {
                         style={{ color: free ? '#35E08A' : '#F45B5B' }}>
                         {free ? '無' : p.activation}
                       </td>
+                      <td className="px-4 py-4 font-heading text-lg whitespace-nowrap text-white">{p.total}</td>
                       <td className="px-4 py-4 whitespace-nowrap">
                         {p.code
                           ? <Code code={p.code} onToast={showToast} />

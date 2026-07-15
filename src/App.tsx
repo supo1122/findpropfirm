@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Preloader from './components/Preloader';
 import Chrome from './components/Chrome';
@@ -7,7 +7,7 @@ import Discord from './components/Discord';
 import FirmAnim from './components/FirmAnim';
 import { ArrowUpRight } from './components/icons';
 import MissionCard from './components/MissionCard';
-import { MISSION_FIRMS, plansOf } from './missions';
+import { FIRMS_M, VERIFIED, firmOf, plansOf, sizesOf, type SizeKey } from './missions';
 import { FIRMS, activeOffers, daysLeft, PRICES, QUIZ, recommend } from './data';
 import { copyCode } from './lib/confetti';
 
@@ -68,10 +68,24 @@ export default function App() {
   const offers = useMemo(() => activeOffers(), []); // 過期活動自動下架
 
   // 快速規則選擇器：選公司 → 選方案 → 出任務卡
+  // 出金任務三層選擇器:公司 → 帳號類型 → 規模
   const [mFirm, setMFirm] = useState('lucid');
-  const [mPlan, setMPlan] = useState(0);
+  const [mPlanId, setMPlanId] = useState('flex');
+  const [mSize, setMSize] = useState<SizeKey>('50K');
   const mPlans = useMemo(() => plansOf(mFirm), [mFirm]);
-  const mission = mPlans[Math.min(mPlan, mPlans.length - 1)];
+  const mPlan = useMemo(
+    () => mPlans.find((p) => p.id === mPlanId) ?? mPlans[0],
+    [mPlans, mPlanId],
+  );
+  const mSizes = useMemo(() => sizesOf(mFirm, mPlan.id), [mFirm, mPlan]);
+
+  // 換公司時方案可能不存在;換方案時規模可能不存在 → 自動落回第一個可用值
+  useEffect(() => {
+    if (!mPlans.some((p) => p.id === mPlanId)) setMPlanId(mPlans[0].id);
+  }, [mPlans, mPlanId]);
+  useEffect(() => {
+    if (mSizes.length && !mSizes.includes(mSize)) setMSize(mSizes[0]);
+  }, [mSizes, mSize]);
   const filtered = useMemo(() => FIRMS.filter((f) => {
     if (filter.risk && !f.risk.includes(filter.risk)) return false;
     if (filter.pay && f.pay !== filter.pay) return false;
@@ -135,14 +149,14 @@ export default function App() {
 
             <motion.div {...rise} animate={rise.whileInView} transition={{ duration: 0.8, delay: 0.85 }}
               className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
-              <a href="#showcase"
+              <a href="#mission"
                 className="glass-hover w-full sm:w-auto flex-1 justify-center rounded-full px-8 py-4 flex items-center gap-2 text-lg font-heading text-black"
-                style={{ background: '#35E08A' }}>
-                看規則 <ArrowUpRight className="h-5 w-5" />
+                style={{ background: '#35E08A', boxShadow: '0 0 30px rgba(53,224,138,.45)' }}>
+                30 秒看懂出金任務 <ArrowUpRight className="h-5 w-5" />
               </a>
-              <a href="#quiz"
+              <a href="#showcase"
                 className="glass-hover w-full sm:w-auto flex-1 justify-center liquid-glass-strong rounded-full px-8 py-4 flex items-center justify-center text-lg font-heading">
-                快速選擇
+                看五家比較
               </a>
             </motion.div>
           </div>
@@ -208,17 +222,17 @@ export default function App() {
         {/* ===== 快速規則選擇器 ===== */}
         <section id="mission" className="relative px-6 md:px-12 py-24 max-w-4xl mx-auto">
           <SecHead tag="// 查規則" title="30 秒看懂你的出金任務"
-            sub="選你買的公司和帳號，直接看要打到多少錢、哪些線不能碰。" />
+            sub="選公司 → 選帳號類型 → 選規模，數字全部幫你算好，不用自己換算。" />
 
           {/* Step 1 選公司 */}
           <div className="mb-4">
             <div className="font-body text-xs text-white/40 mb-2">① 選公司</div>
             <div className="flex flex-wrap gap-2">
-              {MISSION_FIRMS.map((id) => {
-                const f = FIRMS.find((x) => x.id === id)!;
-                const on = mFirm === id;
+              {FIRMS_M.map((fm) => {
+                const f = FIRMS.find((x) => x.id === fm.id)!;
+                const on = mFirm === fm.id;
                 return (
-                  <button key={id} onClick={() => { setMFirm(id); setMPlan(0); }}
+                  <button key={fm.id} onClick={() => setMFirm(fm.id)}
                     className="glass-hover rounded-xl px-4 py-2.5 flex items-center gap-2 font-heading text-sm transition"
                     style={on
                       ? { background: '#35E08A', color: '#06110B' }
@@ -231,19 +245,39 @@ export default function App() {
             </div>
           </div>
 
-          {/* Step 2 選方案 */}
-          <div className="mb-6">
-            <div className="font-body text-xs text-white/40 mb-2">② 選帳號方案</div>
+          {/* Step 2 選帳號類型 */}
+          <div className="mb-4">
+            <div className="font-body text-xs text-white/40 mb-2">② 選帳號類型</div>
             <div className="flex flex-wrap gap-2">
-              {mPlans.map((p, i) => {
-                const on = mission === p;
+              {mPlans.map((p) => {
+                const on = mPlanId === p.id;
                 return (
-                  <button key={p.plan} onClick={() => setMPlan(i)}
-                    className="glass-hover rounded-lg px-4 py-2 font-body text-sm transition"
+                  <button key={p.id} onClick={() => setMPlanId(p.id)}
+                    className="glass-hover rounded-lg px-4 py-2.5 text-left transition"
                     style={on
-                      ? { background: 'rgba(53,224,138,.15)', border: '1px solid #35E08A', color: '#35E08A' }
+                      ? { background: 'rgba(53,224,138,.15)', border: '1px solid #35E08A' }
+                      : { background: '#0F141C', border: '1px solid rgba(255,255,255,.12)' }}>
+                    <div className="font-heading text-sm" style={{ color: on ? '#35E08A' : '#C7CDD8' }}>{p.name}</div>
+                    <div className="font-body text-[11px] mt-0.5" style={{ color: on ? 'rgba(53,224,138,.7)' : '#6B7484' }}>{p.sub}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Step 3 選帳號大小 */}
+          <div className="mb-6">
+            <div className="font-body text-xs text-white/40 mb-2">③ 選帳號大小</div>
+            <div className="flex flex-wrap gap-2">
+              {mSizes.map((sz) => {
+                const on = mSize === sz;
+                return (
+                  <button key={sz} onClick={() => setMSize(sz)}
+                    className="glass-hover rounded-lg px-5 py-2 font-heading text-sm transition"
+                    style={on
+                      ? { background: '#35E08A', color: '#06110B' }
                       : { background: '#0F141C', border: '1px solid rgba(255,255,255,.12)', color: '#8A93A2' }}>
-                    {p.plan}
+                    {sz}
                   </button>
                 );
               })}
@@ -252,10 +286,10 @@ export default function App() {
 
           {/* 任務卡 */}
           <AnimatePresence mode="wait">
-            <motion.div key={mFirm + mPlan}
+            <motion.div key={mFirm + mPlanId + mSize}
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}>
-              <MissionCard m={mission} />
+              {mPlan && <MissionCard plan={mPlan} size={mSize} firmName={firmOf(mFirm).name} verified={VERIFIED[mFirm]} />}
             </motion.div>
           </AnimatePresence>
 

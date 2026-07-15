@@ -21,10 +21,10 @@
 
   <h2><span class="n">01</span> Select — 考試 40% 一致性，通關後無</h2>
   <ul>
-    <li>最快 <b>3 天</b>通關；考試階段 40% 一致性。</li>
-    <li>通關後<b>二選一</b>（不可更改）：<b>Flex</b>（<span class="risk">無日風控</span>、每 5 獲利日<span class="pay">出金</span>、大額上限）或 <b>Daily</b>（<span class="risk">有 DLL</span>、每日可領、需緩衝金如 $2,100）。</li>
-    <li>Flex 每次最多領餘額 50%；Daily 每日固定上限（如 50K 每日 $1,000）。</li>
-    <li>啟動費 $0。</li>
+    <li>最快 <b>3 天</b>通關（因為有一致性，1 天過不了）；考試階段 40% 一致性、<span class="pay">考試無日風控</span>。</li>
+    <li>通關後<b>二選一</b>（<span class="risk">不可更改</span>）：<b>Flex</b>（<span class="risk">無日風控</span>、每 5 獲利日<span class="pay">出金</span>、上限較大）或 <b>Daily</b>（<span class="risk">有 DLL</span>、每日可領、需過利潤緩衝 50K $2,100）。</li>
+    <li>Flex 每次最多領<b>總獲利</b>的 50%（50K 上限 $3,000）；Daily 每次可領「上次出金後利潤 ×2」（50K 上限 $1,000）。</li>
+    <li>啟動費 $0。考試獲利目標：25K $1,500、50K $3,000、100K $6,000、150K $9,000。</li>
   </ul>
 
   <h2><span class="n">02</span> Growth — 快速通關</h2>
@@ -43,82 +43,154 @@
     <li>Growth DLL 原 $1,250，獲利超 6%（餘額 $53,000）後隔天變 $2,000。</li>
   </ul>
 
-  <div class="box risk"><b>⚠️ 出金前必看：Lightning 的緩衝金<u>永遠領不到</u></b>
-    Lightning 免考試,但你必須<b>先幫平台賺出一筆等於「最大回撤」的錢</b>,這筆<span class="risk">永遠不能出金</span>。<br>
-    <b>白話</b>：50K 最大回撤 $2,500 → 要先打到 <b>$52,500</b>,超過的部分才是你的。<span class="risk">等於變相先繳一筆看不見的成本。</span><br>
-    <b>對策</b>：把緩衝金當成隱形費用算進總成本再比價;不想墊這筆就選 <b>Select</b>（無緩衝）。
+  <div class="box risk"><b>⚠️ 出金前必看：Lightning 的「利潤目標 ≠ 能領的錢」</b>
+    Lightning 的<b>利潤目標</b>只是<u>解鎖出金申請</u>的門檻，不是你能提領的金額。實際能領多少另外受<b>單次出金上限</b>限制。<br>
+    <b>白話</b>（50K）：你賺到首次目標 <b>$3,000</b> 才能按申請，但單次上限只有 <b>$2,000</b>，剩下的 $1,000 留在帳戶。<span class="risk">而且目標達成後歸零重算，上一輪剩的利潤不會累積到下一輪。</span><br>
+    <b>對策</b>：把「目標」與「上限」分開看；想每次領好領滿，選 <b>Select Flex</b>（上限 50K $3,000）更直接。
   </div>
 
   <h2><span class="n">03</span> Lightning — 免考試直接開帳</h2>
   <ul>
     <li>不用考試，直接拿可<span class="pay">出金</span>帳號（價格較高）。四種規模 25K/50K/100K/150K。</li>
-    <li><b>階梯式一致性</b>：第 1 次<span class="pay">出金</span> <span class="risk">20%</span>、第 2 次 25%、第 3 次起 30%（2025/9/12 後購買者）。</li>
-    <li><span class="risk">利潤緩衝區</span>：須先賺到等於最大回撤的錢（50K 打到 $52,500），這筆<span class="risk">永遠不能領</span>，之後超過才可出。</li>
-    <li>無最低交易天數，達獲利目標與一致性即可申請。</li>
+    <li><b>階梯式一致性</b>：第 1 次<span class="pay">出金</span> <span class="risk">20%</span>、第 2 次 25%、第 3 次起 30%（2025/9/12 後購買者；之前購買的一律 20%）。</li>
+    <li><b>利潤目標</b>（達標才能申請，領完歸零重算）：50K 首次 $3,000、第 2 次起 $2,000；25K 為 $1,500 / $1,000。</li>
+    <li>無最低交易天數，達利潤目標與一致性即可申請。<span class="pay">官方並無「緩衝金永遠不能領」的規定</span>——Lightning 沒有緩衝區機制。</li>
+    <li>最大回撤（EOD）：25K $1,000、50K <b>$2,000</b>、100K $4,000、150K $5,250。</li>
   </ul>
 
-  <h2><span class="n">03.5</span> 出金任務卡（以 50K 為例）</h2>
+  <!--MISSIONS:START-->
+  <h2><span class="n">★</span> 出金任務：選你的帳號類型與規模</h2>
+  <div class="box new"><b>✅ 已核對官方</b>本頁每條規則於 <b>2026/07</b> 逐條核對官方幫助中心。規則仍以官網為準。</div>
+  <p class="mission-intro">每個帳號類型的規則<b>都不一樣</b>。下面按類型分開列，每種規模要打到多少錢、最多虧多少、單次能領多少，<b>都已經算好</b>。</p>
+
+  <h3 class="plan-h">Select Flex <span class="plan-sub">考過後選這條 · 無日風控、無緩衝</span>
+    <span class="plan-tag">EOD 收盤結算回撤</span>
+    <span class="plan-tag">分潤 90/10</span></h3>
+
+  <div class="tw"><table>
+    <thead><tr><th>規模</th><th class="col-risk">最大虧損(碰到就爆)</th><th class="col-risk">日虧損上限</th><th class="col-pay">獲利日門檻</th><th class="col-pay">單次最多領</th><th class="">部位上限</th></tr></thead>
+    <tbody>
+      <tr><td><b>25K</b></td><td class="col-risk">$1,000</td><td class="col-risk">無</td><td class="col-pay">$100</td><td class="col-pay">$1,250</td><td class="">起始 1 mini，最高 2 mini</td></tr>
+      <tr><td><b>50K</b></td><td class="col-risk">$2,000</td><td class="col-risk">無</td><td class="col-pay">$150</td><td class="col-pay">$3,000</td><td class="">起始 2 mini，最高 4 mini</td></tr>
+      <tr><td><b>100K</b></td><td class="col-risk">$3,000</td><td class="col-risk">無</td><td class="col-pay">$200</td><td class="col-pay">$4,000</td><td class="">起始 3 mini，最高 8 mini</td></tr>
+      <tr><td><b>150K</b></td><td class="col-risk">$4,500</td><td class="col-risk">無</td><td class="col-pay">$250</td><td class="col-pay">$5,000</td><td class="">起始 3 mini，最高 12 mini</td></tr>
+    </tbody>
+  </table></div>
 
   <div class="mission-card"><div class="bar"></div><div class="inner">
-    <div class="who">Tradeify · <b>Select Flex（5 日出金）</b></div>
+    <div class="who">Tradeify · <b>Select Flex</b>（下列數字以 50K 為例，其他規模見上表）</div>
     <div class="mission-grid">
       <div class="mission-col task"><h4>🎯 你的任務</h4><ul>
-        <li>5 個獲利日 → 可領餘額 <span class="target-num">50%</span>（有上限）</li>
+        <li>5 個獲利日，每日至少賺 <span class="target-num pay">$150</span></li>
+        <li>單次可領總獲利的 <span class="target-num pay">50%</span>，最高 <span class="target-num pay">$3,000</span></li>
+        <li>沒有最低餘額要求，達標就能領</li>
       </ul></div>
       <div class="mission-col line"><h4>🚫 不能碰的線</h4><ul>
-        <li>EOD 回撤 <span class="target-num">$2,000</span></li>
+        <li>餘額碰到最大虧損線就爆：<span class="target-num risk">$2,000</span></li>
+        <li>第 2 次起：該週期淨獲利必須為正</li>
       </ul></div>
     </div>
-    <div class="mission-tip">⚠️ <b>第 2 次起：該週期淨獲利必須為正。</b><br>
-      例：第一次出金後帳戶 $51,500，之後虧到 $50,800（當期 <b>−$700</b>）→ <b>不能出金</b>，要先賺回 $700 讓當期轉正才能申請。</div>
+    <div class="mission-tip">⚠️ 第 2 次起當期必須為正。例：第一次出金後餘額 <span class="target-num pay">$51,250</span>，之後虧到 <span class="target-num pay">$50,800</span>（當期 −<span class="target-num pay">$450</span>）→ 不能出金，要先賺回 <span class="target-num pay">$450</span> 讓當期轉正。注意 <span class="target-num pay">50%</span> 是算「總獲利」（現在餘額 − 起始餘額），不是只算這一輪賺的。</div>
   </div></div>
+
+
+  <h3 class="plan-h">Select Daily <span class="plan-sub">考過後選這條 · 每天可領但有緩衝</span>
+    <span class="plan-tag">EOD 收盤結算回撤</span>
+    <span class="plan-tag">分潤 90/10</span></h3>
+
+  <div class="tw"><table>
+    <thead><tr><th>規模</th><th class="col-risk">最大虧損(碰到就爆)</th><th class="col-risk">日虧損上限</th><th class="col-pay">要打到</th><th class="col-pay">單次最多領</th><th class="">最低出金</th><th class="">部位上限</th></tr></thead>
+    <tbody>
+      <tr><td><b>25K</b></td><td class="col-risk">$1,000</td><td class="col-risk">$500</td><td class="col-pay">利潤 $1,100（餘額 $26,100）</td><td class="col-pay">$600</td><td class="">$250</td><td class="">起始 1 mini，最高 2 mini</td></tr>
+      <tr><td><b>50K</b></td><td class="col-risk">$2,000</td><td class="col-risk">$1,000</td><td class="col-pay">利潤 $2,100（餘額 $52,100）</td><td class="col-pay">$1,000</td><td class="">$250</td><td class="">起始 2 mini，最高 4 mini</td></tr>
+      <tr><td><b>100K</b></td><td class="col-risk">$2,500</td><td class="col-risk">$1,250</td><td class="col-pay">利潤 $2,600（餘額 $102,600）</td><td class="col-pay">$1,500</td><td class="">$250</td><td class="">起始 3 mini，最高 8 mini</td></tr>
+      <tr><td><b>150K</b></td><td class="col-risk">$3,500</td><td class="col-risk">$1,750</td><td class="col-pay">利潤 $3,600（餘額 $153,600）</td><td class="col-pay">$2,500</td><td class="">$250</td><td class="">起始 3 mini，最高 12 mini</td></tr>
+    </tbody>
+  </table></div>
 
   <div class="mission-card"><div class="bar"></div><div class="inner">
-    <div class="who">Tradeify · <b>Select Daily（每日出金）</b></div>
+    <div class="who">Tradeify · <b>Select Daily</b>（下列數字以 50K 為例，其他規模見上表）</div>
     <div class="mission-grid">
       <div class="mission-col task"><h4>🎯 你的任務</h4><ul>
-        <li>先打出緩衝 → <span class="target-num">$52,100</span></li>
-        <li>之後每日可申請（50K 每日上限 <span class="target-num">$1,000</span>）</li>
+        <li>利潤要先超過緩衝 利潤 <span class="target-num pay">$2,100</span>（餘額 <span class="target-num pay">$52,100</span>）（緩衝內的錢不能領）</li>
+        <li>之後每天都能申請</li>
+        <li>單次可領「上次出金後利潤 × 2」，最高 <span class="target-num pay">$1,000</span></li>
       </ul></div>
       <div class="mission-col line"><h4>🚫 不能碰的線</h4><ul>
-        <li>日風控 DLL <span class="target-num">$1,000</span></li>
-        <li>EOD 回撤 <span class="target-num">$2,000</span></li>
-        <li>第 2 次起當期須為正（同 Flex 例）</li>
+        <li>餘額碰到最大虧損線就爆：<span class="target-num risk">$2,000</span></li>
+        <li>日虧損上限 <span class="target-num risk">$1,000</span></li>
+        <li>第 2 次起：該週期淨獲利必須為正</li>
       </ul></div>
     </div>
+    <div class="mission-tip">⚠️ 緩衝算的是「利潤」不是餘額。例（50K）：賺了 <span class="target-num pay">$250</span> → 2×<span class="target-num pay">$250</span>，最多領 <span class="target-num pay">$500</span>；賺 <span class="target-num pay">$700</span> → 2×<span class="target-num pay">$700</span>=<span class="target-num pay">$1,400</span> 但上限 <span class="target-num pay">$1,000</span>，只能領 <span class="target-num pay">$1,000</span>。賺不到 <span class="target-num pay">$125</span> 連最低 <span class="target-num pay">$250</span> 都領不了。</div>
   </div></div>
+
+
+  <h3 class="plan-h">Growth <span class="plan-sub">1 天就能考過 · 但出金要墊最低餘額</span>
+    <span class="plan-tag">EOD 收盤結算回撤</span>
+    <span class="plan-tag">分潤 90/10</span></h3>
+
+  <div class="tw"><table>
+    <thead><tr><th>規模</th><th class="col-pay">考試獲利目標</th><th class="col-risk">最大虧損(碰到就爆)</th><th class="col-risk">日虧損上限</th><th class="col-pay">要打到</th><th class="col-pay">獲利日門檻</th><th class="col-pay">單次最多領</th><th class="">最低出金</th><th class="">部位上限</th></tr></thead>
+    <tbody>
+      <tr><td><b>25K</b></td><td class="col-pay">$1,500</td><td class="col-risk">$1,000</td><td class="col-risk">$600</td><td class="col-pay">$26,500</td><td class="col-pay">$100</td><td class="col-pay">各階皆 $1,000</td><td class="">$250</td><td class="">1 mini / 10 micro</td></tr>
+      <tr><td><b>50K</b></td><td class="col-pay">$3,000</td><td class="col-risk">$2,000</td><td class="col-risk">$1,250</td><td class="col-pay">$53,000</td><td class="col-pay">$150</td><td class="col-pay">第 1 次 $1,500 → 第 4 次起 $3,000</td><td class="">$500</td><td class="">4 mini / 40 micro</td></tr>
+      <tr><td><b>100K</b></td><td class="col-pay">$6,000</td><td class="col-risk">$3,500</td><td class="col-risk">$2,500</td><td class="col-pay">$104,500</td><td class="col-pay">$200</td><td class="col-pay">第 1 次 $2,000 → 第 4 次起 $4,000</td><td class="">$1,000</td><td class="">8 mini / 80 micro</td></tr>
+      <tr><td><b>150K</b></td><td class="col-pay">$9,000</td><td class="col-risk">$5,000</td><td class="col-risk">$3,750</td><td class="col-pay">$156,500</td><td class="col-pay">$250</td><td class="col-pay">第 1 次 $2,500 → 第 4 次起 $5,000</td><td class="">$1,500</td><td class="">12 mini / 120 micro</td></tr>
+    </tbody>
+  </table></div>
 
   <div class="mission-card"><div class="bar"></div><div class="inner">
-    <div class="who">Tradeify · <b>Growth（快速通關）</b></div>
+    <div class="who">Tradeify · <b>Growth</b>（下列數字以 50K 為例，其他規模見上表）</div>
     <div class="mission-grid">
       <div class="mission-col task"><h4>🎯 你的任務</h4><ul>
-        <li>餘額打到 → <span class="target-num">$53,000</span>（緩衝 $3,000）</li>
-        <li>5 個獲利日</li>
-        <li>單日最大獲利 ≤ 總獲利 <span class="target-num">35%</span></li>
+        <li>餘額要打到 <span class="target-num pay">$53,000</span> 才能申請</li>
+        <li>5 個獲利日，每日至少賺 <span class="target-num pay">$150</span></li>
+        <li>最佳單日 ≤ 該週期總獲利的 <span class="target-num pay">35%</span></li>
+        <li>單次最多領 第 1 次 <span class="target-num pay">$1,500</span> → 第 4 次起 <span class="target-num pay">$3,000</span></li>
       </ul></div>
       <div class="mission-col line"><h4>🚫 不能碰的線</h4><ul>
-        <li>EOD 回撤 <span class="target-num">$2,000</span></li>
-        <li>日風控 DLL <span class="target-num">$1,250</span>（軟；獲利超 6% 後變 $2,000）</li>
+        <li>餘額碰到最大虧損線就爆：<span class="target-num risk">$2,000</span></li>
+        <li>日虧損上限 <span class="target-num risk">$1,250</span>（軟性）</li>
       </ul></div>
     </div>
+    <div class="mission-tip">考試無一致性、1 天可過，是最快通關的路；代價是出金要墊到最低餘額，且考試就有日風控。</div>
   </div></div>
+
+
+  <h3 class="plan-h">Lightning <span class="plan-sub">免考試直接開帳 · 無最低天數</span>
+    <span class="plan-tag">EOD 收盤結算回撤</span>
+    <span class="plan-tag">分潤 90/10</span></h3>
+
+  <div class="tw"><table>
+    <thead><tr><th>規模</th><th class="col-risk">最大虧損(碰到就爆)</th><th class="col-risk">日虧損上限</th><th class="col-pay">要打到</th><th class="col-pay">單次最多領</th><th class="">最低出金</th><th class="">部位上限</th></tr></thead>
+    <tbody>
+      <tr><td><b>25K</b></td><td class="col-risk">$1,000</td><td class="col-risk">無</td><td class="col-pay">首次 $1,500，第 2 次起 $1,000</td><td class="col-pay">固定 $1,000</td><td class="">$1,000</td><td class="">1 mini / 10 micro</td></tr>
+      <tr><td><b>50K</b></td><td class="col-risk">$2,000</td><td class="col-risk">$1,250</td><td class="col-pay">首次 $3,000，第 2 次起 $2,000</td><td class="col-pay">第 1–3 次 $2,000，第 4 次起 $2,500</td><td class="">$1,000</td><td class="">4 mini / 40 micro</td></tr>
+      <tr><td><b>100K</b></td><td class="col-risk">$4,000</td><td class="col-risk">$2,500</td><td class="col-pay">首次 $6,000，第 2 次起 $3,500</td><td class="col-pay">第 1–3 次 $2,500，第 4 次起 $3,000</td><td class="">$1,000</td><td class="">8 mini / 80 micro</td></tr>
+      <tr><td><b>150K</b></td><td class="col-risk">$5,250</td><td class="col-risk">$3,000</td><td class="col-pay">首次 $9,000，第 2 次起 $4,500</td><td class="col-pay">第 1–3 次 $3,000，第 4 次起 $3,500</td><td class="">$1,000</td><td class="">12 mini / 120 micro</td></tr>
+    </tbody>
+  </table></div>
 
   <div class="mission-card"><div class="bar"></div><div class="inner">
-    <div class="who">Tradeify · <b>Lightning（免考試直接開帳）</b></div>
+    <div class="who">Tradeify · <b>Lightning</b>（下列數字以 50K 為例，其他規模見上表）</div>
     <div class="mission-grid">
       <div class="mission-col task"><h4>🎯 你的任務</h4><ul>
-        <li>先打到 → <span class="target-num">$52,500</span>（緩衝＝最大回撤，這筆永遠不能領）</li>
-        <li>符合階梯一致性 <span class="target-num">20%</span> → 25% → 30%</li>
+        <li>該週期賺到利潤目標 首次 <span class="target-num pay">$3,000</span>，第 2 次起 <span class="target-num pay">$2,000</span>（達標才解鎖申請）</li>
+        <li>一致性：第 1 次 <span class="target-num pay">20%</span> → 第 2 次 <span class="target-num pay">25%</span> → 第 3 次起 <span class="target-num pay">30%</span></li>
+        <li>沒有最低交易天數，達標當天就能領</li>
+        <li>單次最多領 第 1–3 次 <span class="target-num pay">$2,000</span>，第 4 次起 <span class="target-num pay">$2,500</span></li>
       </ul></div>
       <div class="mission-col line"><h4>🚫 不能碰的線</h4><ul>
-        <li>EOD 回撤 <span class="target-num">$2,500</span></li>
-        <li>日風控 DLL <span class="target-num">$1,250</span>（軟）</li>
+        <li>餘額碰到最大虧損線就爆：<span class="target-num risk">$2,000</span></li>
+        <li>日虧損上限 <span class="target-num risk">$1,250</span>（軟性）</li>
+        <li>第 2 次起：該週期淨獲利必須為正</li>
       </ul></div>
     </div>
-    <div class="mission-tip">緩衝金是隱形成本；不想墊這筆就選 <b>Select</b>（無緩衝）。</div>
+    <div class="mission-tip">⚠️ 利潤目標 ≠ 能領的錢。例（50K）：達成 <span class="target-num pay">$3,000</span> 目標，但單次上限只有 <span class="target-num pay">$2,000</span>，剩下留在帳戶。目標達成後歸零重算，上一輪剩的利潤不會累積過去。</div>
   </div></div>
 
-  <div class="box warn"><b>⚠️ 官方通用規則：第 2 次起出金必須「當期為正」</b>不論你選 Select Flex 或 Daily，<b>第一次出金之後</b>的每次<span class="pay">出金</span>，該出金週期都必須是<b>淨獲利為正</b>才能申請。出金後若虧損，得先把虧損賺回、當期轉正才能再領。<span class="risk">兩種模式都一樣，不能在當期虧損時出金。</span></div>
+  <!--MISSIONS:END-->
 
   <h2><span class="n">04</span> 一致性總表 & 通用規則</h2>
   <div class="tw"><table>
@@ -132,7 +204,25 @@
   </table></div>
   <div class="box warn"><b>平倉時間</b>2026/7/13 起所有持倉須在美東 <b>4:45 PM</b> 前平倉（比原本早 14 分鐘）。</div>
   <div class="box risk"><b>🚫 禁止</b>跨帳號對沖、微搶（&gt;50% 交易須持倉逾 10 秒）、HFT、跨交易者複製。Sim Funded 帳號最多同時 5 個（混合計算）。</div>
-  <p>Tradeify Elite（真實帳號）：3 個單帳號或 10 次總<span class="pay">出金</span>觸發，<span class="pay">80% 分潤</span>。</p>
+  <h2><span class="n">05</span> Tradeify Elite — 真實帳號（Live）</h2>
+  <div class="box new"><b>✅ 已核對官方</b>門檻是<b>被考慮的最低條件，不是自動晉升</b>。官方明講:達標不保證立刻轉 Live，會綜合看一致性與風險管理，由官方主動聯繫。</div>
+  <ul>
+    <li><b>觸發門檻</b>（擇一）：<b>單一帳號 3 次<span class="pay">出金</span></b>，或<b>距上次轉 Live 後累計 10 次出金</b>（跨方案合計；從未轉過 Live 者從首次購買起算）。</li>
+    <li><b>哪些帳號會轉</b>：<span class="risk">只有出金過至少 1 次的 Funded 帳號才會轉 Elite</span>；0 次出金的帳號不會轉。最後一次出金之後的交易與進度<b>不會帶過去</b>。</li>
+    <li><span class="pay">轉 Live 次數不限</span>——可跨方案、反覆晉升。Elite 最多同時 5 個帳號。</li>
+    <li><span class="pay">分潤 80/20</span>；帳戶從 <b>$0</b> 起始，賺到的都是利潤，隨時可申請出金。<span class="risk">若一筆出金把餘額領到 $0，Live 帳號即關閉。</span></li>
+  </ul>
+  <div class="tw"><table>
+    <thead><tr><th>Elite 帳號</th><th>起始餘額</th><th class="col-risk">EOD 回撤</th><th>部位（$0→回撤）</th><th>部位（回撤之上）</th><th class="col-pay">日風控</th></tr></thead>
+    <tbody>
+      <tr><td><b>25K</b></td><td>$0</td><td class="col-risk">$1,500</td><td>1 mini / 10 micro</td><td>2 mini / 20 micro</td><td class="col-pay">無</td></tr>
+      <tr><td><b>50K</b></td><td>$0</td><td class="col-risk">$2,000</td><td>2 mini / 20 micro</td><td>4 mini / 40 micro</td><td class="col-pay">無</td></tr>
+      <tr><td><b>100K</b></td><td>$0</td><td class="col-risk">$3,000</td><td>4 mini / 40 micro</td><td>8 mini / 80 micro</td><td class="col-pay">無</td></tr>
+      <tr><td><b>150K</b></td><td>$0</td><td class="col-risk">$4,500</td><td>6 mini / 40 micro</td><td>12 mini / 120 micro</td><td class="col-pay">無</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box warn"><b>⚠️ 回撤鎖上前別急著領</b>Elite 用 <b>EOD 回撤</b>（收盤才重算）。若你在<b>餘額還沒到「回撤 + $100」</b>之前就送出金申請，官方<span class="risk">不會立刻處理</span>，會壓到隔一個營業日、等 EOD 調整完才扣款。結果是：回撤已經往上移，錢才被扣走 → <span class="risk">你隔天可用的緩衝空間反而變小</span>。<b>對策</b>：等回撤鎖定（餘額站上回撤 + $100）之後再申請。</div>
+  <p>以上參數適用於 Select、Growth、Lightning 轉上來的所有 Elite 帳號。</p>
 
   <div class="buy-cta">
     <div class="l">

@@ -104,3 +104,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--dim);font-siz
 .mission-targets .sep{color:#3a4150;margin:0 8px}
 .mission-tip{margin-top:16px;border-radius:12px;padding:14px;font-size:14px;line-height:1.7;
   background:rgba(245,165,36,.10);border:1px solid rgba(245,165,36,.3);color:var(--text)}
+.mission-tip .target-num{font-size:17px}
+/* 帳號類型標題 */
+.mission-intro{color:var(--soft);margin:12px 0 22px}
+.plan-h{font-family:'Noto Sans TC';font-weight:700;font-size:21px;color:#fff;
+  margin:34px 0 12px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.plan-sub{font-family:'Barlow';font-weight:400;font-size:13.5px;color:var(--dim)}
+.plan-tag{font-family:'Barlow';font-size:12px;font-weight:400;color:var(--soft);
+  background:rgba(255,255,255,.06);border-radius:6px;padding:3px 8px}

@@ -368,6 +368,11 @@ export default function App() {
                       <td className="px-4 py-4 whitespace-nowrap">
                         <span className="font-heading text-xl md:text-2xl" style={{ color: '#35E08A' }}>{p.now}</span>
                         {off && <span className="font-body text-xs text-white/35 ml-2 line-through">{p.list}</span>}
+                        {p.firstBuy && (
+                          <span className="block font-body text-xs mt-1" style={{ color: '#F5A524' }}>
+                            首購 {p.firstBuy}
+                          </span>
+                        )}
                       </td>
                       <td className="px-4 py-4 font-heading text-lg whitespace-nowrap"
                         style={{ color: free ? '#35E08A' : '#F45B5B' }}>

@@ -69,6 +69,14 @@ try {
     if (!got) { add('WARN', `${claimName} 抓不到價格（版面可能改了）`, `${c.now}`, '—'); continue; }
     if (differs(got.now, c.now) || differs(got.list, c.list))
       add('DIFF', `${claimName} 50K 價格`, `${c.list} → ${c.now}`, `$${got.list} → $${got.now}`);
+
+    // 首購價是「官網折後再 −10%」推算的（官網沒有明列首購價，是店家告知的規則）。
+    // 折扣率一變，首購價就跟著錯，所以這裡驗算它跟官網折後價還對不對得起來。
+    if (c.firstBuy) {
+      const expect = money(got.list) * (1 - ((money(got.list) - money(got.now)) / money(got.list) + 0.10));
+      if (differs(c.firstBuy, expect))
+        add('DIFF', `${claimName} 首購價（＝官網折後再 −10% 推算）`, c.firstBuy, `$${expect.toFixed(2)}`);
+    }
   }
 } catch (e) { add('ERR', 'Lucid 抓取失敗', '', e.message.slice(0, 60)); }
 

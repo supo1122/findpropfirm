@@ -1,4 +1,4 @@
-const DISCORD = 'https://discord.gg/YGWXTN7qcd';
+import { DISCORD } from '../data';
 
 /** 右下角、鈴鐺左側的圓形 Discord 客服鈕 */
 export default function Discord() {

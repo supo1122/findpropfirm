@@ -4,6 +4,9 @@ function todayTW(): string {
   return new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 }
 
+/** Discord 邀請連結——只在這裡定義一份，App 和 Discord 元件都從這裡拿 */
+export const DISCORD = 'https://discord.gg/HC7GBnjwwR';
+
 /** LucidPro 日風控免除活動的最後一天（含當天）。過了就自動切回常規規則。 */
 export const LUCID_DLL_WAIVER_UNTIL = '2026-07-24';
 export const lucidDllWaived = (): boolean => todayTW() <= LUCID_DLL_WAIVER_UNTIL;

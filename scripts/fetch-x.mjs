@@ -17,10 +17,15 @@ const STRONG = [
   [/\b\d{1,3}\s?%(\s?off)?\b|\b\d\s?折\b|折扣|優惠|\bpromo\b|\bsale\b|\bcoupon\b|\bdiscount\b|\bcode[s]?\b/i, '折扣'],
   // 促銷訊號：像 Apex「FLASH DROP $49 ALL-IN，史上最低，7/21 截止」這種——
   // 沒有 off/sale/discount 字樣，但明顯是限時特價。這類過去會被漏掉。
-  [/\bflash\s?(drop|sale)\b|\ball[\s.-]?in\b|\blowest\b|\blimited[\s-]?time\b|\bdeal\b|\bspecial\b|\bends?\s+(mon|tue|wed|thu|fri|sat|sun|today|tomorrow|\w+day|\d)|\bexpir|限時|限量|閃購|特價|最低|截止/i, '折扣'],
+  [/\bflash\s?(drop|sale)\b|\ball[\s.-]?in\b|\blowest\b|\blimited[\s-]?time\b|\bdeal[s]?\b|\bspecial\b|\bends?\s+(mon|tue|wed|thu|fri|sat|sun|today|tomorrow|\w+day|\d)|\bexpir|\blast\s?(chance|day)|\bends\s?(soon|tonight)|限時|限量|閃購|特價|最低|截止|倒數/i, '折扣'],
+  // 活動/新方案：官方帳號發這類多半跟使用者有關（新品、上線、贈獎、競賽）
+  [/\blaunch|\bintroduc|\bannounc|\bnow (available|live)|\bnew (account|plan|program|challenge|payout)|\bgiveaway\b|\bcontest\b|\bbonus\b|\bfree\b|贈|競賽|活動|上線|推出|新方案/i, '活動'],
   [/\bpayout[s]?\b|\bwithdraw(al)?\b|出金/i, '出金'],
   [/\bconsistency\b|\bdrawdown\b|\bnew rule[s]?\b|\brule[s]? (change|update)|規則|一致性|回撤/i, '規則更新'],
   [/\bmaintenance\b|\boutage\b|\bdegraded\b|\bincident\b|\bdowntime\b|系統|維護|故障|中斷/i, '故障'],
+  // 保險絲：任何「金額 + 購買/取得動作」的組合都放行——寧可多抓一則也別漏掉促銷。
+  // 例：「Grab a 50K for $49」「Start trading — only $99」。純聊天提到金額不會中（沒有動作詞）。
+  [/\$\d[\d,]*[\s\S]{0,40}?\b(get|grab|start|join|buy|claim|save|only|just|use code|code)\b|\b(get|grab|start|join|buy|claim|save|only|just|use code|code)\b[\s\S]{0,40}?\$\d/i, '折扣'],
 ];
 function classify(text) {
   for (const [re, tag] of STRONG) if (re.test(text)) return tag;
@@ -87,6 +92,7 @@ async function main() {
   // 常駐置頂；until = 截止日（台灣時間），過期自動下架
   const todayTW = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
   const PINNED = [
+    { tag: '折扣', until: '2026-07-21', html: '🚨 <b>Apex FLASH DROP</b>：50K 日內追・免啟動費一口價 <b>$49</b>（Apex 史上最低，平常 $79），折扣碼 <b>SAVENOW</b>，<b>7/21 23:59 ET 截止</b> <a href="https://apextraderfunding.com/" target="_blank" rel="noopener">前往購買↗</a>' },
     { tag: '折扣', html: '<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 7 折（50K $98）、Pro 6 折（50K $111），<b>首購結帳再多 10%</b>（$84／$92.50）。一次性付費、免啟動費 <a href="https://lucidtrading.com/ref/pftw" target="_blank" rel="noopener">前往購買↗</a>' },
     { tag: '規則更新', until: '2026-07-24', html: '⏳ <b>Lucid Pro 日風控免除中</b>，活動到 <b>2026/7/24</b>，之後恢復 <a href="/rules/lucid.html">看規則↗</a>' },
   ].filter((p) => !p.until || p.until >= todayTW)

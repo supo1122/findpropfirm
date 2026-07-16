@@ -11,9 +11,13 @@ const HANDLES = {
   tradeday: 'TradeDayFunding',
 };
 
-// 只留「真的有料」的推文：折扣碼/百分比、出金、規則、維護故障。純閒聊一律濾掉。
+// 只留「真的有料」的推文：折扣/促銷、出金、規則、維護故障。純閒聊一律濾掉。
 const STRONG = [
+  // 折扣：明講折數/折扣碼的
   [/\b\d{1,3}\s?%(\s?off)?\b|\b\d\s?折\b|折扣|優惠|\bpromo\b|\bsale\b|\bcoupon\b|\bdiscount\b|\bcode[s]?\b/i, '折扣'],
+  // 促銷訊號：像 Apex「FLASH DROP $49 ALL-IN，史上最低，7/21 截止」這種——
+  // 沒有 off/sale/discount 字樣，但明顯是限時特價。這類過去會被漏掉。
+  [/\bflash\s?(drop|sale)\b|\ball[\s.-]?in\b|\blowest\b|\blimited[\s-]?time\b|\bdeal\b|\bspecial\b|\bends?\s+(mon|tue|wed|thu|fri|sat|sun|today|tomorrow|\w+day|\d)|\bexpir|限時|限量|閃購|特價|最低|截止/i, '折扣'],
   [/\bpayout[s]?\b|\bwithdraw(al)?\b|出金/i, '出金'],
   [/\bconsistency\b|\bdrawdown\b|\bnew rule[s]?\b|\brule[s]? (change|update)|規則|一致性|回撤/i, '規則更新'],
   [/\bmaintenance\b|\boutage\b|\bdegraded\b|\bincident\b|\bdowntime\b|系統|維護|故障|中斷/i, '故障'],

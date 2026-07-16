@@ -266,6 +266,12 @@ export type Price = {
    *  now 一律放「官網當下看得到的價」，首購價另標——
    *  免得使用者照我們寫的去結帳，發現實際比較貴。 */
   firstBuy?: string;
+  /** 限時特價：未過期就用 flashPrice 顯示，過了 flashUntil（台灣日）自動恢復原 now。 */
+  flashUntil?: string;
+  flashPrice?: string;
+  flashNote?: string;
+  /** runtime 旗標，由 pricesNow() 設定給 UI 顯示「限時」徽章，別手填。 */
+  flashOn?: boolean;
   code?: string;
   link: string;
   note?: string;
@@ -304,6 +310,7 @@ export const PRICES: Price[] = [
   {
     id: 'apex', name: 'Apex · 日內追 · 免啟動', logo: '/logos/apex.png', model: '一次性',
     now: '$79', list: '$790', activation: '無', total: '$79', code: 'SAVENOW',
+    flashUntil: '2026-07-21', flashPrice: '$49', flashNote: '🚨 FLASH DROP：Apex 史上最低，50K 免啟動費一口價 $49（平常 $79）',
     link: 'https://apextraderfunding.com/',
     note: '確定會考過的話，總成本比標準版還低 $4.90',
   },
@@ -345,6 +352,24 @@ export const PRICES: Price[] = [
   },
 ];
 
+/** 價格表要顯示的版本：限時特價未過期就套用 flashPrice，過期自動恢復原價。
+ *  UI 一律用這個，不要直接用 PRICES，才會自動下架過期特價。 */
+export function pricesNow(): Price[] {
+  const today = todayTW();
+  return PRICES.map((p) =>
+    p.flashUntil && p.flashPrice && today <= p.flashUntil
+      ? {
+          ...p,
+          list: p.now,                    // 特價期間，原本的 now（$79）變成對照的「平常價」
+          now: p.flashPrice,              // 顯示特價
+          total: p.activation === '無' ? p.flashPrice : p.total,
+          note: (p.flashNote ? p.flashNote + '。' : '') + (p.note ?? ''),
+          flashOn: true,
+        }
+      : p,
+  );
+}
+
 // 優惠：until = 截止日（YYYY-MM-DD，台灣時間當日 23:59 為止）。過期會自動下架，不用手動刪。
 export type Offer = {
   firm: string; old: string; now: string; note: string; deadline: string;
@@ -357,6 +382,7 @@ export const OFFERS: Offer[] = [
   { firm: 'Tradeify — Select 50K', old: '原價 $165', now: '$99', note: '6 折 · 通關後選 Flex（無緩衝）或 Daily（每日領）', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
   { firm: 'Tradeify — Growth 50K', old: '原價 $145', now: '$87', note: '6 折 · 1 天可通關 · 出金需墊到 $53,000', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
   { firm: 'TradeDay — Quick Pay 50K', old: '原價 $125/月', now: '$62.50/月', note: '5 折 · Intraday 版 · 通關 $0 啟動費', deadline: '折扣碼 TDNEW · 結帳時輸入', code: 'TDNEW', link: 'firms/tradeday' },
+  { firm: 'Apex — 🚨 FLASH DROP', old: '平常 $79', now: '$49', note: '50K 日內追・免啟動費・一口價，Apex 史上最低', deadline: '限時到 7/21 23:59 ET（折扣碼 SAVENOW）', code: 'SAVENOW', link: 'firms/apex', until: '2026-07-21' },
   { firm: 'Apex — 考試（一次性）', old: '原價 $199', now: '$19.90', note: '折扣碼 SAVENOW · 5 入 $85（每個 $17）· 過關另付啟動費', deadline: '考試 30 天內要考完 · 無重置 · 以官網為準', code: 'SAVENOW', link: 'firms/apex' },
 ];
 

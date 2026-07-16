@@ -8,7 +8,7 @@ import FirmAnim from './components/FirmAnim';
 import { ArrowUpRight } from './components/icons';
 import MissionCard from './components/MissionCard';
 import { FIRMS_M, VERIFIED, firmOf, plansOf, sizesOf, type SizeKey } from './missions';
-import { DISCORD, FIRMS, activeOffers, daysLeft, PRICES, QUIZ, recommend } from './data';
+import { DISCORD, FIRMS, activeOffers, daysLeft, pricesNow, QUIZ, recommend } from './data';
 import { copyCode } from './lib/confetti';
 
 // 規則頁在新視窗開啟（避免 Modal 卡住）
@@ -65,6 +65,7 @@ export default function App() {
   const ORDER = ['lucid', 'tradeday', 'tradeify', 'apex', 'topstep'];
   const ranked = useMemo(() => [...FIRMS].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id)), []);
   const offers = useMemo(() => activeOffers(), []); // 過期活動自動下架
+  const prices = useMemo(() => pricesNow(), []);       // 限時特價過期自動恢復原價
 
   // 快速規則選擇器：選公司 → 選方案 → 出任務卡
   // 出金任務三層選擇器:公司 → 帳號類型 → 規模
@@ -350,7 +351,7 @@ export default function App() {
                 </tr>
               </thead>
               <tbody>
-                {PRICES.map((p, i) => {
+                {prices.map((p, i) => {
                   const free = p.activation === '無';
                   const off = p.now !== p.list;
                   return (
@@ -359,14 +360,22 @@ export default function App() {
                         <div className="flex items-center gap-3">
                           <img src={p.logo} alt="" className="h-9 w-9 shrink-0 rounded-lg bg-white p-1 object-contain" />
                           <span>
-                            <span className="block font-heading whitespace-nowrap">{p.name}</span>
+                            <span className="block font-heading whitespace-nowrap">
+                              {p.name}
+                              {p.flashOn && <span className="ml-2 rounded px-1.5 py-0.5 font-body text-[11px] align-middle" style={{ background: '#F45B5B', color: '#fff' }}>限時</span>}
+                            </span>
                             <span className="block font-body text-xs text-white/40">{p.model}</span>
                           </span>
                         </div>
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap">
-                        <span className="font-heading text-xl md:text-2xl" style={{ color: '#35E08A' }}>{p.now}</span>
+                        <span className="font-heading text-xl md:text-2xl" style={{ color: p.flashOn ? '#F45B5B' : '#35E08A' }}>{p.now}</span>
                         {off && <span className="font-body text-xs text-white/35 ml-2 line-through">{p.list}</span>}
+                        {p.flashOn && (
+                          <span className="block font-body text-xs mt-1" style={{ color: '#F45B5B' }}>
+                            🚨 限時到 7/21
+                          </span>
+                        )}
                         {p.firstBuy && (
                           <span className="block font-body text-xs mt-1" style={{ color: '#F5A524' }}>
                             首購 {p.firstBuy}
@@ -398,7 +407,7 @@ export default function App() {
 
           {/* 每列一句話提醒（表格內塞不下，也不該塞） */}
           <div className="mt-5 grid md:grid-cols-2 gap-x-8 gap-y-2">
-            {PRICES.filter((p) => p.note).map((p, i) => (
+            {prices.filter((p) => p.note).map((p, i) => (
               <div key={i} className="font-body text-sm text-white/50 leading-relaxed">
                 <b className="text-white/75">{p.name}</b>：{p.note}
               </div>

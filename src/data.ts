@@ -272,7 +272,7 @@ export const PRICES: Price[] = [
     id: 'lucid', name: 'Lucid · Flex', logo: '/logos/lucid.png', model: '一次性',
     now: '$98', list: '$140', activation: '無', total: '$98', firstBuy: '$84', code: 'PFTW',
     link: 'https://lucidtrading.com/ref/pftw',
-    note: '無日風控、無緩衝區，規則最單純。考不過可以一直考（無時限）。首購結帳時再多 10%＝4 折 $84',
+    note: '無日風控、無緩衝區，規則最單純。考不過可以一直考（無時限）。首購結帳時再多 10%＝6 折 $84',
   },
   {
     id: 'lucid', name: 'Lucid · Pro', logo: '/logos/lucid.png', model: '一次性',
@@ -348,9 +348,9 @@ export type Offer = {
   code: string; link: string; until?: string;
 };
 export const OFFERS: Offer[] = [
-  { firm: 'Lucid — LucidFlex 25K', old: '原價 $100', now: '$70', note: '3 折 · 無日風控 · 無緩衝區 · 免啟動費 · 首購結帳再多 10%＝$60', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
-  { firm: 'Lucid — LucidFlex 50K', old: '原價 $140', now: '$98', note: '3 折 · 5 獲利日出金 · 通關後無一致性 · 首購結帳再多 10%＝$84', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
-  { firm: 'Lucid — LucidPro 50K', old: '原價 $185', now: '$111', note: '4 折 · 緩衝區 $52,100 · 出金上限比 Flex 高 · 首購結帳再多 10%＝$92.50', deadline: '日風控免除活動至 7/24，之後恢復 $1,200', code: 'PFTW', link: 'firms/lucid', until: '2026-07-25' },
+  { firm: 'Lucid — LucidFlex 25K', old: '原價 $100', now: '$70', note: '7 折 · 無日風控 · 無緩衝區 · 免啟動費 · 首購再多 10%（6 折）＝$60', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidFlex 50K', old: '原價 $140', now: '$98', note: '7 折 · 5 獲利日出金 · 通關後無一致性 · 首購再多 10%（6 折）＝$84', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidPro 50K', old: '原價 $185', now: '$111', note: '6 折 · 緩衝區 $52,100 · 出金上限比 Flex 高 · 首購再多 10%（5 折）＝$92.50', deadline: '日風控免除活動至 7/24，之後恢復 $1,200', code: 'PFTW', link: 'firms/lucid', until: '2026-07-25' },
   { firm: 'Tradeify — Select 50K', old: '原價 $165', now: '$99', note: '6 折 · 通關後選 Flex（無緩衝）或 Daily（每日領）', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
   { firm: 'Tradeify — Growth 50K', old: '原價 $145', now: '$87', note: '6 折 · 1 天可通關 · 出金需墊到 $53,000', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
   { firm: 'TradeDay — Quick Pay 50K', old: '原價 $125/月', now: '$62.50/月', note: '5 折 · Intraday 版 · 通關 $0 啟動費', deadline: '折扣碼 TDNEW · 結帳時輸入', code: 'TDNEW', link: 'firms/tradeday' },

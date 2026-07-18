@@ -141,8 +141,8 @@ export const FIRMS: Firm[] = [
     risk: ['eod', 'intraday'],
     pay: 'monthly',
     dll: 'no',
-    code: 'TDNEW',
-    link: 'https://www.tradeday.com/',
+    code: 'PFTW',
+    link: 'https://www.tradeday.com/?a_aid=PFTW',
     anim: '/anim/tradeday.html',
     metrics: [
       { label: '分潤', value: '最高 90%' },
@@ -328,14 +328,14 @@ export const PRICES: Price[] = [
   },
   {
     id: 'tradeday', name: 'TradeDay · Quick Pay', logo: '/logos/tradeday.png', model: '月費',
-    now: '$62／月', list: '$125／月', activation: '無', total: '首月 $62', code: 'TDNEW',
-    link: 'https://www.tradeday.com/',
+    now: '$62／月', list: '$125／月', activation: '無', total: '首月 $62', code: 'PFTW',
+    link: 'https://www.tradeday.com/?a_aid=PFTW',
     note: 'Intraday 版。分潤有 $4,000 分界，利潤不到 $4,000 只分 50%',
   },
   {
     id: 'tradeday', name: 'TradeDay · Fast Pass', logo: '/logos/tradeday.png', model: '月費',
-    now: '$90／月', list: '$180／月', activation: '無', total: '首月 $90', code: 'TDNEW',
-    link: 'https://www.tradeday.com/',
+    now: '$90／月', list: '$180／月', activation: '無', total: '首月 $90', code: 'PFTW',
+    link: 'https://www.tradeday.com/?a_aid=PFTW',
     note: '分潤一律 80%，小額出金比 Quick Pay 划算',
   },
   {
@@ -381,7 +381,7 @@ export const OFFERS: Offer[] = [
   { firm: 'Lucid — LucidPro 50K', old: '原價 $185', now: '$111', note: '6 折 · 緩衝區 $52,100 · 出金上限比 Flex 高 · 首購再多 10%（5 折）＝$92.50', deadline: '日風控免除活動至 7/24，之後恢復 $1,200', code: 'PFTW', link: 'firms/lucid', until: '2026-07-25' },
   { firm: 'Tradeify — Select 50K', old: '原價 $165', now: '$99', note: '6 折 · 通關後選 Flex（無緩衝）或 Daily（每日領）', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
   { firm: 'Tradeify — Growth 50K', old: '原價 $145', now: '$87', note: '6 折 · 1 天可通關 · 出金需墊到 $53,000', deadline: '折扣碼 JULY · 前 5 次 6 折，之後 7 折', code: 'JULY', link: 'firms/tradeify', until: '2026-07-31' },
-  { firm: 'TradeDay — Quick Pay 50K', old: '原價 $125/月', now: '$62.50/月', note: '5 折 · Intraday 版 · 通關 $0 啟動費', deadline: '折扣碼 TDNEW · 結帳時輸入', code: 'TDNEW', link: 'firms/tradeday' },
+  { firm: 'TradeDay — Quick Pay 50K', old: '原價 $125/月', now: '$62.50/月', note: '5 折 · Intraday 版 · 通關 $0 啟動費', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/tradeday' },
   { firm: 'Apex — 🚨 FLASH DROP', old: '平常 $79', now: '$49', note: '50K 日內追・免啟動費・一口價，Apex 史上最低', deadline: '限時到 7/21 23:59 ET（折扣碼 SAVENOW）', code: 'SAVENOW', link: 'firms/apex', until: '2026-07-21' },
   { firm: 'Apex — 考試（一次性）', old: '原價 $199', now: '$19.90', note: '折扣碼 SAVENOW · 5 入 $85（每個 $17）· 過關另付啟動費', deadline: '考試 30 天內要考完 · 無重置 · 以官網為準', code: 'SAVENOW', link: 'firms/apex' },
 ];

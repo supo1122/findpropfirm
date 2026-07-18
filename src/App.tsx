@@ -4,6 +4,7 @@ import Preloader from './components/Preloader';
 import Chrome from './components/Chrome';
 import NotificationBell from './components/NotificationBell';
 import Discord from './components/Discord';
+import AnnouncementBar from './components/AnnouncementBar';
 import FirmAnim from './components/FirmAnim';
 import { ArrowUpRight } from './components/icons';
 import MissionCard from './components/MissionCard';
@@ -115,6 +116,8 @@ export default function App() {
       </AnimatePresence>
 
       <main className={`bg-black transition-opacity duration-700 ${ready ? 'opacity-100' : 'opacity-0'}`}>
+        <AnnouncementBar />
+
         {/* ===== HERO ===== */}
         <section className="relative min-h-screen overflow-hidden flex flex-col">
           <video src="/videos/hero.mp4" autoPlay muted loop playsInline
@@ -550,10 +553,4 @@ export default function App() {
         </section>
 
         <footer className="px-6 md:px-12 py-10 border-t border-white/10 flex flex-wrap justify-between gap-4 font-body text-sm text-white/40 max-w-5xl mx-auto">
-          <span>© 2026 PropFirmTW · 給台灣人的一站式 Prop Firm 整合</span>
-          <span>更新 2026/07</span>
-        </footer>
-      </main>
-    </>
-  );
-}
+          <span>© 2026 PropFirmTW · 給台灣人的一站式 Prop Firm 整合</span>

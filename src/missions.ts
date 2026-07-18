@@ -302,7 +302,7 @@ export const FIRMS_M: FirmM[] = [
   {
     id: 'tradeday',
     name: 'TradeDay',
-    link: 'https://www.tradeday.com/',
+    link: 'https://www.tradeday.com/?a_aid=PFTW',
     plans: [
       {
         id: 'qp-ind',

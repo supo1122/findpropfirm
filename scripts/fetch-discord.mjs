@@ -100,7 +100,7 @@ async function main() {
         const text = (it.html || '')
           .replace(/<a [^>]*href="([^"]+)"[^>]*>.*?<\/a>/g, ' $1')
           .replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
-        const content = `📡 **【${it.tag || '消息'}】X 最新**\n${text}`.slice(0, 1900);
+        const content = `🐦 **X 快訊**  \`${it.tag || '消息'}\`\n${text}`.slice(0, 1900);
         const wr = await fetch(WEBHOOK, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -139,8 +139,8 @@ async function main() {
     const firm = firmOf(text);
     let zh = await toZh(text.replace(/https?:\/\/\S+/g, '').trim());
     zh = swapCode(zh, firm);
-    const head = `【${tag}】${firm ? FIRM_ZH[firm] : 'PropFirm'}`;
-    const content = `📡 **${head}**\n${zh}`.slice(0, 1900);
+    const head = `📢 **官方公告 · ${firm ? FIRM_ZH[firm] : 'PropFirm'}**  \`${tag}\``;
+    const content = `${head}\n${zh}`.slice(0, 1900);
 
     const wr = await fetch(WEBHOOK, {
       method: 'POST',

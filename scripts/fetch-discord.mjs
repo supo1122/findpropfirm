@@ -84,6 +84,35 @@ async function loadState() {
 async function main() {
   const state = await loadState();
 
+  // ── 整合：把 X 爬蟲的新消息（public/news.json）也轉發到同一個正式群 ──
+  // 用推文 id 去重；第一次執行只記基準、不回填洗版。
+  try {
+    if (existsSync('public/news.json')) {
+      const news = JSON.parse(readFileSync('public/news.json', 'utf8'));
+      const firstX = state.postedX === undefined;   // 第一次整合 → 只記基準
+      const sentX = new Set(state.postedX || []);
+      for (const it of news.items || []) {
+        const m = /x\.com\/[^/]+\/status\/(\d+)/.exec(it.html || '');
+        if (!m) continue;                 // 沒有推文 id（置頂促銷）→ 跳過
+        const id = m[1];
+        if (sentX.has(id)) continue;
+        if (firstX) { sentX.add(id); continue; }   // 首次只記基準
+        const text = (it.html || '')
+          .replace(/<a [^>]*href="([^"]+)"[^>]*>.*?<\/a>/g, ' $1')
+          .replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+        const content = `📡 **【${it.tag || '消息'}】X 最新**\n${text}`.slice(0, 1900);
+        const wr = await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content, allowed_mentions: { parse: [] } }),
+        });
+        if (wr.ok) { sentX.add(id); await new Promise((r) => setTimeout(r, 1200)); }
+        else console.error('X 轉發失敗', wr.status, await wr.text());
+      }
+      state.postedX = [...sentX].slice(0, 300);
+    }
+  } catch (e) { console.error('轉發 X 消息失敗:', e.message); }
+
   // 讀集中頻道訊息（新→舊）。有 lastId 就只抓它之後的新訊息。
   const q = new URLSearchParams({ limit: '50' });
   if (state.lastId) q.set('after', state.lastId);

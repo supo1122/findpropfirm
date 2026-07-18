@@ -553,4 +553,10 @@ export default function App() {
         </section>
 
         <footer className="px-6 md:px-12 py-10 border-t border-white/10 flex flex-wrap justify-between gap-4 font-body text-sm text-white/40 max-w-5xl mx-auto">
-          <span>© 2026 PropFirmTW · 給台灣人的一站式 Prop Firm 整合</span>
+          <span>© 2026 PropFirmTW · 給台灣人的一站式 Prop Firm 整合</span>
+          <span>更新 2026/07</span>
+        </footer>
+      </main>
+    </>
+  );
+}

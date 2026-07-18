@@ -96,4 +96,7 @@ h1, h2, h3, .font-heading {
 /* firm anim placeholder breathe */
 @keyframes breathe { 0%,100%{transform:scale(1);opacity:.9} 50%{transform:scale(1.06);opacity:1} }
 
-/* 上方跑馬燈：內容重複兩輪，位移 -50% 剛好無縫�
+/* 上方跑馬燈：內容重複兩輪，位移 -50% 剛好無縫接回開頭 */
+@keyframes marquee { from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+
+@media(prefers-reduced-motion:reduce){ *{animation:none!important} }

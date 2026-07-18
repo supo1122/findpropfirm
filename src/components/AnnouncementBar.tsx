@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { activeOffers } from '../data';
 
 const GIVEAWAY_DISCORD = 'https://discord.gg/rmCgMQn43T';
 
@@ -12,16 +13,21 @@ const GIVEAWAY_ITEMS = [
   '🔥 LucidFlex 50K ＋ LucidFlex 25K，各一名，7/31 開獎，把握最後機會',
 ];
 
-// 抽獎結束後的最新優惠文案（跑馬燈）
-const PROMO_ITEMS = [
-  '💎 Lucid 7 折 · 折扣碼 PFTW · LucidFlex 50K $98／25K $70 · 首購再多 10%',
-  '⚡ Apex FLASH · 折扣碼 SAVENOW · 50K 一口價 $49 · 史上最低',
-  '🚀 Tradeify 6 折 · 折扣碼 JULY · Select 50K $99／Growth 50K $87',
-  '📈 TradeDay 5 折 · 折扣碼 PFTW · Quick Pay 50K 首月 $62.50',
-];
-
 function pad(n: number) {
   return String(n).padStart(2, '0');
+}
+
+/**
+ * 抽獎結束後的最新優惠文案：直接讀 data.ts 的 activeOffers()，
+ * 爬蟲一更新價格／優惠，這裡就自動同步，不用手改。
+ */
+function buildPromoItems(): string[] {
+  const items = activeOffers().map((o) => {
+    const code = o.code ? ` · 折扣碼 ${o.code}` : '';
+    return `🔥 ${o.firm}　${o.now}${code}`;
+  });
+  // 保底：萬一資料被清空也不會出現空白跑馬燈
+  return items.length ? items : ['🔥 各家 Prop Firm 最新優惠與折扣碼，點我看完整比較'];
 }
 
 /** 上方跑馬燈：抽獎期間顯示倒數計時，7/31 截止後自動切換為最新優惠 */
@@ -54,7 +60,7 @@ export default function AnnouncementBar() {
     background = 'linear-gradient(90deg,#5865F2,#3B3F8F)';
     ariaLabel = '加入 Discord 參加 Lucid 帳號抽獎，倒數計時中';
   } else {
-    items = PROMO_ITEMS;
+    items = buildPromoItems();
     background = 'linear-gradient(90deg,#0EA5A0,#0B5F6B)';
     ariaLabel = '最新 Prop Firm 優惠與折扣碼';
   }

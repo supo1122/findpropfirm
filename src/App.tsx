@@ -18,6 +18,10 @@ const openRules = (id: string) => window.open(`/rules/${id}.html`, '_blank', 'no
 const buy = (url: string) => window.open(url, '_blank', 'noopener');
 
 const FAQ = [
+  ['PF 是什麼？', 'PF 是 Prop Firm（自營交易商）的簡稱。在期貨圈，PF 指提供「資金帳戶」的期貨自營商：你付費參加評測，通過規則後就能用平台資金操盤並分潤，常見的有 Lucid、Apex、Topstep、Tradeify、TradeDay。'],
+  ['台灣 PF 有哪些？怎麼比較？', '台灣交易者常用的期貨 PF 有 Lucid、Apex、Topstep、Tradeify、TradeDay。比較重點是評測規則、出金與分潤條件、啟動費與月費、以及折扣碼——本站把五家整合在同一頁。'],
+  ['PF 規則有哪些？', 'PF 規則通常包含獲利目標、每日虧損限制（日風控）、整體回撤／緩衝區、最低交易天數、一致性規則，以及出金前的獲利日數與分潤比例。各家不同，可用上方「查規則」查你的方案。'],
+  ['PF 價格與折扣碼？', 'PF 價格依帳戶規模（25K、50K）與是否含啟動費而不同，多數平台常有折扣。本站即時更新現價、原價、啟動費與最新折扣碼，例如 Lucid／TradeDay 用 PFTW、Tradeify 用 JULY、Apex 用 SAVENOW。'],
   ['Prop Firm 是什麼？', '自營商用「先考核、後資助」模式：你付費考試，通過後用他們的（模擬）資金操盤並分潤。'],
   ['出金要多久？', '各家不同，多為 1～2 個工作日。Lucid 支援 WorkMarket 或加密貨幣（USDC / USDT）出金。'],
   ['台灣可以用嗎？', '四家目前台灣皆可使用。付款以主要信用卡 / 簽帳卡為主，部分支援加密貨幣。'],

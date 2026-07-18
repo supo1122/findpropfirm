@@ -1,0 +1,43 @@
+name: Discord 公告轉發（每 15 分）
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # 每 15 分鐘
+  workflow_dispatch: {}       # 也可在 Actions 頁手動觸發測試
+
+permissions:
+  contents: write             # 允許 commit 回 discord-state.json
+
+concurrency:
+  group: discord-news
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 讀集中頻道並轉發到正式群
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_SOURCE_CHANNEL_ID: ${{ secrets.DISCORD_SOURCE_CHANNEL_ID }}
+          DISCORD_OUTPUT_WEBHOOK: ${{ secrets.DISCORD_OUTPUT_WEBHOOK }}
+        run: node scripts/fetch-discord.mjs
+      - name: Commit 狀態
+        run: |
+          git config user.name "discord-bot"
+          git config user.email "bot@users.noreply.github.com"
+          if git diff --quiet public/discord-state.json 2>/dev/null; then
+            echo "狀態無變化，略過"; exit 0
+          fi
+          git add public/discord-state.json
+          git commit -m "auto: 更新 Discord 轉發狀態"
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase -X theirs origin/main || { git checkout --theirs public/discord-state.json 2>/dev/null; git add public/discord-state.json; git rebase --continue || true; }
+            if git push origin main; then echo "推送成功"; break; fi
+            echo "重試 $i ..."; sleep 5
+          done

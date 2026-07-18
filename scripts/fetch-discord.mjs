@@ -5,10 +5,11 @@
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
-const SOURCE = process.env.DISCORD_SOURCE_CHANNEL_ID;   // 集中頻道 #各家公告 的 ID
+// 集中頻道 ID：已內建你的 #各家公告，要改也可用環境變數覆蓋
+const SOURCE = process.env.DISCORD_SOURCE_CHANNEL_ID || '1528058945782939680';
 const WEBHOOK = process.env.DISCORD_OUTPUT_WEBHOOK;      // 正式群輸出頻道的 Webhook URL
-if (!TOKEN || !SOURCE || !WEBHOOK) {
-  throw new Error('缺少 DISCORD_BOT_TOKEN / DISCORD_SOURCE_CHANNEL_ID / DISCORD_OUTPUT_WEBHOOK');
+if (!TOKEN || !WEBHOOK) {
+  throw new Error('缺少 DISCORD_BOT_TOKEN / DISCORD_OUTPUT_WEBHOOK（頻道 ID 已內建）');
 }
 
 const STATE_FILE = 'public/discord-state.json';

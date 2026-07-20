@@ -133,6 +133,7 @@ async function main() {
   for (const m of msgs) {
     state.lastId = m.id;
     if (m.type !== 0) continue;         // 跳過系統訊息（如「已將…新增至此頻道」）
+    if ((state.posted || []).includes(m.id)) continue;  // 防重複：發過的不再發
     const text = messageText(m);
     if (!text) continue;
     const tag = classify(text) || '公告';  // DC 不過濾：抓不到分類就標「公告」，全部轉

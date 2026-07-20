@@ -132,10 +132,10 @@ async function main() {
   let posted = 0;
   for (const m of msgs) {
     state.lastId = m.id;
+    if (m.type !== 0) continue;         // 跳過系統訊息（如「已將…新增至此頻道」）
     const text = messageText(m);
     if (!text) continue;
-    const tag = classify(text);
-    if (!tag) continue;                 // 濾掉非故障/優惠/規則的雜訊
+    const tag = classify(text) || '公告';  // DC 不過濾：抓不到分類就標「公告」，全部轉
     const firm = firmOf(text);
     let zh = await toZh(text.replace(/https?:\/\/\S+/g, '').trim());
     zh = swapCode(zh, firm);

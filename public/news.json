@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-23 18:57",
+  "updated": "2026-07-23 20:09",
   "items": [
     {
       "tag": "折扣",
@@ -8,6 +8,10 @@
     {
       "tag": "規則更新",
       "html": "⏳ <b>Lucid Pro 日風控免除中</b>，活動到 <b>2026/7/24</b>，之後恢復 <a href=\"/rules/lucid.html\">看規則↗</a>"
+    },
+    {
+      "tag": "出金",
+      "html": "<b>Apex</b>：來自 Apex Live Funded 交易者的更多即時支付。 <a href=\"https://x.com/ApexTradeFund/status/2080383747493417284\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     },
     {
       "tag": "折扣",
@@ -28,10 +32,6 @@
     {
       "tag": "折扣",
       "html": "<b>TradeDay</b>：💰 第一天支出。 5萬美元的帳戶。 62.50 美元。 QuickPay 提供 50% 折扣且無需啟動費，是道具領域最便宜的 5 萬美元融資途徑 - 並且從您… <a href=\"https://x.com/TradeDayFunding/status/2080221700042399873\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "折扣",
-      "html": "<b>Apex</b>：遺產難以消逝。 🔥舊版評估帳號限時迴歸。永遠不會回來。不要錯過機會。 •第一個月90% 折扣 •定期月份80% 折扣 •舊版終身PA 啟用費：美國東部時間8 … <a href=\"https://x.com/ApexTradeFund/status/2080095715762614678\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     }
   ]
 }

@@ -428,3 +428,78 @@ export function recommend(a: Record<string, string>): { id: string; why: string 
   if (a.speed === 'fast' && a.dll === 'ok' && a.goal !== 'cheap') return { id: 'tradeify', why: '想通關快，Tradeify Growth 可一天通關，Select 通關後出金還免一致性。' };
   return { id: 'lucid', why: '規則最單純：Flex 完全無日風控、無緩衝區、5 個獲利日就能出金，考不過還能一直考——新手首選。50K 折後 $98，首購再多 10%＝$84。' };
 }
+
+// ===== 可交易商品（首頁「30 秒找任務卡」的「可交易商品」切換用）=====
+export type FirmProducts = {
+  platforms: string;   // 交易平台
+  exchanges: string;   // 交易所
+  allow: string[];     // 可交易類別（含代碼）
+  deny: string[];      // 禁止／未提供
+  note?: string;       // 一句話重點
+};
+export const PRODUCTS: Record<string, FirmProducts> = {
+  lucid: {
+    platforms: 'NinjaTrader / Tradovate / Rithmic / Tradesea / MotiveWave / QuantTower',
+    exchanges: 'CME 集團（CME・CBOT・NYMEX・COMEX）',
+    allow: [
+      '股指：ES NQ YM RTY NKD（含微型 MES MNQ M2K MYM）',
+      '外匯期貨：6A 6B 6C 6E 6J 6S 6N',
+      '能源：CL NG 等',
+      '金屬：GC SI 等',
+      '利率・農產品期貨',
+    ],
+    deny: ['比特幣期貨 BTC／MBT', 'VIX 期貨', '股票・選擇權・現貨外匯・現貨加密・CFD'],
+    note: '主流 CME 期貨都能做，但不能碰加密與 VIX。另禁高頻、禁 5 秒內微剝頭皮佔比過半、禁對沖。',
+  },
+  apex: {
+    platforms: 'Tradovate / NinjaTrader / Rithmic 等多平台',
+    exchanges: 'CME 集團（CME・CBOT・NYMEX・COMEX）',
+    allow: [
+      '股指：ES NQ YM RTY（含微型）',
+      '能源：CL NG MCL',
+      '農產品：ZC ZS ZW ZL LE HE',
+      '外匯：6E 6B 6J 6A 6C 6S',
+      '微型加密：MBT（微比特幣）・MET（微以太）',
+      '金屬（2026/5 恢復）：GC SI MGC HG PL PA',
+    ],
+    deny: ['股票・選擇權・現貨外匯・CFD'],
+    note: '商品最齊全的一家——連微型加密（MBT/MET）都能做，金屬 2026/5 起全帳號恢復。',
+  },
+  topstep: {
+    platforms: 'TopstepX（內建 TradingView）',
+    exchanges: 'CME・COMEX・NYMEX・CBOT（僅限期貨）',
+    allow: [
+      '股指：ES MES NQ MNQ RTY M2K NKD',
+      '外匯期貨：6A 6B 6C 6E 6J 6S E7 M6E 等',
+      '能源・利率・農產品期貨',
+      '微型加密：MBT MET',
+    ],
+    deny: ['股票・選擇權・現貨外匯・現貨加密・CFD', '部分商品受限：GC SI HG PL NG QG'],
+    note: '只能做期貨；GC・SI・HG・PL・NG・QG 這幾項受限，下單前留意。',
+  },
+  tradeify: {
+    platforms: 'Tradovate / NinjaTrader / Rithmic / TradingView 等',
+    exchanges: 'CME 集團 ＋ 🇪🇺 Eurex（歐洲）',
+    allow: [
+      '美國期貨：CME・COMEX・NYMEX・CBOT 全系列',
+      '🇪🇺 歐洲 Eurex：DAX(FDAX)・迷你 DAX(FDXM)・Euro Stoxx 50(FESX) 及多檔歐洲指數/債券',
+      '股指・能源・金屬・利率・農產品',
+    ],
+    deny: ['加密貨幣衍生品（含比特幣期貨）'],
+    note: '唯一提供歐洲 Eurex（DAX、Euro Stoxx）的一家，想做歐盤選它；不支援加密。',
+  },
+  tradeday: {
+    platforms: 'Tradovate / NinjaTrader / Rithmic 等多平台',
+    exchanges: 'CME 集團（CME・CBOT・NYMEX・COMEX）全系列',
+    allow: [
+      '股指：ES NQ RTY YM NKD',
+      '外匯：6E 6B 6J 6A 6C 6S 6N',
+      '利率：ZN ZB ZT ZF UB TN（完整利率期貨）',
+      '能源：CL NG',
+      '金屬：GC SI',
+      '農產品：玉米・黃豆・小麥',
+    ],
+    deny: ['加密貨幣'],
+    note: 'CME 全系列都能做（含完整利率期貨）；不能在價格限制 2% 範圍內交易，無加密。',
+  },
+};

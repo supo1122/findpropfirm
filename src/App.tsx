@@ -9,7 +9,7 @@ import FirmAnim from './components/FirmAnim';
 import { ArrowUpRight } from './components/icons';
 import MissionCard from './components/MissionCard';
 import { FIRMS_M, VERIFIED, firmOf, plansOf, sizesOf, type SizeKey } from './missions';
-import { DISCORD, FIRMS, activeOffers, daysLeft, pricesNow, QUIZ, recommend } from './data';
+import { DISCORD, FIRMS, PRODUCTS, activeOffers, daysLeft, pricesNow, QUIZ, recommend } from './data';
 import { copyCode } from './lib/confetti';
 
 // 規則頁在新視窗開啟（避免 Modal 卡住）
@@ -58,6 +58,47 @@ function Code({ code, onToast }: { code: string; onToast: (m: string) => void })
   );
 }
 
+/** 可交易商品面板：選完公司後，「可交易商品」切換顯示 */
+function ProductsPanel({ firmId }: { firmId: string }) {
+  const p = PRODUCTS[firmId];
+  const firm = FIRMS.find((f) => f.id === firmId);
+  if (!p || !firm) return null;
+  return (
+    <motion.div key={firmId} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
+      className="liquid-glass rounded-2xl p-6 md:p-8">
+      <div className="flex items-center gap-3 mb-5">
+        <img src={firm.logo} alt="" className="h-10 w-10 rounded-lg bg-white p-1 object-contain" />
+        <div>
+          <div className="font-heading text-2xl">{firm.name}<span className="text-white/50 text-lg"> · 可交易商品</span></div>
+          <div className="font-body text-xs text-white/50 mt-0.5">{p.exchanges}</div>
+        </div>
+      </div>
+      {p.note && <p className="font-body text-sm text-white/75 mb-5 leading-relaxed">{p.note}</p>}
+      <div className="font-body text-xs text-white/40 mb-1">交易平台</div>
+      <p className="font-body text-sm text-white/80 mb-6">{p.platforms}</p>
+      <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <div className="font-heading text-sm mb-2" style={{ color: '#35E08A' }}>✅ 可交易</div>
+          <ul className="space-y-1.5">
+            {p.allow.map((a, i) => (
+              <li key={i} className="font-body text-sm text-white/80 flex gap-2"><span style={{ color: '#35E08A' }}>·</span><span>{a}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div className="font-heading text-sm mb-2" style={{ color: '#F45B5B' }}>🚫 不可交易／未提供</div>
+          <ul className="space-y-1.5">
+            {p.deny.map((a, i) => (
+              <li key={i} className="font-body text-sm text-white/60 flex gap-2"><span style={{ color: '#F45B5B' }}>·</span><span>{a}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <p className="font-body text-[11px] text-white/40 mt-6">※ 商品清單以官網為準，各家不定期調整。</p>
+    </motion.div>
+  );
+}
+
 export default function App() {
   const [ready, setReady] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
@@ -77,6 +118,7 @@ export default function App() {
   const [mFirm, setMFirm] = useState('lucid');
   const [mPlanId, setMPlanId] = useState('flex');
   const [mSize, setMSize] = useState<SizeKey>('50K');
+  const [mView, setMView] = useState<'plan' | 'products'>('plan'); // 帳號規則 vs 可交易商品
   const mPlans = useMemo(() => plansOf(mFirm), [mFirm]);
   const mPlan = useMemo(
     () => mPlans.find((p) => p.id === mPlanId) ?? mPlans[0],
@@ -252,6 +294,20 @@ export default function App() {
             </div>
           </div>
 
+          {/* 切換：帳號規則 vs 可交易商品 */}
+          <div className="mb-5 flex gap-2">
+            {([['plan', '📋 出金任務規則'], ['products', '🛒 可交易商品']] as const).map(([v, l]) => (
+              <button key={v} onClick={() => setMView(v)}
+                className="glass-hover rounded-lg px-4 py-2 font-heading text-sm transition"
+                style={mView === v
+                  ? { background: '#35E08A', color: '#06110B' }
+                  : { background: '#0F141C', border: '1px solid rgba(255,255,255,.12)', color: '#B9C0CB' }}>
+                {l}
+              </button>
+            ))}
+          </div>
+
+          {mView === 'plan' && (<>
           {/* Step 2 選帳號類型 */}
           <div className="mb-4">
             <div className="font-body text-xs text-white/40 mb-2">② 選帳號類型</div>
@@ -308,6 +364,9 @@ export default function App() {
             <button onClick={() => openRules(mFirm)}
               className="glass-hover liquid-glass rounded-full px-5 py-3 font-heading text-white/60">看完整規則</button>
           </div>
+          </>)}
+
+          {mView === 'products' && <ProductsPanel firmId={mFirm} />}
         </section>
 
         {/* ===== 優惠 ===== */}

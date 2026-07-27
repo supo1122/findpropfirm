@@ -110,6 +110,32 @@ export const FIRMS_M: FirmM[] = [
         },
       },
       {
+        id: 'daily',
+        name: 'LucidDaily 🆕',
+        toLive: '單日毛利達上限自動轉真倉：25K $6,000／50K $8,000／100K $10,000／150K $12,000',
+        sub: '每天都能領 · 通關後無一致性 · 日風控可選',
+        dd: 'Intraday',
+        split: '90/10',
+        tasks: [
+          '考試：賺到 {target}（50% 一致性有緩衝，最快 2 天可過）',
+          '通關後每天都能申請出金——無一致性、無固定次數上限',
+          '餘額要高於緩衝 {goal}（緩衝內的錢不能領），單筆最低 {minPayout}',
+          '單日毛利達 {cap} 會自動被移到真倉',
+        ],
+        redlines: [
+          '餘額碰到最大虧損線就爆：{maxLoss}',
+          '日虧損上限 {dll}（結帳可選 開／關；軟性不沒收帳號）',
+          '真倉禁交易紅色新聞：事件前後各 1 分鐘要空手，違者硬爆',
+        ],
+        tip: 'LucidDaily 主打「每天都能領」：通關後 90/10、無一致性、無固定出金次數上限。回撤在結帳時可選 Intraday（較便宜）或 EOD（較彈性）；日風控也可選開或關。單日毛利達上限會自動轉真倉。',
+        sizes: {
+          '25K': { target: '$1,250', maxLoss: '$1,000', dll: '$600（可關）', goal: '$26,100', cap: '單日毛利上限 $6,000', minPayout: '$500', contracts: '2 mini / 20 micro' },
+          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '$1,200（可關）', goal: '$52,100', cap: '單日毛利上限 $8,000', minPayout: '$500', contracts: '4 mini / 40 micro' },
+          '100K': { target: '$6,000', maxLoss: '$3,000', dll: '$1,800（可關）', goal: '$103,100', cap: '單日毛利上限 $10,000', minPayout: '$500', contracts: '6 mini / 60 micro' },
+          '150K': { target: '$9,000', maxLoss: '$4,500', dll: '$2,700（可關）', goal: '$154,600', cap: '單日毛利上限 $12,000', minPayout: '$500', contracts: '10 mini / 100 micro' },
+        },
+      },
+      {
         id: 'direct',
         name: 'LucidDirect',
         toLive: '第 5 次出金後進真倉審核池（上限 5 次）',

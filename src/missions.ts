@@ -124,10 +124,11 @@ export const FIRMS_M: FirmM[] = [
         ],
         redlines: [
           '餘額碰到最大虧損線就爆：{maxLoss}',
+          '⚠️ 通關後一律「日內追蹤（Intraday）」回撤——即使考試選 EOD：{maxLoss} 隨即時損益（含浮盈）往上跑、只升不降，過 Initial Trail 後才鎖在「起始＋$100」',
           '日虧損上限 {dll}（結帳可選 開／關；軟性不沒收帳號）',
           '真倉禁交易紅色新聞：事件前後各 1 分鐘要空手，違者硬爆',
         ],
-        tip: 'LucidDaily 主打「每天都能領」：通關後 90/10、無一致性、無固定出金次數上限。回撤在結帳時可選 Intraday（較便宜）或 EOD（較彈性）；日風控也可選開或關。單日毛利達上限會自動轉真倉。',
+        tip: 'LucidDaily 主打「每天都能領」：通關後 90/10、無一致性、無固定出金次數上限。⚠️ 考試回撤可選 Intraday（較便宜）或 EOD（較彈性），但通關後的出金帳號一律是 Intraday 日內追蹤（官方明文）；日風控可選開或關。單日毛利達上限會自動轉真倉。',
         sizes: {
           '25K': { target: '$1,250', maxLoss: '$1,000', dll: '$600（可關）', goal: '$26,100', cap: '單日毛利上限 $6,000', minPayout: '$500', contracts: '2 mini / 20 micro' },
           '50K': { target: '$3,000', maxLoss: '$2,000', dll: '$1,200（可關）', goal: '$52,100', cap: '單日毛利上限 $8,000', minPayout: '$500', contracts: '4 mini / 40 micro' },

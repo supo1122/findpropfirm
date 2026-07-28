@@ -16,7 +16,9 @@ export default function MissionCard({
           <span className="font-body text-sm text-white/45">{firmName}</span>
           <span className="font-heading text-white/90">{plan.name}</span>
           <span className="font-heading text-sm px-2.5 py-1 rounded-lg" style={{ background: 'rgba(53,224,138,.14)', color: '#35E08A' }}>{size}</span>
-          <span className="font-body text-xs px-2 py-1 rounded-md" style={{ background: 'rgba(255,255,255,.06)', color: 'rgba(255,255,255,.6)' }}>
+          <span className="font-body text-xs px-2 py-1 rounded-md" style={plan.dd === 'Intraday'
+            ? { background: 'rgba(245,165,36,.14)', color: '#F5A524' }
+            : { background: 'rgba(255,255,255,.06)', color: 'rgba(255,255,255,.6)' }}>
             {plan.dd === 'EOD' ? 'EOD 收盤結算回撤' : 'Intraday 盤中即時回撤'}
           </span>
           {(verified === false || plan.unverified) && (

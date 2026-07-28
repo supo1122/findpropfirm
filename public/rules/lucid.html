@@ -11,6 +11,15 @@
 <meta property="og:url" content="https://propfirmtw.com/rules/lucid.html">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "Lucid Trading 規則 2026 完整中文整理", "description": "Lucid Trading 2026 規則中文詳解：LucidFlex 無日風控、緩衝區、獲利日、出金與分潤條件，含本站折扣碼 PFTW。", "inLanguage": "zh-TW", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://propfirmtw.com/rules/lucid.html"}, "about": {"@type": "Organization", "name": "Lucid Trading"}, "publisher": {"@type": "Organization", "name": "PropFirmTW", "alternateName": ["PFTW", "PropFirmTW", "PropFirm TW"], "url": "https://propfirmtw.com/", "logo": {"@type": "ImageObject", "url": "https://propfirmtw.com/favicon-512.png"}}, "dateModified": "2026-07-28"}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "PropFirmTW", "item": "https://propfirmtw.com/"}, {"@type": "ListItem", "position": 2, "name": "PF 規則比較", "item": "https://propfirmtw.com/compare.html"}, {"@type": "ListItem", "position": 3, "name": "Lucid Trading 規則", "item": "https://propfirmtw.com/rules/lucid.html"}]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Lucid Trading 的一致性規則是什麼？怎麼計算？", "acceptedAnswer": {"@type": "Answer", "text": "一致性 = 該出金週期的單日最大獲利 ÷ 該週期帳戶總獲利。算出的百分比必須低於方案門檻才能出金：LucidFlex 通關後無一致性（考試中 50%）、LucidPro 40%、LucidDirect 20%、LucidDaily 通關後無一致性、LucidMaxx 40%、LucidLive 真倉無限制。每次出金後歸零重算。一致性不是爆倉條件，只是出金資格。"}}, {"@type": "Question", "name": "Lucid Trading 是詐騙嗎？", "acceptedAnswer": {"@type": "Answer", "text": "目前沒有系統性拒絕出金的公開紀錄，出金走 WorkMarket 與加密貨幣，申請後通常 2 個工作天入帳。但仍有實際風險：公司 2024 年成立、營運歷史短；規則調整頻繁；轉真倉時機不完全由交易者決定。建議先用最小規模帳號完整走過一次出金流程再考慮加碼。"}}, {"@type": "Question", "name": "信用卡帳單出現不認識的商家名稱，是被盜刷嗎？", "acceptedAnswer": {"@type": "Answer", "text": "多半不是。Prop Firm 普遍透過第三方金流收款，帳單顯示的可能是金流商名稱而非 Lucid。先比對金額與日期，或到官網訂單紀錄確認。Lucid 考試費是一次性、無月費，若看到週期性扣款請檢查是否為交易平台的行情費或月費。建議用虛擬卡或低額度信用卡支付海外 Prop Firm 費用。"}}, {"@type": "Question", "name": "Lucid Trading 怎麼登入交易？", "acceptedAnswer": {"@type": "Answer", "text": "官網後台只管買帳號、看風控狀態與申請出金，不是下單的地方。實際交易使用 Tradovate、Rithmic 系列（NinjaTrader、Quantower、Sierra Chart）或 Lucid 自家的 Tradesea，購買後會另外收到交易平台帳密，兩邊帳號分開。"}}, {"@type": "Question", "name": "台灣人可以用 Lucid Trading 嗎？出金怎麼拿到台灣？", "acceptedAnswer": {"@type": "Answer", "text": "可以。出金主要走 WorkMarket（可電匯到台灣銀行帳戶）或加密貨幣如 USDT。首次出金需完成 KYC 身分驗證，建議提早準備護照或身分證件。"}}, {"@type": "Question", "name": "LucidFlex、LucidPro、LucidDirect 該選哪一個？", "acceptedAnswer": {"@type": "Answer", "text": "新手建議 LucidFlex：無日風控、通關後無一致性、規則最單純。想單次領較多且能接受 40% 一致性與緩衝區選 LucidPro。已有穩定策略、不想再考試的老手選 LucidDirect，但 20% 一致性代表至少要交易 5 天以上才能出金。想每天都能領則看 LucidDaily。"}}]}
+</script>
 <link rel="stylesheet" href="/rules/rules.css">
 </head><body>
 <header><div class="wrap">
@@ -292,6 +301,88 @@
       <tr><td><b>Pro</b></td><td>150K</td><td>$370</td><td class="col-pay">$222</td><td class="col-pay">$185</td></tr>
     </tbody>
   </table></div>
+
+  <h2><span class="n">10</span> 一致性規則完全解析（Flex 0% / Pro 40% / Direct 20%）</h2>
+  <p>「一致性」（Consistency）是 Lucid 最多人卡關、也最多人誤解的一條。它不是要你每天都賺，而是<b>不准你靠某一天暴賺就走人</b>。公式只有一條：</p>
+  <div class="box warn"><b>一致性 ＝ 該週期單日最大獲利 ÷ 該週期帳戶總獲利</b>算出來的百分比要<span class="pay">低於</span>你方案的門檻才能出金。注意分母是「總獲利」不是「帳戶餘額」，而且<b>每次出金後歸零重算</b>——上一個週期的紀錄完全不影響下一個週期。</div>
+
+  <h3>三種方案的門檻差在哪</h3>
+  <div class="tw"><table>
+    <thead><tr><th>方案</th><th>一致性門檻</th><th>意思</th><th>最少要打幾天</th></tr></thead>
+    <tbody>
+      <tr><td><b>LucidFlex</b>（通關後）</td><td class="col-pay">無</td><td>一天賺完也能領</td><td class="col-pay">看獲利日門檻（5 個獲利日）</td></tr>
+      <tr><td><b>LucidFlex</b>（考試中）</td><td>50%</td><td>單日獲利 ≤ 總獲利一半</td><td>2 天</td></tr>
+      <tr><td><b>LucidPro</b></td><td>40%</td><td>單日獲利 ≤ 總獲利 40%</td><td>3 天</td></tr>
+      <tr><td><b>LucidDirect</b></td><td class="col-risk">20%</td><td>單日獲利 ≤ 總獲利 20%</td><td class="col-risk">5 天</td></tr>
+      <tr><td><b>LucidDaily</b>（通關後）</td><td class="col-pay">無</td><td>每天都能領，考試階段 50%</td><td class="col-pay">無</td></tr>
+      <tr><td><b>LucidMaxx</b></td><td>40%</td><td>同 Pro，另有最少 5 天規定</td><td>5 天</td></tr>
+      <tr><td><b>LucidLive</b>（真倉）</td><td class="col-pay">無</td><td>真錢帳戶不設一致性</td><td class="col-pay">無</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>實際試算：40% 的 Pro 帳號</h3>
+  <p>假設你 LucidPro 50K，這個週期最低獲利目標是 $500。第一天大賺 <b>$2,000</b>，接著就想領錢——不行。$2,000 ÷ $2,000 ＝ 100%，遠超 40%。</p>
+  <ul>
+    <li>要讓那個 $2,000 變成合格的 40%，總獲利必須至少 <b>$5,000</b>（$2,000 ÷ $5,000 ＝ 40%）。</li>
+    <li>也就是說你還得再賺 <b>$3,000</b>，而且<span class="risk">後面任何一天都不能再賺超過 $2,000</span>，不然分子又被推高。</li>
+    <li>反過來想更容易：<b>先決定要領多少，再回推單日上限</b>。目標總獲利 $2,500 的話，每天最多只能賺 $1,000。</li>
+  </ul>
+  <div class="box new"><b>💡 實務做法</b>賺到接近單日上限就收手，不要凹。一致性罰的是「爆賺日」，不是虧損日——<b>虧損的那天不會進分子</b>，但會拉低分母（總獲利），反而讓比例變差。所以連續小賺、少大賠，才是通過一致性最快的路。</div>
+
+  <h3>常見誤解</h3>
+  <ul>
+    <li><b>「我單日虧很多會不會違反一致性？」</b>不會。一致性只看<span class="pay">獲利</span>最大的那天，虧損日不計入分子。但它會減少總獲利，間接讓比例變高。</li>
+    <li><b>「超過就爆倉嗎？」</b>不會。一致性<span class="pay">不是爆倉條件</span>，只是<b>出金資格</b>。沒達標就是先領不到，繼續打就好。真正會爆的只有最大虧損 MLL。</li>
+    <li><b>「出金後要重新累積嗎？」</b>要。每次出金後一致性歸零，新週期重新算。</li>
+    <li><b>「2025/11/28 前買的帳號呢？」</b>Pro 舊帳號是 <b>35%</b>，比現在更嚴。以帳號購買或重置日為準。</li>
+  </ul>
+  <div class="box warn"><b>想完全避開一致性？</b>選 <b>LucidFlex</b>。它是全站唯一「通關後零一致性」的方案，只要湊滿 5 個獲利日（50K 每日至少 $150）就能領——這也是它被列為新手首選的主因。</div>
+
+  <h2><span class="n">11</span> Lucid Trading 是詐騙嗎？該怎麼判斷</h2>
+  <p>這是中文圈搜尋量很高的問題，先講結論：<b>Lucid 目前沒有系統性拒絕出金的公開紀錄</b>，Trustpilot 上有 <b>4,793 則評論、★ 4.6</b>，出金管道走 <b>WorkMarket</b>（美國薪資服務商 ADP 的子平台）與加密貨幣，申請後通常 <b>2 個工作天</b>內入帳。但「不是詐騙」不等於「沒有風險」，下面是你真正該擔心的幾件事。</p>
+
+  <h3>先搞清楚 Prop Firm 的本質</h3>
+  <div class="box warn"><b>你交易的是模擬帳戶，不是真錢</b>Flex / Pro / Direct 全部都是 <b>模擬（sim）環境</b>，公司的收入主要來自考試費，出金是從公司自有資金支付。這是整個產業的通則，不是 Lucid 獨有。只有升到 <b>LucidLive</b> 才是真實市場。理解這點，你才知道自己在買什麼——你買的是「通過考核後領取分潤的權利」，不是投資商品。</div>
+
+  <h3>真正該注意的三個風險</h3>
+  <ul>
+    <li><b>公司成立於 2024 年，營運歷史短。</b>這是最實際的風險。Prop Firm 產業汰換極快，新公司在規則、資金、風控上都還在調整期。不要把大額資金押在單一新平台。</li>
+    <li><b>規則會變，而且變得很快。</b>光是 2025/11 到 2026/07，Pro 的一致性就從 35% 調到 40%、日風控時而免除時而恢復。<span class="risk">你買帳號時的規則不保證是你出金時的規則</span>，購買前務必到官方幫助中心確認當下版本。</li>
+    <li><b>轉 Live 的時機不完全由你決定。</b>官方規則是第 5 次出金後轉真倉，但風控團隊可以提前轉。有使用者回報在預期之外被提前轉 Live，導致原本規劃的出金節奏被打亂。建議<b>提早規劃帳號數量與出金頻率</b>，不要假設一定能領滿 5 次。</li>
+  </ul>
+
+  <h3>怎麼自己驗證一家 Prop Firm</h3>
+  <p>與其問「是不是詐騙」，不如用這幾個可查證的點自己判斷：規則有沒有公開在幫助中心而不是只寫在行銷頁；出金走的是什麼金流商、有沒有第三方；Trustpilot 的負評內容是「規則不滿」還是「領不到錢」（前者正常、後者是紅燈）；規則變更有沒有事先公告；以及最重要的——<b>先用最小規模帳號實際走完一次出金流程</b>，確認錢真的進得來，再考慮加碼。</p>
+  <div class="box risk"><b>⚠️ 不要做的事</b>不要一次買多個大規模帳號、不要把生活費投入考試費、不要相信任何「保證通過」的代考服務（Lucid 明文禁止帳號共用，抓到直接封號且不退費）。</div>
+
+  <h2><span class="n">12</span> 付款安全：關於「盜刷」與扣款疑慮</h2>
+  <p>有人搜「lucid trading 盜刷」，多半是遇到下面幾種狀況，其中大部分不是盜刷：</p>
+  <ul>
+    <li><b>帳單上的商家名稱和 Lucid 對不起來。</b>Prop Firm 普遍透過第三方金流收款，信用卡帳單顯示的可能是金流商名稱而非 Lucid。看到陌生商家名先別急著報遺失，<b>比對金額與日期</b>，或到官網訂單紀錄確認。</li>
+    <li><b>重複扣款。</b>結帳頁失敗後重試，有機率產生兩筆授權。多數會在數日內自動釋放；沒有的話直接開 support ticket 附上交易編號。</li>
+    <li><b>訂閱型扣款。</b>Lucid 的考試費是<span class="pay">一次性</span>、無月費，所以如果看到週期性扣款，那不會是 Lucid 的考試費——請檢查是不是其他平台（例如 Tradovate、Rithmic 的行情費或平台月費）。</li>
+    <li><b>真的被盜刷。</b>如果金額、日期都對不上任何一筆訂單，立刻聯絡發卡行止付，並改掉在該站使用過的密碼。</li>
+  </ul>
+  <div class="box new"><b>💡 降低風險的做法</b>用<b>虛擬卡或單獨一張額度低的信用卡</b>付海外 Prop Firm 的費用，是這個圈子最常見的自保方式：額度限縮、方便追蹤、真出事也好停卡。另外開啟發卡行的即時消費通知，任何扣款都能第一時間看到。</div>
+
+  <h2><span class="n">13</span> 常見問題</h2>
+  <h3>Lucid Trading 怎麼登入？</h3>
+  <p>Lucid 官網的帳號後台只管「買帳號、看風控狀態、申請出金」，<b>不是下單的地方</b>。實際交易要用它支援的交易平台登入，主要是 <b>Tradovate</b>、<b>Rithmic</b> 系列（NinjaTrader、Quantower、Sierra Chart 等），以及 Lucid 自家的 <b>Tradesea</b>。買完帳號後系統會寄交易平台的帳密給你，兩邊帳號是分開的。</p>
+
+  <h3>有手機 App 嗎？</h3>
+  <p>Lucid 官方沒有自己的下單 App。手機下單靠交易平台自己的 App，例如 Tradovate 的行動版；Lucid 後台則是網頁版，手機瀏覽器可以正常操作出金申請。</p>
+
+  <h3>折扣碼 / 優惠碼怎麼用？</h3>
+  <p>結帳頁輸入 <span class="code-chip">PFTW</span>：<b>Flex 一律 7 折、Pro 一律 6 折</b>，全規模適用。<span class="pay">首購結帳時系統會再自動多給 10%</span>，Flex 等於 6 折、Pro 等於 5 折。實際金額以結帳頁顯示為準。</p>
+
+  <h3>考不過會怎樣？要再付錢嗎？</h3>
+  <p>Lucid <b>沒有時間限制</b>，考試沒過可以一直重試；但帳號爆倉（碰到最大虧損）就結束了，要重新購買或使用重置。另外 Lucid <b>免啟動費</b>，通關後不需要再付一筆錢才能開始領——考試費就是全部成本，這點跟部分同業不同。</p>
+
+  <h3>台灣人可以用嗎？出金怎麼拿到台灣？</h3>
+  <p>可以。出金主要走 <b>WorkMarket</b>（可電匯到台灣銀行帳戶）或<b>加密貨幣</b>（USDT 等）。首次出金需要完成 KYC 身分驗證，建議提早準備護照或身分證件，避免卡在驗證。</p>
+
+  <h3>Flex、Pro、Direct 我到底該選哪個？</h3>
+  <p>沒有出金急迫性、想要規則最單純的新手選 <b>Flex</b>（無日風控、通關後無一致性）。想要單次領比較多、能接受 40% 一致性與緩衝區的選 <b>Pro</b>。已經有穩定策略、不想再考一次試的老手選 <b>Direct</b>，但要有心理準備：20% 一致性代表你至少得打滿 5 天以上才領得到錢。</p>
 
   <div class="buy-cta">
     <div class="l">

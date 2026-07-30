@@ -17,7 +17,7 @@ const API = 'https://discord.com/api/v10';
 const H = { Authorization: `Bot ${TOKEN}`, 'User-Agent': 'PropFirmTW-Bot (github actions, v1)' };
 
 // 你的折扣碼：偵測到某家 → 換成你的碼、並附上你的碼
-const MY_CODES = { lucid: 'PFTW', tradeday: 'PFTW', tradeify: 'JULY', apex: 'SAVENOW' };
+const MY_CODES = { lucid: 'PFTW', tradeday: 'PFTW', tradeify: 'PFTW', apex: 'SAVENOW' };
 // 由內文關鍵字判斷是哪一家
 const FIRM_MATCH = [
   ['lucid', /lucid/i],

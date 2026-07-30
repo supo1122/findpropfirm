@@ -195,7 +195,7 @@ export const FIRMS_M: FirmM[] = [
   {
     id: 'tradeify',
     name: 'Tradeify',
-    link: 'https://tradeify.co/',
+    link: 'https://tradeify.co/?ref=ZIPOK2X5',
     plans: [
       {
         id: 'flex',

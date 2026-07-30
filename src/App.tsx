@@ -108,7 +108,7 @@ export default function App() {
 
   const showToast = (m: string) => { setToast(m); setTimeout(() => setToast(null), 1800); };
   // 展示排序（編輯精選；星等維持真實不造假）
-  const ORDER = ['lucid', 'tradeday', 'tradeify', 'apex', 'topstep'];
+  const ORDER = ['lucid', 'tradeify', 'tradeday', 'apex', 'topstep'];
   const ranked = useMemo(() => [...FIRMS].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id)), []);
   const offers = useMemo(() => activeOffers(), []); // 過期活動自動下架
   const prices = useMemo(() => pricesNow(), []);       // 限時特價過期自動恢復原價

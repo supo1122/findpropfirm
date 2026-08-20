@@ -1,9 +1,13 @@
 {
-  "updated": "2026-08-19 23:13",
+  "updated": "2026-08-20 00:35",
   "items": [
     {
       "tag": "折扣",
       "html": "<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 7 折（50K $98）、Pro 6 折（50K $111），<b>首購結帳再多 10%</b>（$84／$92.50）。一次性付費、免啟動費 <a href=\"https://lucidtrading.com/ref/pftw\" target=\"_blank\" rel=\"noopener\">前往購買↗</a>"
+    },
+    {
+      "tag": "活動",
+      "html": "<b>Tradeify</b>：調查顯示…👀 Trader Feud 即將登陸 r/Tradeify。您認為您知道交易者在想什麼嗎？讓自己接受測試，您就可以獲得一個免費的 Tradeify … <a href=\"https://x.com/Tradeify/status/2090220625755541997\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     },
     {
       "tag": "出金",
@@ -24,10 +28,6 @@
     {
       "tag": "折扣",
       "html": "<b>Apex</b>：RT @RazTraderNZ：✅ 另一個 5 萬美元的評估已通過 → 資金已到位 另一個 @ApexTradeFund 帳戶剛剛達到 3,000 美元的利潤目… <a href=\"https://x.com/ApexTradeFund/status/2090073581052981726\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "活動",
-      "html": "<b>Lucid</b>：RT @WatcherGuru：剛剛：🇺🇸 納斯達克將於美國東部時間 12 月晚上 9 點至凌晨 4 點推出隔夜股票交易。 <a href=\"https://x.com/LucidTrading/status/2089813404970066330\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     }
   ]
 }

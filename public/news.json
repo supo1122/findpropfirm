@@ -1,9 +1,17 @@
 {
-  "updated": "2026-08-28 19:44",
+  "updated": "2026-08-29 02:34",
   "items": [
     {
       "tag": "折扣",
       "html": "<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 7 折（50K $98）、Pro 6 折（50K $111），<b>首購結帳再多 10%</b>（$84／$92.50）。一次性付費、免啟動費 <a href=\"https://lucidtrading.com/ref/pftw\" target=\"_blank\" rel=\"noopener\">前往購買↗</a>"
+    },
+    {
+      "tag": "出金",
+      "html": "<b>Tradeify</b>：First payout ever? Maybe. First of many? Absolutely. 👏 <a href=\"https://x.com/Tradeify/status/2093464643024912726\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
+    },
+    {
+      "tag": "出金",
+      "html": "<b>Apex</b>：What could your first payout change? Don't just look at the price. Look at the p… <a href=\"https://x.com/ApexTradeFund/status/2093429349789692335\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     },
     {
       "tag": "出金",
@@ -20,14 +28,6 @@
     {
       "tag": "活動",
       "html": "<b>Tradeify</b>：You thought Forge 300k V2 was the launch? That was the warm-up 🔥 200 beta teste… <a href=\"https://x.com/Tradeify/status/2093128015928574396\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "折扣",
-      "html": "<b>Tradeify</b>：SELECT 300K V2 IS LIVE! 🔥 You asked. We listened. 👀 💰 $349 - down from $449 \ud83d… <a href=\"https://x.com/Tradeify/status/2093061131673776450\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "出金",
-      "html": "<b>Apex</b>：2 PAYOUTS?! Dave crushing it with the Legacy 250K account. <a href=\"https://x.com/ApexTradeFund/status/2093039693214388394\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     }
   ]
 }

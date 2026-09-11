@@ -1,9 +1,13 @@
 {
-  "updated": "2026-09-11 18:51",
+  "updated": "2026-09-11 21:25",
   "items": [
     {
       "tag": "折扣",
       "html": "<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 7 折（50K $98）、Pro 6 折（50K $111），<b>首購結帳再多 10%</b>（$84／$92.50）。一次性付費、免啟動費 <a href=\"https://lucidtrading.com/ref/pftw\" target=\"_blank\" rel=\"noopener\">前往購買↗</a>"
+    },
+    {
+      "tag": "活動",
+      "html": "<b>Tradeify</b>：Rewards Center is now LIVE. (ngl, the team cooked with this one.) More access co… <a href=\"https://x.com/Tradeify/status/2098486737177649268\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     },
     {
       "tag": "出金",
@@ -24,10 +28,6 @@
     {
       "tag": "出金",
       "html": "<b>Apex</b>：RT @nqputs: That feeling when you open your email and see payout approved from @… <a href=\"https://x.com/ApexTradeFund/status/2097829566517575820\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "折扣",
-      "html": "<b>Apex</b>：Justin passed a 300K Legacy Account! 90% OFF until September 22nd, 2026 at 11:59… <a href=\"https://x.com/ApexTradeFund/status/2097781738793484664\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     }
   ]
 }

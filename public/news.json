@@ -1,9 +1,13 @@
 {
-  "updated": "2026-09-17 13:53",
+  "updated": "2026-09-17 17:49",
   "items": [
     {
       "tag": "折扣",
       "html": "<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 7 折（50K $98）、Pro 6 折（50K $111），<b>首購結帳再多 10%</b>（$84／$92.50）。一次性付費、免啟動費 <a href=\"https://lucidtrading.com/ref/pftw\" target=\"_blank\" rel=\"noopener\">前往購買↗</a>"
+    },
+    {
+      "tag": "出金",
+      "html": "<b>Apex</b>：Congratulations to Ashu on her first payout! <a href=\"https://x.com/ApexTradeFund/status/2100630865294565881\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     },
     {
       "tag": "出金",
@@ -24,10 +28,6 @@
     {
       "tag": "折扣",
       "html": "<b>Apex</b>：Funded For Just $49. 100% profit split. One day to pass. Up to 20 PA accounts. I… <a href=\"https://x.com/ApexTradeFund/status/2099519096312230243\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "出金",
-      "html": "<b>TradeDay</b>：📺 How did Henry first hear about TradeDay? 👇 Henry had been trading with other… <a href=\"https://x.com/TradeDayFunding/status/2097700709063905585\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     }
   ]
 }

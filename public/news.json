@@ -1,21 +1,17 @@
 {
-  "updated": "2026-09-21 11:20",
+  "updated": "2026-09-21 17:20",
   "items": [
     {
       "tag": "折扣",
       "html": "<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 7 折（50K $98）、Pro 6 折（50K $111），<b>首購結帳再多 10%</b>（$84／$92.50）。一次性付費、免啟動費 <a href=\"https://lucidtrading.com/ref/pftw\" target=\"_blank\" rel=\"noopener\">前往購買↗</a>"
     },
     {
+      "tag": "活動",
+      "html": "<b>Apex</b>：RT @EinsteinoWallSt: Mark your calendars for next Wednesday... @WSGTA_official i… <a href=\"https://x.com/ApexTradeFund/status/2102017364900319384\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
+    },
+    {
       "tag": "折扣",
       "html": "<b>Tradeify</b>：Last CEO reveal: @Syanne 🥊 Years in the gym have taught her that the results do… <a href=\"https://x.com/Tradeify/status/2101793529475604891\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "活動",
-      "html": "<b>Tradeify</b>：CEO reveal: @CooperTV is joining the league. Man's spent years force buying with… <a href=\"https://x.com/Tradeify/status/2101785974137077957\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "活動",
-      "html": "<b>Tradeify</b>：Almost through the CEO reveals: @PikabooIRL is next. One of the highest rated ar… <a href=\"https://x.com/Tradeify/status/2101782199439606024\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     },
     {
       "tag": "活動",
@@ -28,6 +24,10 @@
     {
       "tag": "出金",
       "html": "<b>Apex</b>：DOUBLE DIGITS. Marco just secured his 10TH PAYOUT with Apex Trader Funding. Ten … <a href=\"https://x.com/ApexTradeFund/status/2100223850071961645\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
+    },
+    {
+      "tag": "出金",
+      "html": "<b>TradeDay</b>：⚡ Why Henry picked TradeDay over other prop firms 👇 For Henry, it came down to … <a href=\"https://x.com/TradeDayFunding/status/2100160725998055891\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     }
   ]
 }

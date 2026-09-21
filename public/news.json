@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-21 05:37",
+  "updated": "2026-09-21 11:20",
   "items": [
     {
       "tag": "折扣",
@@ -19,15 +19,15 @@
     },
     {
       "tag": "活動",
-      "html": "<b>Tradeify</b>：Another CEO just clocked in! @EsfandTV joins PTL-C. Professional chaos generator… <a href=\"https://x.com/Tradeify/status/2101778163973951707\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
-    },
-    {
-      "tag": "活動",
       "html": "<b>Apex</b>：Basu has unlocked another LIVE Bonus Vault payment. Congrats Basu! <a href=\"https://x.com/ApexTradeFund/status/2100944762282873095\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     },
     {
       "tag": "出金",
       "html": "<b>Apex</b>：Congratulations to Ashu on her first payout! <a href=\"https://x.com/ApexTradeFund/status/2100630865294565881\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
+    },
+    {
+      "tag": "出金",
+      "html": "<b>Apex</b>：DOUBLE DIGITS. Marco just secured his 10TH PAYOUT with Apex Trader Funding. Ten … <a href=\"https://x.com/ApexTradeFund/status/2100223850071961645\" target=\"_blank\" rel=\"noopener\">原文↗</a>"
     }
   ]
 }

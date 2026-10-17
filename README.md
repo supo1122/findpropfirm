@@ -31,6 +31,12 @@ npm run dev
 ## 改內容
 所有五家規則、折扣、通知、測驗邏輯都集中在 **`src/data.ts`**，改資料不用動畫面。
 
+## 規則頁／比較頁（/rules/*.html、/compare.html）
+- 上半部是 React 互動區：`src/rules/RulesApp.tsx`、`src/compare/CompareApp.tsx`，工具在 `src/tools/`。
+- 下半部的完整長文（SEO 用）放在 **`src/pages-src/*.html`**，建置時每個 h2 段落自動變成可摺疊區塊。要改長文就改這裡。
+- 出金任務表由 `node scripts/gen-rules.mjs` 從 `src/missions.ts` 產生，寫進 `src/pages-src/`。
+- `npm run build` 會把六頁預先畫成靜態 HTML（網址不變），不用另外跑指令。
+
 ## 部署到網域（免費）
 ```
 npm run build      # 產出 dist/

@@ -8,6 +8,7 @@ import AnnouncementBar from './components/AnnouncementBar';
 import FirmAnim from './components/FirmAnim';
 import { ArrowUpRight } from './components/icons';
 import MissionCard from './components/MissionCard';
+import { CompareButton, CompareTray } from './components/CompareUI';
 import { FIRMS_M, VERIFIED, firmOf, plansOf, sizesOf, type SizeKey } from './missions';
 import { DISCORD, FIRMS, PRODUCTS, activeOffers, daysLeft, pricesNow, QUIZ, recommend } from './data';
 import { copyCode } from './lib/confetti';
@@ -151,6 +152,7 @@ export default function App() {
       <Chrome />
       <NotificationBell />
       <Discord />
+      <CompareTray />
 
       <AnimatePresence>
         {toast && (
@@ -352,7 +354,16 @@ export default function App() {
             <motion.div key={mFirm + mPlanId + mSize}
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}>
-              {mPlan && <MissionCard plan={mPlan} size={mSize} firmName={firmOf(mFirm).name} verified={VERIFIED[mFirm]} />}
+              {mPlan && <MissionCard plan={mPlan} size={mSize} firmName={firmOf(mFirm).name} verified={VERIFIED[mFirm]}
+                actions={<>
+                  <CompareButton firm={mFirm} plan={mPlan.id} size={mSize} />
+                  {mPlan.calc && (
+                    <a href={`/rules/${mFirm}.html?plan=${mPlan.id}&size=${mSize}&tool=calc#tools`}
+                      className="font-heading text-xs rounded-lg px-2.5 py-1.5" style={{ background: 'rgba(91,157,244,.14)', color: '#5B9DF4' }}>
+                      🧮 試算 →
+                    </a>
+                  )}
+                </>} />}
             </motion.div>
           </AnimatePresence>
 

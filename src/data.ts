@@ -354,6 +354,11 @@ export const PRICES: Price[] = [
 
 /** 價格表要顯示的版本：限時特價未過期就套用 flashPrice，過期自動恢復原價。
  *  UI 一律用這個，不要直接用 PRICES，才會自動下架過期特價。 */
+/** 這家的折扣碼：公司資料沒有就找價格表（Apex 的 SAVENOW 只寫在價格表） */
+export function codeOf(firmId: string): string | undefined {
+  return FIRMS.find((f) => f.id === firmId)?.code || PRICES.find((p) => p.id === firmId && p.code)?.code || undefined;
+}
+
 export function pricesNow(): Price[] {
   const today = todayTW();
   return PRICES.map((p) =>

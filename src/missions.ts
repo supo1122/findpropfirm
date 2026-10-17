@@ -25,7 +25,42 @@ export type Spec = {
   minPayout?: string;
   /** 部位上限 */
   contracts?: string;
+  /** 每個出金週期最低獲利（與考試目標不同時才填，例：LucidPro） */
+  cycle?: string;
 };
+
+/** 試算器／帳戶線模擬／一致性計算器用的數字規則。只放規則資料裡有寫的東西。 */
+export type Calc = {
+  /** 考試最少交易天數 */
+  examDays?: number;
+  /** 考試一致性：最佳單日 ≤ 總獲利 × 此比例 */
+  examCons?: number;
+  /** Topstep：最佳單日要 < 「獲利目標」× examCons（不是總獲利） */
+  examConsOfTarget?: boolean;
+  /** 出金前要幾個獲利日（每天 ≥ minDay） */
+  payDays?: number;
+  /** 出金前要交易幾天（不論賺賠） */
+  payTradeDays?: number;
+  /** 出金一致性：最佳單日 ≤ 總獲利 × 此比例 */
+  payCons?: number;
+  /** 出金前要先站上的門檻：balance＝餘額線（goal／安全網）、profit＝goal 第一個金額是利潤、cycle＝每週期利潤目標 */
+  gate?: 'balance' | 'profit' | 'cycle';
+  /** 每次可領：half＝獲利 50%、aboveGate＝門檻以上的部分、all＝全部獲利、double＝當天利潤 ×2 */
+  amount: 'half' | 'aboveGate' | 'all' | 'double';
+  /** cap 欄位不是「單次出金上限」（例：LucidDaily 寫的是單日毛利上限） */
+  noCap?: boolean;
+  /** 回撤爬到「起始 + lock」就停住不再追 */
+  lock?: number;
+  /** 分潤比例 */
+  split: number;
+  /** TradeDay Quick Pay：當前利潤 $4,000 以下的部分只分 50% */
+  splitTier?: boolean;
+  /** 規則有模糊地帶時，試算結果下方顯示的假設 */
+  note?: string;
+};
+
+/** 圖像化任務卡用的一行：[圖示, 短句]。短句可用與 tasks 相同的 {佔位符} */
+export type Item = [icon: string, text: string];
 
 export type Plan = {
   id: string;
@@ -41,6 +76,12 @@ export type Plan = {
   tasks: string[];
   /** 🚫 紅線 */
   redlines: string[];
+  /** 試算器用數字規則（真倉方案不提供） */
+  calc?: Calc;
+  /** 首頁任務卡①考試階段（短句）。null = 免考試直接開帳 */
+  exam?: Item[] | null;
+  /** 首頁任務卡②出金帳號階段（短句） */
+  payout?: Item[];
   tip?: string;
   /** 幾次出金會轉真倉（每家都不一樣，買之前一定要知道） */
   toLive?: string;
@@ -65,6 +106,16 @@ export const FIRMS_M: FirmM[] = [
         sub: '規則最單純 · 新手首選',
         dd: 'EOD',
         split: '90/10',
+        calc: { examCons: 0.5, payDays: 5, amount: 'half', lock: 100, split: 0.9 },
+        exam: [
+          ['⚖️', '最佳單日 ≤ 總獲利 50%'],
+          ['🔁', '沒有時限，考不過可以一直考'],
+        ],
+        payout: [
+          ['📅', '5 個獲利日，每天 ≥ {minDay}'],
+          ['➕', '當期淨利為正（賺 $1 也算）'],
+          ['✅', '無日風控・無一致性・無緩衝'],
+        ],
         tasks: [
           '5 個獲利日，每日至少賺 {minDay}',
           '該出金週期淨獲利為正（賺 $1 也算）',
@@ -89,9 +140,19 @@ export const FIRMS_M: FirmM[] = [
         sub: '有緩衝區 · 出金上限較高',
         dd: 'EOD',
         split: '90/10',
+        calc: { examDays: 1, gate: 'balance', payCons: 0.4, amount: 'aboveGate', lock: 100, split: 0.9 },
+        exam: [
+          ['⚡', '最快 1 天通關'],
+          ['🔁', '沒有時限，考不過可以一直考'],
+        ],
+        payout: [
+          ['🛡️', '餘額先站上緩衝 {goal}'],
+          ['🎯', '每個週期至少賺 {cycle}'],
+          ['⚖️', '最佳單日 ≤ 週期獲利 40%'],
+        ],
         tasks: [
           '餘額要打過緩衝 {goal}（緩衝內的錢不能領）',
-          '該週期至少賺到 {target}',
+          '該週期至少賺到 {cycle}',
           '最佳單日 ≤ 該週期總獲利的 40%',
           '單次最多領 {cap}',
         ],
@@ -103,10 +164,10 @@ export const FIRMS_M: FirmM[] = [
         ],
         tip: '餘額收在緩衝之上後，固定日風控會換成 LucidScale：最高 EOD 利潤 × 60%，只升不降。2025/11/28 前買的帳號一致性是 35%。',
         sizes: {
-          '25K': { target: '$250', maxLoss: '$1,000', dll: '無', goal: '$26,100', cap: '首次 $1,000，第 2 次起 $1,500', minPayout: '$500', contracts: '2 mini / 20 micro' },
-          '50K': { target: '$500', maxLoss: '$2,000', dll: '$1,200', goal: '$52,100', cap: '首次 $2,000，第 2 次起 $2,500', minPayout: '$500', contracts: '4 mini / 40 micro' },
-          '100K': { target: '$750', maxLoss: '$3,000', dll: '$1,800', goal: '$103,100', cap: '首次 $2,500，第 2 次起 $3,000', minPayout: '$500', contracts: '6 mini / 60 micro' },
-          '150K': { target: '$1,000', maxLoss: '$4,500', dll: '$2,700', goal: '$154,600', cap: '首次 $3,000，第 2 次起 $3,500', minPayout: '$500', contracts: '10 mini / 100 micro' },
+          '25K': { target: '$1,250', cycle: '$250', maxLoss: '$1,000', dll: '無', goal: '$26,100', cap: '首次 $1,000，第 2 次起 $1,500', minPayout: '$500', contracts: '2 mini / 20 micro' },
+          '50K': { target: '$3,000', cycle: '$500', maxLoss: '$2,000', dll: '$1,200', goal: '$52,100', cap: '首次 $2,000，第 2 次起 $2,500', minPayout: '$500', contracts: '4 mini / 40 micro' },
+          '100K': { target: '$6,000', cycle: '$750', maxLoss: '$3,000', dll: '$1,800', goal: '$103,100', cap: '首次 $2,500，第 2 次起 $3,000', minPayout: '$500', contracts: '6 mini / 60 micro' },
+          '150K': { target: '$9,000', cycle: '$1,000', maxLoss: '$4,500', dll: '$2,700', goal: '$154,600', cap: '首次 $3,000，第 2 次起 $3,500', minPayout: '$500', contracts: '10 mini / 100 micro' },
         },
       },
       {
@@ -116,6 +177,16 @@ export const FIRMS_M: FirmM[] = [
         sub: '每天都能領 · 通關後無一致性 · 日風控可選',
         dd: 'Intraday',
         split: '90/10',
+        calc: { examCons: 0.5, gate: 'balance', amount: 'aboveGate', noCap: true, lock: 100, split: 0.9 },
+        exam: [
+          ['⚖️', '50% 一致性（有緩衝）'],
+          ['⚡', '最快 2 天可過'],
+        ],
+        payout: [
+          ['📆', '通關後每天都能領'],
+          ['🛡️', '餘額要高於緩衝 {goal}'],
+          ['✅', '無一致性・單筆最低 {minPayout}'],
+        ],
         tasks: [
           '考試：賺到 {target}（50% 一致性有緩衝，最快 2 天可過）',
           '通關後每天都能申請出金——無一致性、無固定次數上限',
@@ -143,6 +214,13 @@ export const FIRMS_M: FirmM[] = [
         sub: '免考試直接開帳 · 一致性最嚴',
         dd: 'EOD',
         split: '90/10',
+        calc: { gate: 'cycle', payCons: 0.2, amount: 'all', lock: 100, split: 0.9 },
+        exam: null,
+        payout: [
+          ['🎯', '該週期賺到 {goal}'],
+          ['⚖️', '最佳單日 ≤ 20%（全站最嚴）'],
+          ['🗓️', '實際上至少要打 5 天'],
+        ],
         tasks: [
           '該週期賺到利潤目標 {goal}',
           '最佳單日 ≤ 該週期總獲利的 20%（全站最嚴）',
@@ -204,6 +282,17 @@ export const FIRMS_M: FirmM[] = [
         sub: '考過後選這條 · 無日風控、無緩衝',
         dd: 'EOD',
         split: '90/10',
+        calc: { examCons: 0.4, payDays: 5, amount: 'half', split: 0.9 },
+        exam: [
+          ['⚖️', '考試 40% 一致性'],
+          ['📅', '最快 3 天・考試無日風控'],
+          ['🔀', '考過再選 Flex / Daily（不能改）'],
+        ],
+        payout: [
+          ['📅', '5 個獲利日，每天 ≥ {minDay}'],
+          ['💵', '每次可領總獲利 50%'],
+          ['✅', '無最低餘額・無日風控'],
+        ],
         tasks: [
           '5 個獲利日，每日至少賺 {minDay}',
           '單次可領總獲利的 50%，最高 {cap}',
@@ -215,10 +304,10 @@ export const FIRMS_M: FirmM[] = [
         ],
         tip: '⚠️ 第 2 次起當期必須為正。例：第一次出金後餘額 $51,250，之後虧到 $50,800（當期 −$450）→ 不能出金，要先賺回 $450 讓當期轉正。注意 50% 是算「總獲利」（現在餘額 − 起始餘額），不是只算這一輪賺的。',
         sizes: {
-          '25K': { maxLoss: '$1,000', dll: '無', minDay: '$100', cap: '$1,250', contracts: '起始 1 mini，最高 2 mini' },
-          '50K': { maxLoss: '$2,000', dll: '無', minDay: '$150', cap: '$3,000', contracts: '起始 2 mini，最高 4 mini' },
-          '100K': { maxLoss: '$3,000', dll: '無', minDay: '$200', cap: '$4,000', contracts: '起始 3 mini，最高 8 mini' },
-          '150K': { maxLoss: '$4,500', dll: '無', minDay: '$250', cap: '$5,000', contracts: '起始 3 mini，最高 12 mini' },
+          '25K': { target: '$1,500', maxLoss: '$1,000', dll: '無', minDay: '$100', cap: '$1,250', contracts: '起始 1 mini，最高 2 mini' },
+          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '無', minDay: '$150', cap: '$3,000', contracts: '起始 2 mini，最高 4 mini' },
+          '100K': { target: '$6,000', maxLoss: '$3,000', dll: '無', minDay: '$200', cap: '$4,000', contracts: '起始 3 mini，最高 8 mini' },
+          '150K': { target: '$9,000', maxLoss: '$4,500', dll: '無', minDay: '$250', cap: '$5,000', contracts: '起始 3 mini，最高 12 mini' },
         },
       },
       {
@@ -228,6 +317,17 @@ export const FIRMS_M: FirmM[] = [
         sub: '考過後選這條 · 每天可領但有緩衝',
         dd: 'EOD',
         split: '90/10',
+        calc: { examCons: 0.4, gate: 'profit', amount: 'double', split: 0.9, note: '假設利潤過緩衝後，隔天申請「當天利潤 × 2」' },
+        exam: [
+          ['⚖️', '考試 40% 一致性'],
+          ['📅', '最快 3 天・考試無日風控'],
+          ['🔀', '考過再選 Flex / Daily（不能改）'],
+        ],
+        payout: [
+          ['🛡️', '利潤先打過緩衝 {goal}'],
+          ['📆', '之後每天都能領'],
+          ['✖️', '可領「上次出金後利潤 × 2」'],
+        ],
         tasks: [
           '先把利潤打過緩衝 {goal}——緩衝內的錢不能領',
           '之後每天都能申請',
@@ -240,10 +340,10 @@ export const FIRMS_M: FirmM[] = [
         ],
         tip: '⚠️ 緩衝算的是「利潤」不是餘額。例（50K）：賺了 $250 → 2×$250，最多領 $500；賺 $700 → 2×$700=$1,400 但上限 $1,000，只能領 $1,000。賺不到 $125 連最低 $250 都領不了。',
         sizes: {
-          '25K': { maxLoss: '$1,000', dll: '$500', goal: '$1,100（餘額要到 $26,100）', cap: '$600', minPayout: '$250', contracts: '起始 1 mini，最高 2 mini' },
-          '50K': { maxLoss: '$2,000', dll: '$1,000', goal: '$2,100（餘額要到 $52,100）', cap: '$1,000', minPayout: '$250', contracts: '起始 2 mini，最高 4 mini' },
-          '100K': { maxLoss: '$2,500', dll: '$1,250', goal: '$2,600（餘額要到 $102,600）', cap: '$1,500', minPayout: '$250', contracts: '起始 3 mini，最高 8 mini' },
-          '150K': { maxLoss: '$3,500', dll: '$1,750', goal: '$3,600（餘額要到 $153,600）', cap: '$2,500', minPayout: '$250', contracts: '起始 3 mini，最高 12 mini' },
+          '25K': { target: '$1,500', maxLoss: '$1,000', dll: '$500', goal: '$1,100（餘額要到 $26,100）', cap: '$600', minPayout: '$250', contracts: '起始 1 mini，最高 2 mini' },
+          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '$1,000', goal: '$2,100（餘額要到 $52,100）', cap: '$1,000', minPayout: '$250', contracts: '起始 2 mini，最高 4 mini' },
+          '100K': { target: '$6,000', maxLoss: '$2,500', dll: '$1,250', goal: '$2,600（餘額要到 $102,600）', cap: '$1,500', minPayout: '$250', contracts: '起始 3 mini，最高 8 mini' },
+          '150K': { target: '$9,000', maxLoss: '$3,500', dll: '$1,750', goal: '$3,600（餘額要到 $153,600）', cap: '$2,500', minPayout: '$250', contracts: '起始 3 mini，最高 12 mini' },
         },
       },
       {
@@ -253,6 +353,16 @@ export const FIRMS_M: FirmM[] = [
         sub: '1 天就能考過 · 但出金要墊最低餘額',
         dd: 'EOD',
         split: '90/10',
+        calc: { gate: 'balance', payDays: 5, payCons: 0.35, amount: 'aboveGate', split: 0.9, note: '保守估算：只算緩衝線以上的部分' },
+        exam: [
+          ['⚡', '1 天就能過・無一致性'],
+          ['📉', '考試就有日風控 {dll}'],
+        ],
+        payout: [
+          ['🛡️', '餘額打到 {goal}'],
+          ['📅', '5 個獲利日，每天 ≥ {minDay}'],
+          ['⚖️', '最佳單日 ≤ 35%'],
+        ],
         tasks: [
           '餘額要打到 {goal} 才能申請',
           '5 個獲利日，每日至少賺 {minDay}',
@@ -278,6 +388,13 @@ export const FIRMS_M: FirmM[] = [
         sub: '免考試直接開帳 · 無最低天數',
         dd: 'EOD',
         split: '90/10',
+        calc: { gate: 'cycle', payCons: 0.2, amount: 'all', split: 0.9 },
+        exam: null,
+        payout: [
+          ['🎯', '該週期賺到 {goal}'],
+          ['⚖️', '一致性 20% → 25% → 30%'],
+          ['⚡', '無最低天數，達標當天可領'],
+        ],
         tasks: [
           '該週期賺到利潤目標 {goal}（達標才解鎖申請）',
           '一致性：第 1 次 20% → 第 2 次 25% → 第 3 次起 30%',
@@ -338,6 +455,15 @@ export const FIRMS_M: FirmM[] = [
         sub: '最便宜 · 但回撤含浮盈',
         dd: 'Intraday',
         split: '$4,000 分界:50% / 80%',
+        calc: { examDays: 5, examCons: 0.3, amount: 'all', split: 0.8, splitTier: true },
+        exam: [
+          ['📅', '最少交易 5 天'],
+          ['⚖️', '最佳單日 ≤ 30%'],
+        ],
+        payout: [
+          ['💵', '正餘額就能領，最低 {minPayout}'],
+          ['💡', '利潤過 $4,000 再領 → 分潤 80%'],
+        ],
         tasks: [
           '考試：最少 5 天 + 賺到 {target} + 最佳單日 ≤ 總獲利 30%',
           '通關後只要正餘額就能領，最低 {minPayout}',
@@ -362,6 +488,16 @@ export const FIRMS_M: FirmM[] = [
         sub: '考試較好過 · 但出金帳號仍是 Intraday',
         dd: 'EOD',
         split: '$4,000 分界:50% / 80%',
+        calc: { examDays: 5, examCons: 0.3, amount: 'all', split: 0.8, splitTier: true },
+        exam: [
+          ['📅', '最少交易 5 天'],
+          ['⚖️', '最佳單日 ≤ 30%'],
+          ['🌙', '考試用 EOD 回撤（較好過）'],
+        ],
+        payout: [
+          ['💵', '正餘額就能領，最低 {minPayout}'],
+          ['💡', '利潤過 $4,000 再領 → 分潤 80%'],
+        ],
         tasks: [
           '考試：最少 5 天 + 賺到 {target} + 最佳單日 ≤ 總獲利 30%（EOD 結算回撤）',
           '通關後只要正餘額就能領，最低 {minPayout}',
@@ -386,6 +522,16 @@ export const FIRMS_M: FirmM[] = [
         sub: '無最低天數 · 分潤一律 80%',
         dd: 'EOD',
         split: '80/20（無分界）',
+        calc: { examCons: 0.45, payDays: 5, amount: 'half', split: 0.8 },
+        exam: [
+          ['⚖️', '最佳單日 ≤ 45%'],
+          ['⚡', '無最低交易天數'],
+        ],
+        payout: [
+          ['📅', '5 個獲利日，每天 ≥ {minDay}'],
+          ['➕', '餘額高於起始・當期淨利為正'],
+          ['💵', '每次可領餘額 50%'],
+        ],
         tasks: [
           '考試：賺到 {target} + 最佳單日 ≤ 總獲利 45%，無最低交易天數',
           '出金:5 個獲利日，每日至少賺 {minDay}',
@@ -444,6 +590,16 @@ export const FIRMS_M: FirmM[] = [
         sub: '5 個獲利日 · 老牌路線',
         dd: 'EOD',
         split: '90/10',
+        calc: { examDays: 2, examCons: 0.5, examConsOfTarget: true, payDays: 5, amount: 'half', lock: 0, split: 0.9 },
+        exam: [
+          ['⚖️', '最佳單日 < 目標的 50%'],
+          ['📅', '最快 2 天（不能 1 天）'],
+        ],
+        payout: [
+          ['📅', '5 個獲利日，每天 ≥ {minDay}'],
+          ['💵', '每次可領餘額 50%'],
+          ['💡', '結帳加購 DLL → 上限加倍'],
+        ],
         tasks: [
           '先考過 Combine：賺到 {target}，最佳單日 < 獲利目標的 50%（最快 2 天，不能 1 天）',
           '出金:5 個獲利日，每日至少賺 {minDay}',
@@ -467,6 +623,16 @@ export const FIRMS_M: FirmM[] = [
         sub: '只要 3 天 · 出金上限更高',
         dd: 'EOD',
         split: '90/10',
+        calc: { examDays: 2, examCons: 0.5, examConsOfTarget: true, payTradeDays: 3, payCons: 0.4, amount: 'half', lock: 0, split: 0.9 },
+        exam: [
+          ['⚖️', '最佳單日 < 目標的 50%'],
+          ['📅', '最快 2 天（不能 1 天）'],
+        ],
+        payout: [
+          ['📅', '只要交易 3 天（每天 ≥ 1 筆）'],
+          ['⚖️', '最佳單日 ≤ 總淨利 40%'],
+          ['💵', '每次可領餘額 50%'],
+        ],
         tasks: [
           '先考過 Combine：賺到 {target}，最佳單日 < 獲利目標的 50%',
           '出金：只要交易 3 天（每天至少 1 筆）',
@@ -526,6 +692,17 @@ export const FIRMS_M: FirmM[] = [
         sub: '回撤收盤才重算 · 但考試有日風控',
         dd: 'EOD',
         split: '100%',
+        calc: { examDays: 1, gate: 'balance', payDays: 5, payCons: 0.5, amount: 'aboveGate', lock: 100, split: 1 },
+        exam: [
+          ['⚡', '1 天可過・30 天內完成'],
+          ['📉', '考試有日風控 {dll}'],
+        ],
+        payout: [
+          ['🛡️', '餘額打到 {goal}'],
+          ['📅', '5 個獲利日，每天 ≥ {minDay}'],
+          ['⚖️', '最佳單日 < 獲利 50%'],
+          ['🔢', '每個 PA 最多領 6 次'],
+        ],
         tasks: [
           '考試：賺到 {target}，不用最低天數，1 天過也可以（30 天內要完成）',
           '出金：餘額要打到 {goal}',
@@ -557,6 +734,17 @@ export const FIRMS_M: FirmM[] = [
         sub: '回撤跟著浮盈即時跑 · 考試無日風控',
         dd: 'Intraday',
         split: '100%',
+        calc: { examDays: 1, gate: 'balance', payDays: 5, payCons: 0.5, amount: 'aboveGate', lock: 100, split: 1 },
+        exam: [
+          ['⚡', '1 天可過・30 天內完成'],
+          ['✅', '考試無日風控'],
+        ],
+        payout: [
+          ['🛡️', '餘額打到 {goal}'],
+          ['📅', '5 個獲利日，每天 ≥ {minDay}'],
+          ['⚖️', '最佳單日 < 獲利 50%'],
+          ['🔢', '每個 PA 最多領 6 次'],
+        ],
         tasks: [
           '考試：賺到 {target}，不用最低天數，1 天過也可以（30 天內要完成）',
           '出金：餘額要打到 {goal}',
@@ -646,6 +834,7 @@ export function fill(text: string, s: Spec, plan?: Plan): string {
     .replace(/\{minDay\}/g, s.minDay ?? '—')
     .replace(/\{cap\}/g, s.cap)
     .replace(/\{target\}/g, s.target ?? '—')
+    .replace(/\{cycle\}/g, s.cycle ?? '—')
     .replace(/\{maxLoss\}/g, s.maxLoss)
     .replace(/\{dll\}/g, s.dll ?? '無')
     .replace(/\{minPayout\}/g, s.minPayout ?? '—');

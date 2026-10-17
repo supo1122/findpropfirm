@@ -1,4 +1,4 @@
-// 從 src/missions.ts 產生規則頁的「出金任務」區塊,寫進 public/rules/*.html
+// 從 src/missions.ts 產生規則頁的「出金任務」區塊,寫進 src/pages-src/*.html（規則頁原始長文，建置時摺疊進頁面）
 // 用法:node scripts/gen-rules.mjs
 // 規則頁中以 <!--MISSIONS:START--> ... <!--MISSIONS:END--> 標記插入點。
 import { execSync } from 'node:child_process';
@@ -28,6 +28,7 @@ function planBlock(firm, plan) {
     ['最大虧損(碰到就爆)', (s) => s.maxLoss, 'col-risk'],
     ['日虧損上限', (s) => s.dll ?? '無', 'col-risk'],
     ['要打到', (s) => s.goal, 'col-pay'],
+    ['每週期最低獲利', (s) => s.cycle, 'col-pay'],
     ['獲利日門檻', (s) => s.minDay, 'col-pay'],
     ['單次最多領', (s) => s.cap, 'col-pay'],
     ['最低出金', (s) => s.minPayout, ''],
@@ -87,14 +88,18 @@ ${firm.plans.map((p) => planBlock(firm, p)).join('\n')}
 
 let n = 0;
 for (const firm of FIRMS_M) {
-  const file = path.join(root, 'public/rules', `${firm.id}.html`);
+  const file = path.join(root, 'src/pages-src', `${firm.id}.html`);
   if (!existsSync(file)) { console.warn(`skip (no file): ${firm.id}`); continue; }
   const html = readFileSync(file, 'utf8');
   if (!html.includes('<!--MISSIONS:START-->')) {
     console.warn(`skip (no marker): ${firm.id}.html — 請先加入 <!--MISSIONS:START--><!--MISSIONS:END-->`);
     continue;
   }
-  const out = html.replace(/<!--MISSIONS:START-->[\s\S]*?<!--MISSIONS:END-->/, firmBlock(firm));
+  // 保留舊區塊標題上的 id（目錄 TOC 用 #secN 跳轉）
+  const oldId = /<!--MISSIONS:START-->\s*<h2 id="([^"]+)"/.exec(html)?.[1];
+  let block = firmBlock(firm);
+  if (oldId) block = block.replace('<h2>', `<h2 id="${oldId}">`);
+  const out = html.replace(/<!--MISSIONS:START-->[\s\S]*?<!--MISSIONS:END-->/, () => block);
   writeFileSync(file, out, 'utf8');
   console.log(`✓ ${firm.id}.html — ${firm.plans.length} 個帳號類型`);
   n++;

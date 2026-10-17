@@ -92,9 +92,9 @@ async function main() {
   // 常駐置頂；until = 截止日（台灣時間），過期自動下架
   const todayTW = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
   const PINNED = [
-    { tag: '折扣', until: '2026-07-21', html: '🚨 <b>Apex FLASH DROP</b>：50K 日內追・免啟動費一口價 <b>$49</b>（Apex 史上最低，平常 $79），折扣碼 <b>SAVENOW</b>，<b>7/21 23:59 ET 截止</b> <a href="https://apextraderfunding.com/" target="_blank" rel="noopener">前往購買↗</a>' },
-    { tag: '折扣', html: '<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 7 折（50K $98）、Pro 6 折（50K $111），<b>首購結帳再多 10%</b>（$84／$92.50）。一次性付費、免啟動費 <a href="https://lucidtrading.com/ref/pftw" target="_blank" rel="noopener">前往購買↗</a>' },
-    { tag: '規則更新', until: '2026-07-24', html: '⏳ <b>Lucid Pro 日風控免除中</b>，活動到 <b>2026/7/24</b>，之後恢復 <a href="/rules/lucid.html">看規則↗</a>' },
+    { tag: '折扣', until: '2026-10-19', html: '🚨 <b>Apex 全部考試 1 折</b>：50K 日內追 <b>$24.90</b>（原價 $249），5 入組 $47.50，折扣碼 <b>SAVENOW</b>，<b>10/18（週日）晚上 美東時間截止</b> <a href="/rules/apex.html">看規則↗</a>' },
+    { tag: '折扣', until: '2026-11-01', html: '🔥 <b>Tradeify 全帳號 7 折</b>：Select 50K <b>$116</b>、Growth 50K <b>$102</b>，折扣碼 <b>PFTW</b>，<b>10/31 截止</b> <a href="https://tradeify.co/?ref=ZIPOK2X5" target="_blank" rel="sponsored nofollow noopener">前往購買↗</a>' },
+    { tag: '折扣', html: '<b>Lucid</b>：折扣碼 <b>PFTW</b> — Flex 50K <b>$90.20</b>、Pro 50K <b>$115.40</b>。一次性付費、免啟動費 <a href="https://lucidtrading.com/ref/pftw" target="_blank" rel="sponsored nofollow noopener">前往購買↗</a>' },
   ].filter((p) => !p.until || p.until >= todayTW)
    .map(({ tag, html }) => ({ tag, html }));
   const finalItems = [...PINNED, ...items].slice(0, 8);

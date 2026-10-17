@@ -24,12 +24,12 @@ export default function ConsCalc({ firmId, plan, size, init }: {
   useEffect(() => {
     const ph = phases.find((p) => p === init?.ph) ?? phases[0] ?? 'exam';
     setPhase(ph);
-  }, [plan.id, size]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [plan.id, size, init]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     // 分享連結帶進來的資料先顯示；使用者動手改了才會存進他自己的日誌
     if (init?.e?.length) { setDays(init.e); return; }
     setDays(local.get<Log>(KEYS.cons, {})[k] ?? []);
-  }, [k]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [k, init]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!phases.length) {
     return <div className="rounded-xl p-4 font-body text-[15px]" style={{ background: 'rgba(53,224,138,.07)', border: `1px solid ${G}44` }}>

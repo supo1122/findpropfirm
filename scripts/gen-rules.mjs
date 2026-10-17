@@ -76,7 +76,7 @@ function planBlock(firm, plan) {
 function firmBlock(firm) {
   const v = VERIFIED[firm.id];
   const note = v
-    ? `<div class="box new"><b>✅ 已核對官方</b>本頁每條規則於 <b>2026/07</b> 逐條核對官方幫助中心。規則仍以官網為準。</div>`
+    ? `<div class="box new"><b>✅ 已核對官方</b>本頁每條規則於 <b>2026/10/17</b> 逐條核對官方幫助中心。規則仍以官網為準。</div>`
     : `<div class="box warn"><b>⚠️ 官方核對中</b>本家官網對自動查詢有存取限制，以下數字尚未逐條核對官方原文，<b>請務必以官網為準</b>。</div>`;
   return `<!--MISSIONS:START-->
   <h2><span class="n">★</span> 出金任務：選你的帳號類型與規模</h2>

@@ -58,8 +58,8 @@ export function simulate(plan: Plan, size: SizeKey, daily: number, price?: numbe
   if (plan.exam !== null) {
     const target = money(s.target);
     if (!target) return { ok: false, reason: '這個規模沒有考試目標資料' };
-    if (c.examConsOfTarget && c.examCons && daily >= c.examCons * target)
-      return { ok: false, reason: `單日賺 ${fmt(daily)} 會違反考試一致性（最佳單日要 < ${fmt(c.examCons * target)}），請把每日獲利調低` };
+    if (c.examConsOfTarget && c.examCons && daily > c.examCons * target)
+      return { ok: false, reason: `單日賺 ${fmt(daily)} 會違反考試一致性（最佳單日要 ≤ ${fmt(c.examCons * target)}），請把每日獲利調低` };
     let n = Math.ceil(target / daily);
     if (c.examDays) n = Math.max(n, c.examDays);
     if (c.examCons && !c.examConsOfTarget) n = Math.max(n, Math.ceil(1 / c.examCons - 1e-9));
@@ -144,7 +144,7 @@ export function consModes(plan: Plan, s: Spec): { exam?: ConsMode; payout?: Cons
   if (c.examCons) {
     const t = money(s.target);
     out.exam = c.examConsOfTarget && t
-      ? { ratio: c.examCons, ofTarget: t, label: `最佳單日 < 目標 ${fmt(t)} 的 ${pct(c.examCons)}` }
+      ? { ratio: c.examCons, ofTarget: t, label: `最佳單日 ≤ 目標 ${fmt(t)} 的 ${pct(c.examCons)}` }
       : { ratio: c.examCons, label: `最佳單日 ≤ 總獲利 ${pct(c.examCons)}` };
   }
   if (c.payCons) out.payout = { ratio: c.payCons, label: `最佳單日 ≤ 週期總獲利 ${pct(c.payCons)}` };
@@ -162,7 +162,7 @@ export function checkCons(days: number[], mode: ConsMode): ConsResult {
   const best = days.length ? Math.max(0, ...days) : 0;
   if (mode.ofTarget) {
     const limit = mode.ofTarget * mode.ratio;
-    return { total, best, ratio: best / mode.ofTarget, ok: best < limit, need: 0 };
+    return { total, best, ratio: best / mode.ofTarget, ok: best <= limit, need: 0 };
   }
   if (total <= 0) return { total, best, ratio: null, ok: false, need: best > 0 ? best / mode.ratio - total : 0 };
   const ratio = best / total;

@@ -21,7 +21,7 @@ export default function LineSim({ firmId, plan, size, init }: {
     setPhase(init?.ph === 'pay' || (init?.ph === 'exam' && hasExam) ? init.ph : hasExam ? 'exam' : 'pay');
     setCur(init?.c ?? 0);
     setPeak(Math.max(0, init?.pk ?? 0, init?.c ?? 0));
-  }, [plan.id, size]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [plan.id, size, init]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!s || !start || !loss) return <Empty />;
 

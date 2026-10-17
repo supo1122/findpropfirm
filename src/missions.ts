@@ -1,9 +1,7 @@
 // ===== 出金任務資料層（首頁三層選擇器 + 規則頁共用）=====
 // 三層:公司 → 帳號類型（方案/回撤型態） → 帳號規模
 // 所有數字皆已逐規模預先算好。Lucid / Tradeify / TradeDay / Topstep
-// 於 2026/07 逐條核對官方幫助中心;Apex 官網封鎖機房 IP,標示為待核。
-
-import { lucidDllWaived } from './data';
+// 於 2026/07 逐條核對官方幫助中心，2026/10/17 再核對一次;Apex 官網封鎖機房 IP,標示為待核。
 
 // Apex Live 官方明講「不是 25K/50K/100K 那種分級」，全部同一組參數 → 用「單一規格」
 export type SizeKey = '25K' | '50K' | '100K' | '150K' | '單一規格';
@@ -35,7 +33,7 @@ export type Calc = {
   examDays?: number;
   /** 考試一致性：最佳單日 ≤ 總獲利 × 此比例 */
   examCons?: number;
-  /** Topstep：最佳單日要 < 「獲利目標」× examCons（不是總獲利） */
+  /** Topstep：最佳單日要 ≤ 「獲利目標」× examCons（不是總獲利） */
   examConsOfTarget?: boolean;
   /** 出金前要幾個獲利日（每天 ≥ minDay） */
   payDays?: number;
@@ -114,7 +112,7 @@ export const FIRMS_M: FirmM[] = [
         payout: [
           ['📅', '5 個獲利日，每天 ≥ {minDay}'],
           ['➕', '當期淨利為正（賺 $1 也算）'],
-          ['✅', '無日風控・無一致性・無緩衝'],
+          ['✅', '無一致性・無緩衝・日風控自選開關'],
         ],
         tasks: [
           '5 個獲利日，每日至少賺 {minDay}',
@@ -124,13 +122,14 @@ export const FIRMS_M: FirmM[] = [
         redlines: [
           '餘額碰到最大虧損線就爆：{maxLoss}',
           '這個帳號最多只能領 5 次，第 5 次後轉真倉',
+          '日虧損上限 {dll}（結帳時選開或關，之後不能改；軟性，不會沒收帳號）',
         ],
-        tip: '通關後無日風控、無一致性、無緩衝區——沒有隱藏門檻。注意考試階段仍有 50% 一致性（最佳單日不得超過總獲利一半）。',
+        tip: '通關後無一致性、無緩衝區——沒有隱藏門檻。日風控結帳時自選：開＝比較便宜，關＝完全沒有日風控（考試和出金帳號一起）。出金帳號有縮放計畫：獲利越多、能下的口數越大。注意考試階段仍有 50% 一致性（最佳單日不得超過總獲利一半）。',
         sizes: {
-          '25K': { target: '$1,250', maxLoss: '$1,000', minDay: '$100', cap: '獲利的 50%，最高 $1,000', minPayout: '$500', contracts: '2 mini / 20 micro' },
-          '50K': { target: '$3,000', maxLoss: '$2,000', minDay: '$150', cap: '獲利的 50%，最高 $2,000', minPayout: '$500', contracts: '4 mini / 40 micro' },
-          '100K': { target: '$6,000', maxLoss: '$3,000', minDay: '$200', cap: '獲利的 50%，最高 $2,500', minPayout: '$500', contracts: '6 mini / 60 micro' },
-          '150K': { target: '$9,000', maxLoss: '$4,500', minDay: '$250', cap: '獲利的 50%，最高 $3,000', minPayout: '$500', contracts: '10 mini / 100 micro' },
+          '25K': { target: '$1,250', maxLoss: '$1,000', dll: '$600（可關）', minDay: '$100', cap: '獲利的 50%，最高 $1,000', minPayout: '$500', contracts: '2 mini / 20 micro' },
+          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '$1,200（可關）', minDay: '$150', cap: '獲利的 50%，最高 $2,000', minPayout: '$500', contracts: '4 mini / 40 micro' },
+          '100K': { target: '$6,000', maxLoss: '$3,000', dll: '$1,800（可關）', minDay: '$200', cap: '獲利的 50%，最高 $2,500', minPayout: '$500', contracts: '6 mini / 60 micro' },
+          '150K': { target: '$9,000', maxLoss: '$4,500', dll: '$2,700（可關）', minDay: '$250', cap: '獲利的 50%，最高 $3,000', minPayout: '$500', contracts: '10 mini / 100 micro' },
         },
       },
       {
@@ -158,16 +157,14 @@ export const FIRMS_M: FirmM[] = [
         ],
         redlines: [
           '餘額碰到最大虧損線就爆：{maxLoss}',
-          lucidDllWaived()
-            ? '日虧損上限 {dll}（軟性）——⚡ 目前活動免除中，2026/7/24 後自動恢復'
-            : '日虧損上限 {dll}（軟性，不會沒收帳號）',
+          '日虧損上限 {dll}（結帳時選開或關，之後不能改；軟性，不會沒收帳號）',
         ],
         tip: '餘額收在緩衝之上後，固定日風控會換成 LucidScale：最高 EOD 利潤 × 60%，只升不降。2025/11/28 前買的帳號一致性是 35%。',
         sizes: {
           '25K': { target: '$1,250', cycle: '$250', maxLoss: '$1,000', dll: '無', goal: '$26,100', cap: '首次 $1,000，第 2 次起 $1,500', minPayout: '$500', contracts: '2 mini / 20 micro' },
-          '50K': { target: '$3,000', cycle: '$500', maxLoss: '$2,000', dll: '$1,200', goal: '$52,100', cap: '首次 $2,000，第 2 次起 $2,500', minPayout: '$500', contracts: '4 mini / 40 micro' },
-          '100K': { target: '$6,000', cycle: '$750', maxLoss: '$3,000', dll: '$1,800', goal: '$103,100', cap: '首次 $2,500，第 2 次起 $3,000', minPayout: '$500', contracts: '6 mini / 60 micro' },
-          '150K': { target: '$9,000', cycle: '$1,000', maxLoss: '$4,500', dll: '$2,700', goal: '$154,600', cap: '首次 $3,000，第 2 次起 $3,500', minPayout: '$500', contracts: '10 mini / 100 micro' },
+          '50K': { target: '$3,000', cycle: '$500', maxLoss: '$2,000', dll: '$1,200（可關）', goal: '$52,100', cap: '首次 $2,000，第 2 次起 $2,500', minPayout: '$500', contracts: '4 mini / 40 micro' },
+          '100K': { target: '$6,000', cycle: '$750', maxLoss: '$3,000', dll: '$1,800（可關）', goal: '$103,100', cap: '首次 $2,500，第 2 次起 $3,000', minPayout: '$500', contracts: '6 mini / 60 micro' },
+          '150K': { target: '$9,000', cycle: '$1,000', maxLoss: '$4,500', dll: '$2,700（可關）', goal: '$154,600', cap: '首次 $3,000，第 2 次起 $3,500', minPayout: '$500', contracts: '10 mini / 100 micro' },
         },
       },
       {
@@ -197,7 +194,7 @@ export const FIRMS_M: FirmM[] = [
           '餘額碰到最大虧損線就爆：{maxLoss}',
           '⚠️ 通關後一律「日內追蹤（Intraday）」回撤——即使考試選 EOD：{maxLoss} 隨即時損益（含浮盈）往上跑、只升不降，過 Initial Trail 後才鎖在「起始＋$100」',
           '日虧損上限 {dll}（結帳可選 開／關；軟性不沒收帳號）',
-          '真倉禁交易紅色新聞：事件前後各 1 分鐘要空手，違者硬爆',
+          '出金帳號禁做美國高影響（紅色）新聞：事件前後各 1 分鐘要空手，違者直接爆倉',
         ],
         tip: 'LucidDaily 主打「每天都能領」：通關後 90/10、無一致性、無固定出金次數上限。⚠️ 考試回撤可選 Intraday（較便宜）或 EOD（較彈性），但通關後的出金帳號一律是 Intraday 日內追蹤（官方明文）；日風控可選開或關。單日毛利達上限會自動轉真倉。',
         sizes: {
@@ -249,7 +246,7 @@ export const FIRMS_M: FirmM[] = [
           '帳戶從 $0 開始，賺到的都是你的利潤',
           '每天都能申請出金，沒有次數與金額上限',
           '無日風控、無一致性、無緩衝——規則比模擬帳號還少',
-          '🎁 首次轉真倉限定：賺到 {goal} → 額外領一次性獎金 {cap}',
+          '🎁 可重複獎金：真倉賺到 {goal} ＋ 交易滿 20 天 → 領 {cap}（90/10），每個帳號都能重複拿',
         ],
         redlines: [
           '回撤 {maxLoss}（沿用你原本 funded 帳號的規模）',
@@ -258,12 +255,12 @@ export const FIRMS_M: FirmM[] = [
           '爆掉真倉要冷卻 2 週才能再買考試；反覆亂玩會被延長',
           '家裡有人在跑真倉，其他人就不能跑模擬帳號',
         ],
-        tip: '⚠️ 轉真倉時，所有「有出過金」的 funded 帳號會一起轉，其餘模擬帳號全部關閉——包含你留著沒動的考試帳號（0 次出金的 funded 帳號會退考試費）。不想被關就別囤考試帳號。最多同時 5 個真倉。獎金只有第一次轉真倉能拿，且 LucidMaxx 不適用。',
+        tip: '⚠️ 轉真倉時，所有「有出過金」的 funded 帳號會一起轉，其餘模擬帳號全部關閉——包含你留著沒動的考試帳號（0 次出金的 funded 帳號會退考試費）。不想被關就別囤考試帳號。最多同時 5 個真倉。💵 新制多了「不進真倉」選項：收到轉真倉信 24 小時內可改領現金＝真倉起始額度的 50%（90/10），沒選就自動轉真倉。',
         sizes: {
-          '25K': { maxLoss: '$1,000', dll: '無', goal: '$1,100', cap: '獎金 $1,000', contracts: '2 mini / 20 micro（依獲利分級）' },
-          '50K': { maxLoss: '$2,000', dll: '無', goal: '$2,100', cap: '獎金 $2,000', contracts: '4 mini / 40 micro（依獲利分級）' },
-          '100K': { maxLoss: '$3,000', dll: '無', goal: '$3,100', cap: '獎金 $3,000', contracts: '6 mini / 60 micro（依獲利分級）' },
-          '150K': { maxLoss: '$4,500', dll: '無', goal: '$4,600', cap: '獎金 $4,500', contracts: '10 mini / 100 micro（依獲利分級）' },
+          '25K': { maxLoss: '$1,000', dll: '無', goal: '$2,000', cap: '獎金 $1,000', contracts: '2 mini / 20 micro（依獲利分級）' },
+          '50K': { maxLoss: '$2,000', dll: '無', goal: '$4,000', cap: '獎金 $2,000', contracts: '4 mini / 40 micro（依獲利分級）' },
+          '100K': { maxLoss: '$3,000', dll: '無', goal: '$6,000', cap: '獎金 $3,000', contracts: '6 mini / 60 micro（依獲利分級）' },
+          '150K': { maxLoss: '$4,500', dll: '無', goal: '$9,000', cap: '獎金 $4,500', contracts: '10 mini / 100 micro（依獲利分級）' },
         },
       },
     ],
@@ -284,7 +281,7 @@ export const FIRMS_M: FirmM[] = [
         split: '90/10',
         calc: { examCons: 0.4, payDays: 5, amount: 'half', split: 0.9 },
         exam: [
-          ['⚖️', '考試 40% 一致性'],
+          ['⚖️', '考試 40% 一致性（可加購放寬到 50%）'],
           ['📅', '最快 3 天・考試無日風控'],
           ['🔀', '考過再選 Flex / Daily（不能改）'],
         ],
@@ -302,12 +299,12 @@ export const FIRMS_M: FirmM[] = [
           '餘額碰到最大虧損線就爆：{maxLoss}',
           '第 2 次起：該週期淨獲利必須為正',
         ],
-        tip: '⚠️ 第 2 次起當期必須為正。例：第一次出金後餘額 $51,250，之後虧到 $50,800（當期 −$450）→ 不能出金，要先賺回 $450 讓當期轉正。注意 50% 是算「總獲利」（現在餘額 − 起始餘額），不是只算這一輪賺的。',
+        tip: '⚠️ 第 2 次起當期必須為正。例：第一次出金後餘額 $51,250，之後虧到 $50,800（當期 −$450）→ 不能出金，要先賺回 $450 讓當期轉正。注意 50% 是算「總獲利」（現在餘額 − 起始餘額），不是只算這一輪賺的。上限是 2026/9/1 後買的新帳號；之前買的較高（50K $3,000／100K $4,000／150K $5,000）。',
         sizes: {
           '25K': { target: '$1,500', maxLoss: '$1,000', dll: '無', minDay: '$100', cap: '$1,250', contracts: '起始 1 mini，最高 2 mini' },
-          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '無', minDay: '$150', cap: '$3,000', contracts: '起始 2 mini，最高 4 mini' },
-          '100K': { target: '$6,000', maxLoss: '$3,000', dll: '無', minDay: '$200', cap: '$4,000', contracts: '起始 3 mini，最高 8 mini' },
-          '150K': { target: '$9,000', maxLoss: '$4,500', dll: '無', minDay: '$250', cap: '$5,000', contracts: '起始 3 mini，最高 12 mini' },
+          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '無', minDay: '$150', cap: '$2,500', contracts: '起始 2 mini，最高 4 mini' },
+          '100K': { target: '$6,000', maxLoss: '$3,000', dll: '無', minDay: '$200', cap: '$3,500', contracts: '起始 3 mini，最高 8 mini' },
+          '150K': { target: '$9,000', maxLoss: '$4,500', dll: '無', minDay: '$250', cap: '$4,500', contracts: '起始 3 mini，最高 12 mini' },
         },
       },
       {
@@ -319,7 +316,7 @@ export const FIRMS_M: FirmM[] = [
         split: '90/10',
         calc: { examCons: 0.4, gate: 'profit', amount: 'double', split: 0.9, note: '假設利潤過緩衝後，隔天申請「當天利潤 × 2」' },
         exam: [
-          ['⚖️', '考試 40% 一致性'],
+          ['⚖️', '考試 40% 一致性（可加購放寬到 50%）'],
           ['📅', '最快 3 天・考試無日風控'],
           ['🔀', '考過再選 Flex / Daily（不能改）'],
         ],
@@ -338,11 +335,11 @@ export const FIRMS_M: FirmM[] = [
           '日虧損上限 {dll}',
           '第 2 次起：該週期淨獲利必須為正',
         ],
-        tip: '⚠️ 緩衝算的是「利潤」不是餘額。例（50K）：賺了 $250 → 2×$250，最多領 $500；賺 $700 → 2×$700=$1,400 但上限 $1,000，只能領 $1,000。賺不到 $125 連最低 $250 都領不了。',
+        tip: '⚠️ 緩衝算的是「利潤」不是餘額。例（50K）：賺了 $250 → 2×$250，最多領 $500；賺 $700 → 2×$700=$1,400 但上限 $1,250，只能領 $1,250。賺不到 $125 連最低 $250 都領不了。上限是 2026/9/1 後買的新帳號；之前買的 50K 是 $1,000、100K 是 $1,500。',
         sizes: {
           '25K': { target: '$1,500', maxLoss: '$1,000', dll: '$500', goal: '$1,100（餘額要到 $26,100）', cap: '$600', minPayout: '$250', contracts: '起始 1 mini，最高 2 mini' },
-          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '$1,000', goal: '$2,100（餘額要到 $52,100）', cap: '$1,000', minPayout: '$250', contracts: '起始 2 mini，最高 4 mini' },
-          '100K': { target: '$6,000', maxLoss: '$2,500', dll: '$1,250', goal: '$2,600（餘額要到 $102,600）', cap: '$1,500', minPayout: '$250', contracts: '起始 3 mini，最高 8 mini' },
+          '50K': { target: '$3,000', maxLoss: '$2,000', dll: '$1,000', goal: '$2,100（餘額要到 $52,100）', cap: '$1,250', minPayout: '$250', contracts: '起始 2 mini，最高 4 mini' },
+          '100K': { target: '$6,000', maxLoss: '$2,500', dll: '$1,250', goal: '$2,600（餘額要到 $102,600）', cap: '$1,750', minPayout: '$250', contracts: '起始 3 mini，最高 8 mini' },
           '150K': { target: '$9,000', maxLoss: '$3,500', dll: '$1,750', goal: '$3,600（餘額要到 $153,600）', cap: '$2,500', minPayout: '$250', contracts: '起始 3 mini，最高 12 mini' },
         },
       },
@@ -476,6 +473,7 @@ export const FIRMS_M: FirmM[] = [
         ],
         tip: '⚠️ 分潤看「帳戶當前利潤」：當前利潤 < $4,000 → 整筆只分 50%。例：賺 $3,000 領 $1,000 → 實拿 $500。當前利潤 > $4,000 且領完仍 > $4,000 → 全額 80%。跨越 $4,000 則分開算：賺 $6,000 領 $3,000 → 80%×$2,000 + 50%×$1,000 = $2,100。想小額快領，選 Fast Pass 更划算。',
         sizes: {
+          '25K': { target: '$1,500', maxLoss: '$1,000', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '2 口 / 20 微' },
           '50K': { target: '$3,000', maxLoss: '$2,000', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '5 口 / 50 微' },
           '100K': { target: '$6,000', maxLoss: '$3,000', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '10 口 / 50 微' },
           '150K': { target: '$9,000', maxLoss: '$4,500', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '15 口 / 50 微' },
@@ -510,6 +508,7 @@ export const FIRMS_M: FirmM[] = [
         ],
         tip: '⚠️ 這個方案唯一的差別是「考試」用 EOD 比較好過（貴一點）；通關後的出金帳號規則跟 Intraday 版完全一樣，含 Intraday 回撤與 $4,000 分潤分界。',
         sizes: {
+          '25K': { target: '$1,500', maxLoss: '$1,000', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '2 口 / 20 微' },
           '50K': { target: '$3,000', maxLoss: '$2,000', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '5 口 / 50 微' },
           '100K': { target: '$6,000', maxLoss: '$3,000', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '10 口 / 50 微' },
           '150K': { target: '$9,000', maxLoss: '$4,500', cap: '無固定上限（受正餘額限制）', minPayout: '$250', contracts: '15 口 / 50 微' },
@@ -519,22 +518,23 @@ export const FIRMS_M: FirmM[] = [
         id: 'fp',
         name: 'Fast Pass',
         toLive: '第 5 次出金申請時 → 直接轉真倉，Sim 帳號關閉',
-        sub: '無最低天數 · 分潤一律 80%',
+        sub: '最快 3 天過 · 分潤一律 80%',
         dd: 'EOD',
         split: '80/20（無分界）',
-        calc: { examCons: 0.45, payDays: 5, amount: 'half', split: 0.8 },
+        calc: { examCons: 0.45, payDays: 5, payCons: 0.45, amount: 'half', split: 0.8, note: '依 2026/7/26 後新帳號規則：出金 45% 一致性、新上限' },
         exam: [
           ['⚖️', '最佳單日 ≤ 45%'],
-          ['⚡', '無最低交易天數'],
+          ['⚡', '最快 3 天（無最低天數規定）'],
         ],
         payout: [
           ['📅', '5 個獲利日，每天 ≥ {minDay}'],
-          ['➕', '餘額高於起始・當期淨利為正'],
+          ['⚖️', '出金也要 45% 一致性'],
           ['💵', '每次可領餘額 50%'],
         ],
         tasks: [
-          '考試：賺到 {target} + 最佳單日 ≤ 總獲利 45%，無最低交易天數',
+          '考試：賺到 {target} + 最佳單日 ≤ 總獲利 45%（最快 3 天）',
           '出金:5 個獲利日，每日至少賺 {minDay}',
+          '最佳單日 ≤ 總獲利 45%（2026/7/26 後開的新帳號）',
           '餘額要高於起始餘額，且當期淨利為正',
           '單次可領餘額的 50%，最高 {cap}',
         ],
@@ -542,11 +542,12 @@ export const FIRMS_M: FirmM[] = [
           '回撤 {maxLoss}（EOD 結算，考試與出金帳號都是；沒有日風控，這是唯一的線）',
           '第 5 次出金申請時 → 轉真倉，Sim 帳號關閉',
         ],
-        tip: '分潤一律 80%，小額出金比 Quick Pay 划算，且無緩衝要求。首次出金時若回撤還沒爬到起始餘額，會自動移上去並固定。⚠️ 送出申請後先別交易，等錢到帳；新週期的 Day 1 要等下一個交易時段才開始算。',
+        tip: '分潤一律 80%，小額出金比 Quick Pay 划算，且無緩衝要求。首次出金時若回撤還沒爬到起始餘額，會自動移上去並固定。⚠️ 送出申請後先別交易，等錢到帳；新週期的 Day 1 要等下一個交易時段才開始算。上面的 45% 出金一致性與上限適用 2026/7/26 後開的帳號；之前的舊帳號出金沒有一致性、上限較高（50K $2,000／100K $2,500／150K $3,000）。',
         sizes: {
-          '50K': { target: '$3,000', maxLoss: '$2,000', minDay: '$150', cap: '$2,000', minPayout: '$250', contracts: '5 口 / 50 微' },
-          '100K': { target: '$6,000', maxLoss: '$3,000', minDay: '$200', cap: '$2,500', minPayout: '$250', contracts: '10 口 / 50 微' },
-          '150K': { target: '$9,000', maxLoss: '$4,500', minDay: '$250', cap: '$3,000', minPayout: '$250', contracts: '15 口 / 50 微' },
+          '25K': { target: '$1,500', maxLoss: '$1,000', minDay: '$100', cap: '$750', minPayout: '$250', contracts: '起始 1 口，每賺 $2,000 加 1 口' },
+          '50K': { target: '$3,000', maxLoss: '$2,000', minDay: '$150', cap: '$1,500', minPayout: '$250', contracts: '起始 2 口，每賺 $2,000 加 1 口' },
+          '100K': { target: '$6,000', maxLoss: '$3,000', minDay: '$200', cap: '$1,875', minPayout: '$250', contracts: '起始 3 口，每賺 $2,000 加 1 口' },
+          '150K': { target: '$9,000', maxLoss: '$4,500', minDay: '$250', cap: '$2,250', minPayout: '$250', contracts: '起始 4 口，每賺 $2,000 加 1 口' },
         },
       },
       {
@@ -590,9 +591,9 @@ export const FIRMS_M: FirmM[] = [
         sub: '5 個獲利日 · 老牌路線',
         dd: 'EOD',
         split: '90/10',
-        calc: { examDays: 2, examCons: 0.5, examConsOfTarget: true, payDays: 5, amount: 'half', lock: 0, split: 0.9 },
+        calc: { examDays: 2, examCons: 0.55, examConsOfTarget: true, payDays: 5, amount: 'half', lock: 0, split: 0.9 },
         exam: [
-          ['⚖️', '最佳單日 < 目標的 50%'],
+          ['⚖️', '最佳單日 ≤ 目標的 55%'],
           ['📅', '最快 2 天（不能 1 天）'],
         ],
         payout: [
@@ -601,7 +602,7 @@ export const FIRMS_M: FirmM[] = [
           ['💡', '結帳加購 DLL → 上限加倍'],
         ],
         tasks: [
-          '先考過 Combine：賺到 {target}，最佳單日 < 獲利目標的 50%（最快 2 天，不能 1 天）',
+          '先考過 Combine：賺到 {target}，最佳單日 ≤ 獲利目標的 55%（最快 2 天，不能 1 天）',
           '出金:5 個獲利日，每日至少賺 {minDay}',
           '單次可領餘額的 50%，最高 {cap}',
         ],
@@ -612,8 +613,8 @@ export const FIRMS_M: FirmM[] = [
         tip: '💡 結帳時自願加購日風控（DLL），出金上限直接加倍。最低出金只要 $125，是五家裡門檻最低的。',
         sizes: {
           '50K': { target: '$3,000', maxLoss: '$2,000', minDay: '$150', cap: '$2,000（加 DLL 變 $4,000）', minPayout: '$125', contracts: '5 口 / 50 微' },
-          '100K': { target: '$6,000', maxLoss: '$3,000', minDay: '$200', cap: '$3,000（加 DLL 變 $6,000）', minPayout: '$125', contracts: '10 口 / 100 微' },
-          '150K': { target: '$9,000', maxLoss: '$4,500', minDay: '$250', cap: '$5,000（加 DLL 變 $10,000）', minPayout: '$125', contracts: '15 口 / 150 微' },
+          '100K': { target: '$6,000', maxLoss: '$3,000', minDay: '$150', cap: '$3,000（加 DLL 變 $6,000）', minPayout: '$125', contracts: '10 口 / 100 微' },
+          '150K': { target: '$9,000', maxLoss: '$4,500', minDay: '$150', cap: '$5,000（加 DLL 變 $10,000）', minPayout: '$125', contracts: '15 口 / 150 微' },
         },
       },
       {
@@ -623,9 +624,9 @@ export const FIRMS_M: FirmM[] = [
         sub: '只要 3 天 · 出金上限更高',
         dd: 'EOD',
         split: '90/10',
-        calc: { examDays: 2, examCons: 0.5, examConsOfTarget: true, payTradeDays: 3, payCons: 0.4, amount: 'half', lock: 0, split: 0.9 },
+        calc: { examDays: 2, examCons: 0.55, examConsOfTarget: true, payTradeDays: 3, payCons: 0.4, amount: 'half', lock: 0, split: 0.9 },
         exam: [
-          ['⚖️', '最佳單日 < 目標的 50%'],
+          ['⚖️', '最佳單日 ≤ 目標的 55%'],
           ['📅', '最快 2 天（不能 1 天）'],
         ],
         payout: [
@@ -634,7 +635,7 @@ export const FIRMS_M: FirmM[] = [
           ['💵', '每次可領餘額 50%'],
         ],
         tasks: [
-          '先考過 Combine：賺到 {target}，最佳單日 < 獲利目標的 50%',
+          '先考過 Combine：賺到 {target}，最佳單日 ≤ 獲利目標的 55%',
           '出金：只要交易 3 天（每天至少 1 筆）',
           '最佳單日 ÷ 總淨利 ≤ 40%',
           '單次可領餘額的 50%，最高 {cap}',

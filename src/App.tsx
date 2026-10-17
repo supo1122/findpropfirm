@@ -450,7 +450,7 @@ export default function App() {
                         {off && <span className="font-body text-xs text-white/35 ml-2 line-through">{p.list}</span>}
                         {p.flashOn && (
                           <span className="block font-body text-xs mt-1" style={{ color: '#F45B5B' }}>
-                            🚨 限時到 7/21
+                            🚨 限時到 {p.flashUntil?.slice(5).replace('-', '/')}
                           </span>
                         )}
                         {p.firstBuy && (

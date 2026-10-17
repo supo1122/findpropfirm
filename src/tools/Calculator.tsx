@@ -16,12 +16,12 @@ export default function Calculator({ firmId, firmName, code, plan, size, init }:
   const [daily, setDaily] = useState<number | ''>(300);
   const [price, setPrice] = useState<number | ''>(knownPrice(firmId, plan.id, size) ?? '');
 
-  // 讀上次輸入（第一次渲染不讀，避免與預先產生的 HTML 不一致）；網址參數優先
+  // 讀上次輸入（第一次渲染不讀，避免與預先產生的 HTML 不一致）；網址參數優先，且參數晚一步才到時要重讀
   useEffect(() => {
     const s = local.get<Saved>(KEYS.calc, {});
     setDaily(init?.d ?? s.daily ?? 300);
     setPrice(init?.price ?? s.price?.[key] ?? knownPrice(firmId, plan.id, size) ?? '');
-  }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [key, init]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const save = (patch: Partial<{ daily: number | ''; price: number | '' }>) => {
     const s = local.get<Saved>(KEYS.calc, {});

@@ -42,7 +42,7 @@ export const FIRMS: Firm[] = [
     id: 'lucid',
     name: 'Lucid Trading',
     logo: '/logos/lucid.png',
-    rating: 4.6,
+    rating: 4.4,
     type: 'futures',
     tags: ['新手首選', 'EOD', '一次性付費'],
     summary: '無月費、免啟動費、EOD 回撤、可新聞交易。Flex / Pro / Direct / Maxx 多條路線，新手第一家首選之一。',
@@ -182,7 +182,7 @@ export const FIRMS: Firm[] = [
     rating: 4.3,
     type: 'futures',
     tags: ['獲利潛力最高', 'EOD／Intraday', '複製 20 帳'],
-    summary: '考試常有大幅折扣（折扣碼 SAVENOW，50K 日內 $249→$24.90），但過關要付啟動費（日內 $59／EOD $119），總成本要含啟動費一起算；考試 30 天內要考完、無重置。可開 20 帳複製下單。模擬 PA 出金 100% 分潤，真倉 Apex Live 為邀請制、90/10。',
+    summary: '考試常有大幅折扣（折扣碼 SAVENOW，50K 日內 $249→$24.90），但過關要付啟動費（日內 $99／EOD $129），總成本要含啟動費一起算；考試 30 天內要考完、無重置。可開 20 帳複製下單。模擬 PA 出金 100% 分潤，真倉 Apex Live 為邀請制、90/10。',
     risk: ['eod', 'intraday'],
     pay: 'once',
     dll: 'no',
@@ -218,7 +218,7 @@ export const FIRMS: Firm[] = [
     id: 'topstep',
     name: 'Topstep',
     logo: '/logos/topstep.png',
-    rating: 3.6,
+    rating: 3.7,
     type: 'futures',
     tags: ['規則最簡單', 'EOD', '月費'],
     summary: '老牌自營商，TopstepX 內建 TradingView。規則語言最好懂，Live 帳戶免數據費。',
@@ -279,64 +279,63 @@ export type Price = {
 export const PRICES: Price[] = [
   {
     id: 'lucid', name: 'Lucid · Flex', logo: '/logos/lucid.png', model: '一次性',
-    now: '$98', list: '$140', activation: '無', total: '$98', firstBuy: '$84', code: 'PFTW',
+    now: '$90.20', list: '$146', activation: '無', total: '$90.20', code: 'PFTW',
     link: 'https://lucidtrading.com/ref/pftw',
-    note: '無日風控、無緩衝區，規則最單純。考不過可以一直考（無時限）。首購結帳時再多 10%＝6 折 $84',
+    note: '無緩衝區，規則最單純；日風控結帳時自選開或關。考不過可以一直考（無時限）',
   },
   {
     id: 'lucid', name: 'Lucid · Pro', logo: '/logos/lucid.png', model: '一次性',
-    now: '$111', list: '$185', activation: '無', total: '$111', firstBuy: '$92.50', code: 'PFTW',
+    now: '$115.40', list: '$192', activation: '無', total: '$115.40', code: 'PFTW',
     link: 'https://lucidtrading.com/ref/pftw',
-    note: '出金上限比 Flex 高，但要打過緩衝 $52,100 才領得到。首購結帳時再多 10%＝5 折 $92.50',
+    note: '出金上限比 Flex 高，但要打過緩衝 $52,100 才領得到。日風控結帳時自選開或關',
   },
   {
     id: 'tradeify', name: 'Tradeify · Growth', logo: '/logos/tradeify.png', model: '一次性',
-    now: '$87', list: '$145', activation: '無', total: '$87', code: 'PFTW',
+    now: '$102', list: '$145', activation: '無', total: '$102', code: 'PFTW',
     link: 'https://tradeify.co/?ref=ZIPOK2X5',
     note: '1 天可通關，但出金要墊到 $53,000',
   },
   {
     id: 'tradeify', name: 'Tradeify · Select', logo: '/logos/tradeify.png', model: '一次性',
-    now: '$99', list: '$165', activation: '無', total: '$99', code: 'PFTW',
+    now: '$116', list: '$165', activation: '無', total: '$116', code: 'PFTW',
     link: 'https://tradeify.co/?ref=ZIPOK2X5',
     note: '通關後可選 Flex（無緩衝）或 Daily（每日領），選了不能改',
   },
   {
     id: 'apex', name: 'Apex · 日內追 · 標準', logo: '/logos/apex.png', model: '一次性',
-    now: '$24.90', list: '$249', activation: '$59', total: '$83.90', code: 'SAVENOW',
+    now: '$24.90', list: '$249', activation: '$99', total: '$123.90', code: 'SAVENOW',
     link: 'https://apextraderfunding.com/',
-    note: '考試費全場最低——沒考過只賠 $24.90，但考過要補 $59',
+    note: '考試費全場最低——沒考過只賠 $24.90，但考過要補 $99 啟動費',
   },
   {
     id: 'apex', name: 'Apex · 日內追 · 免啟動', logo: '/logos/apex.png', model: '一次性',
-    now: '$79', list: '$790', activation: '無', total: '$79', code: 'SAVENOW',
-    flashUntil: '2026-07-21', flashPrice: '$49', flashNote: '🚨 FLASH DROP：Apex 史上最低，50K 免啟動費一口價 $49（平常 $79）',
+    now: '$79.90', list: '$799', activation: '無', total: '$79.90', code: 'SAVENOW',
     link: 'https://apextraderfunding.com/',
-    note: '確定會考過的話，總成本比標準版還低 $4.90',
+    note: '確定會考過的話，總成本比標準版還低 $44',
   },
   {
     id: 'apex', name: 'Apex · EOD 追尾 · 標準', logo: '/logos/apex.png', model: '一次性',
-    now: '$49', list: '$490', activation: '$119', total: '$168', code: 'SAVENOW',
+    now: '$59', list: '$590', activation: '$129', total: '$188', code: 'SAVENOW',
     link: 'https://apextraderfunding.com/',
-    note: 'EOD 版盤中不怕浮盈推門檻，但啟動費 $119 讓總成本翻倍',
+    note: 'EOD 版盤中不怕浮盈推門檻，但啟動費 $129 讓總成本變三倍',
   },
   {
     id: 'apex', name: 'Apex · EOD 追尾 · 免啟動', logo: '/logos/apex.png', model: '一次性',
-    now: '$109', list: '$1,090', activation: '無', total: '$109', code: 'SAVENOW',
+    now: '$119', list: '$1,190', activation: '無', total: '$119', code: 'SAVENOW',
     link: 'https://apextraderfunding.com/',
-    note: '想要 EOD 就選這個——比 EOD 標準版總共省 $59',
+    note: '想要 EOD 就選這個——比 EOD 標準版總共省 $69',
   },
   {
     id: 'tradeday', name: 'TradeDay · Quick Pay', logo: '/logos/tradeday.png', model: '月費',
-    now: '$62／月', list: '$125／月', activation: '無', total: '首月 $62', code: 'PFTW',
+    now: '$59／月', list: '$131／月', activation: '無', total: '首月 $59', code: 'PFTW',
     link: 'https://www.tradeday.com/?a_aid=PFTW',
     note: 'Intraday 版。分潤有 $4,000 分界，利潤不到 $4,000 只分 50%',
   },
   {
     id: 'tradeday', name: 'TradeDay · Fast Pass', logo: '/logos/tradeday.png', model: '月費',
-    now: '$90／月', list: '$180／月', activation: '無', total: '首月 $90', code: 'PFTW',
+    now: '$95／月', list: '$189／月', activation: '無', total: '首月 $95', code: 'PFTW',
     link: 'https://www.tradeday.com/?a_aid=PFTW',
-    note: '分潤一律 80%，小額出金比 Quick Pay 划算',
+    note: '分潤一律 80%，小額出金比 Quick Pay 划算（7/26 後新帳號出金要 45% 一致性）',
   },
   {
     id: 'topstep', name: 'Topstep · 標準', logo: '/logos/topstep.png', model: '月費',
@@ -381,14 +380,16 @@ export type Offer = {
   code: string; link: string; until?: string;
 };
 export const OFFERS: Offer[] = [
-  { firm: 'Lucid — LucidFlex 25K', old: '原價 $100', now: '$70', note: '7 折 · 無日風控 · 無緩衝區 · 免啟動費 · 首購再多 10%（6 折）＝$60', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
-  { firm: 'Lucid — LucidFlex 50K', old: '原價 $140', now: '$98', note: '7 折 · 5 獲利日出金 · 通關後無一致性 · 首購再多 10%（6 折）＝$84', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
-  { firm: 'Lucid — LucidPro 50K', old: '原價 $185', now: '$111', note: '6 折 · 緩衝區 $52,100 · 出金上限比 Flex 高 · 首購再多 10%（5 折）＝$92.50', deadline: '日風控免除活動至 7/24，之後恢復 $1,200', code: 'PFTW', link: 'firms/lucid', until: '2026-07-25' },
-  { firm: 'Tradeify — Select 50K', old: '原價 $165', now: '$99', note: '6 折 · 通關後選 Flex（無緩衝）或 Daily（每日領）', deadline: '折扣碼 PFTW · 前 5 次 6 折，之後 7 折', code: 'PFTW', link: 'firms/tradeify' },
-  { firm: 'Tradeify — Growth 50K', old: '原價 $145', now: '$87', note: '6 折 · 1 天可通關 · 出金需墊到 $53,000', deadline: '折扣碼 PFTW · 前 5 次 6 折，之後 7 折', code: 'PFTW', link: 'firms/tradeify' },
-  { firm: 'TradeDay — Quick Pay 50K', old: '原價 $125/月', now: '$62.50/月', note: '5 折 · Intraday 版 · 通關 $0 啟動費', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/tradeday' },
-  { firm: 'Apex — 🚨 FLASH DROP', old: '平常 $79', now: '$49', note: '50K 日內追・免啟動費・一口價，Apex 史上最低', deadline: '限時到 7/21 23:59 ET（折扣碼 SAVENOW）', code: 'SAVENOW', link: 'firms/apex', until: '2026-07-21' },
-  { firm: 'Apex — 考試（一次性）', old: '原價 $199', now: '$19.90', note: '折扣碼 SAVENOW · 5 入 $85（每個 $17）· 過關另付啟動費', deadline: '考試 30 天內要考完 · 無重置 · 以官網為準', code: 'SAVENOW', link: 'firms/apex' },
+  // 2026/10/17 官網核對。until＝台灣日期，過了自動下架
+  { firm: 'Apex — 🚨 全部考試 1 折', old: '原價 $249', now: '$24.90', note: '90% OFF 所有考試（日內／EOD／任何規模）· 50K 日內追 · 過關另付啟動費 $99', deadline: '折扣碼 SAVENOW · 到 10/18（週日）晚上 美東時間', code: 'SAVENOW', link: 'firms/apex', until: '2026-10-19' },
+  { firm: 'Apex — 5 入組', old: '原價 $475', now: '$47.50', note: '50K 日內追考試 5 個，每個 $9.50 · 30 天內要考完 · 無重置', deadline: '折扣碼 SAVENOW · 到 10/18（週日）晚上 美東時間', code: 'SAVENOW', link: 'firms/apex', until: '2026-10-19' },
+  { firm: 'Tradeify — Select 50K', old: '原價 $165', now: '$116', note: '7 折 · 通關後選 Flex（5 天領）或 Daily（每天領）', deadline: '折扣碼 PFTW · 到 10/31 23:59 美東時間', code: 'PFTW', link: 'firms/tradeify', until: '2026-11-01' },
+  { firm: 'Tradeify — Growth 50K', old: '原價 $145', now: '$102', note: '7 折 · 1 天可通關 · 出金需墊到 $53,000', deadline: '折扣碼 PFTW · 到 10/31 23:59 美東時間', code: 'PFTW', link: 'firms/tradeify', until: '2026-11-01' },
+  { firm: 'Lucid — LucidFlex 50K', old: '原價 $146', now: '$90.20', note: '5 獲利日出金 · 通關後無一致性 · 無緩衝 · 日風控自選開關', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidFlex 25K', old: '原價 $89', now: '$50.30', note: '最便宜的入門帳號 · 免啟動費 · 考不過可一直考', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'Lucid — LucidPro 50K', old: '原價 $192', now: '$115.40', note: '緩衝區 $52,100 · 出金上限比 Flex 高 · 最快 1 天通關', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/lucid' },
+  { firm: 'TradeDay — Quick Pay 50K', old: '原價 $131/月', now: '$59/月', note: '55% OFF · Intraday 版 · 通關 $0 啟動費 · 隔天就能領', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/tradeday' },
+  { firm: 'TradeDay — Fast Pass 50K', old: '原價 $189/月', now: '$95/月', note: '5 折 · EOD 回撤 · 分潤一律 80%', deadline: '折扣碼 PFTW · 結帳時輸入', code: 'PFTW', link: 'firms/tradeday' },
 ];
 
 /** 台灣時間今天（YYYY-MM-DD） */
@@ -405,9 +406,11 @@ export function activeOffers(): Offer[] {
 }
 
 export const NOTES = [
-  { tag: '折扣', html: '🔥 Lucid Pro 6 折碼 <b>PFTW</b>，台灣時間 7/25 11:59 截止' },
-  { tag: '規則更新', html: '📊 LucidPro 7/5 新制：考試與出金都<b>取消日風控</b>' },
-  { tag: '規則更新', html: '⚡ Apex 4.0：出金改<b>全自動</b>，不再人工審查' },
+  { tag: '折扣', html: '🚨 Apex 全部考試 <b>1 折</b>，碼 <b>SAVENOW</b>，到 10/18（週日）晚上 美東時間' },
+  { tag: '折扣', html: '🔥 Tradeify 全帳號 <b>7 折</b>，碼 <b>PFTW</b>，到 10/31' },
+  { tag: '規則更新', html: '📊 Lucid Flex／Pro／Daily：日風控改成<b>結帳時自選開或關</b>' },
+  { tag: '規則更新', html: '📊 Topstep 考試一致性 <b>50% → 55%</b>' },
+  { tag: '規則更新', html: '⚠️ TradeDay Fast Pass 7/26 後的新帳號：出金也要 <b>45% 一致性</b>、單次上限下修' },
 ];
 
 export const QUIZ = [
@@ -431,7 +434,7 @@ export function recommend(a: Record<string, string>): { id: string; why: string 
   if (a.goal === 'profit') return { id: 'apex', why: '想衝高獲利，Apex 可開 20 帳複製下單、獲利潛力最高（但過關要付啟動費、限 1 個月內考完）。' };
   if (a.goal === 'simple' && a.dll === 'ok') return { id: 'topstep', why: '想要最單純的規則，Topstep 語言最好懂、Live 免數據費（月費制）。' };
   if (a.speed === 'fast' && a.dll === 'ok' && a.goal !== 'cheap') return { id: 'tradeify', why: '想通關快，Tradeify Growth 可一天通關，Select 通關後出金還免一致性。' };
-  return { id: 'lucid', why: '規則最單純：Flex 完全無日風控、無緩衝區、5 個獲利日就能出金，考不過還能一直考——新手首選。50K 折後 $98，首購再多 10%＝$84。' };
+  return { id: 'lucid', why: '規則最單純：Flex 日風控可自選關掉、無緩衝區、5 個獲利日就能出金，考不過還能一直考——新手首選。50K 用碼 PFTW 只要 $90.20。' };
 }
 
 // ===== 可交易商品（首頁「30 秒找任務卡」的「可交易商品」切換用）=====

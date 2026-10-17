@@ -53,7 +53,7 @@ export default function RulesApp({ firmId }: { firmId: string }) {
             <div className="min-w-0">
               <h1 className="font-heading text-2xl md:text-3xl leading-tight">{firm.name} 完整規則</h1>
               <div className="font-body text-sm mt-1" style={{ color: '#F5A524' }}>
-                ★ {firm.rating} · Trustpilot <span className="text-white/40">· 期貨 · 更新 2026/07 · 以官網為準</span>
+                ★ {firm.rating} · Trustpilot <span className="text-white/40">· 期貨 · 更新 2026/10/17 · 以官網為準</span>
               </div>
             </div>
           </div>
